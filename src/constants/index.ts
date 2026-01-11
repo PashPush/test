@@ -47,4 +47,50 @@ const feedbacks = [
 
 const stickers = [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }];
 
-export { navLinks, expCards, feedbacks, stickers };
+const projectsData = [
+  {
+    id: 'pt',
+    name: 'Power Thesaurus',
+    stack: 'React, TypeScript, GraphQL, Node.js',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    role: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Responsible for frontend architecture and performance optimization.',
+    screenshots: [
+      '/images/project-pt.webp',
+      '/images/project-pt.webp',
+      '/images/project-pt.webp',
+    ],
+    color: '#168be8',
+    mainImage: '/images/project-pt.webp',
+  },
+  {
+    id: 'index',
+    name: 'Index Marketing',
+    stack: 'React, Next.js, Tailwind CSS',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    role: 'Lorem ipsum dolor sit amet. Led the frontend development team.',
+    screenshots: [
+      '/images/project-index.webp',
+      '/images/project-index.webp',
+    ],
+    color: 'linear-gradient(126.6deg, rgba(44, 115, 210, 1) 3.4%, rgba(251, 234, 255, 1) 127.9%)',
+    mainImage: '/images/project-index.webp',
+  },
+  {
+    id: 'sagama',
+    name: 'Sagama',
+    stack: 'Vue.js, Nuxt, SCSS',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    role: 'Lorem ipsum dolor sit amet. Full-stack development and deployment.',
+    screenshots: [
+      '/images/project-sagama.webp',
+      '/images/project-sagama.webp',
+    ],
+    color: 'linear-gradient(109.6deg, rgba(163, 213, 255, 1) 11.3%, rgba(4, 137, 137, 1) 86.7%)',
+    mainImage: '/images/project-sagama.webp',
+  },
+];
+
+export { navLinks, expCards, feedbacks, stickers, projectsData };
