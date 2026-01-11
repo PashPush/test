@@ -96,6 +96,7 @@ canvas {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: 40%;
+  translate: none;
 }
 
 .masked-img.masked-img-mobile {
@@ -1132,6 +1133,10 @@ canvas#neuro {
   width: 100%;
   pointer-events: none;
   display: none;
+}
+
+canvas#neuro[data-visible='true'] {
+  display: block;
 }
 
 #blade {

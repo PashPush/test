@@ -159,6 +159,12 @@ const Hands = () => {
         );
     };
 
+    gsap.set('.like-hand', { opacity: 0 });
+    gsap.set('.boom-hand', { opacity: 0 });
+    gsap.set('.point-hand', { opacity: 0 });
+    gsap.set('.call-hand', { opacity: 0 });
+    gsap.set('.hit-hand', { scale: 3 });
+
     const checkTrigger = () => {
       const mainTrigger = ScrollTrigger.getAll().find(st => st.trigger && st.trigger.id === 'skills');
       if (mainTrigger?.animation) {

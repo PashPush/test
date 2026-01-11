@@ -242,8 +242,7 @@ function setupEvents() {
 
   if ('MutationObserver' in window && canvasEl) {
     const checkVisibility = () => {
-      const style = window.getComputedStyle(canvasEl);
-      const nowVisible = style.display !== 'none';
+      const nowVisible = canvasEl.getAttribute('data-visible') === 'true';
       if (nowVisible !== isVisible) {
         isVisible = nowVisible;
         if (isVisible) {
@@ -255,9 +254,9 @@ function setupEvents() {
     };
 
     const observer = new MutationObserver(checkVisibility);
-    observer.observe(canvasEl, { attributes: true, attributeFilter: ['style', 'class'] });
+    observer.observe(canvasEl, { attributes: true, attributeFilter: ['data-visible'] });
 
-    checkVisibility();
+    isVisible = false;
   } else {
     isVisible = true;
     startRenderLoop();

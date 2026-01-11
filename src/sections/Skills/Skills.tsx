@@ -34,6 +34,14 @@ const Skills = () => {
           fastScrollEnd: true,
           preventOverlaps: true,
           end: () => `+=${skillsElement.scrollWidth - document.documentElement.clientWidth}`,
+          onUpdate: self => {
+            if (!canvas) return;
+            if (self.progress >= 0.95) {
+              canvas.setAttribute('data-visible', 'true');
+            } else {
+              canvas.removeAttribute('data-visible');
+            }
+          },
         },
       });
 
@@ -43,11 +51,6 @@ const Skills = () => {
         xPercent: xPercent * (horizontalSections.length - 1),
         ease: 'none',
         force3D: true,
-      });
-
-      tl.to(canvas, {
-        display: 'block',
-        duration: 0.1,
       });
 
       tl.to({}, { duration: endPause });

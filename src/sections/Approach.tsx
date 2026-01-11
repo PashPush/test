@@ -13,6 +13,9 @@ const Approach = () => {
   const goods = t('goods', { returnObjects: true }) as string[];
 
   useGSAP(() => {
+    gsap.set('.masked-img', { clearProps: 'transform,translate,x,y,xPercent,yPercent,scale' });
+    gsap.set('.masked-img', { xPercent: -50, yPercent: -50 });
+
     const start = isMobile ? 'top 1%' : 'top top';
 
     const maskTimeline = gsap.timeline({
@@ -42,7 +45,9 @@ const Approach = () => {
       .to('.masked-img', {
         scale: 2,
         maskSize: isMobile ? '450%' : '300%',
-        translateY: translateY,
+        xPercent: -50,
+        yPercent: -50,
+        y: translateY,
         duration: 1,
         ease: 'power1.inOut ',
       })
