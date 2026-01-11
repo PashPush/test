@@ -1252,6 +1252,11 @@ canvas#neuro {
 }
 
 /* Project Modal Styles */
+
+.no-scroll {
+  overflow: hidden;
+}
+
 .project-modal-overlay {
   position: fixed;
   inset: 0;
@@ -1361,20 +1366,19 @@ canvas#neuro {
   font-size: 1rem;
   line-height: 1.75;
   color: #d9ecff;
+  white-space: pre-line;
 }
 
 .project-modal-screenshots {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .project-modal-screenshot {
   aspect-ratio: 16 / 10;
   border-radius: 0.75rem;
   overflow: hidden;
-  background-color: #1c1c21;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
 }
 
 .project-modal-screenshot img {
@@ -1524,9 +1528,5 @@ canvas#neuro {
     right: 0.75rem;
     width: 40px;
     height: 40px;
-  }
-
-  .project-modal-screenshots {
-    grid-template-columns: 1fr;
   }
 }

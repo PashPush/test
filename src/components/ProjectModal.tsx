@@ -2,13 +2,17 @@ import { useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
+type TScreenshot = {
+  src: string;
+  title: string;
+};
 export interface ProjectData {
   id: string;
   name: string;
   stack: string;
   description: string;
   role: string;
-  screenshots: string[];
+  screenshots: TScreenshot[];
   color: string;
   mainImage: string;
 }
@@ -33,15 +37,15 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.documentElement.classList.add('no-scroll');
       document.addEventListener('keydown', handleEscape);
       contentRef.current?.focus();
     } else {
-      document.body.style.overflow = '';
+      document.documentElement.classList.remove('no-scroll');
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.documentElement.classList.remove('no-scroll');
       document.removeEventListener('keydown', handleEscape);
     };
   }, [isOpen, handleEscape]);
@@ -107,22 +111,25 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             <p className="project-modal-stack">{project.stack}</p>
 
             <section className="project-modal-section">
-              <h3>{t('modal.description', 'About the project')}</h3>
+              <h3>{t('modal.description')}</h3>
               <p>{project.description}</p>
             </section>
 
             <section className="project-modal-section">
-              <h3>{t('modal.role', 'My role')}</h3>
+              <h3>{t('modal.role')}</h3>
               <p>{project.role}</p>
             </section>
 
             <section className="project-modal-section">
-              <h3>{t('modal.screenshots', 'Screenshots')}</h3>
+              <h3>{t('modal.screenshots')}</h3>
               <div className="project-modal-screenshots">
-                {project.screenshots.map((src, index) => (
-                  <div key={index} className="project-modal-screenshot">
-                    <img src={src} alt={`${project.name} screenshot ${index + 1}`} />
-                  </div>
+                {project.screenshots.map((item, index) => (
+                  <>
+                    <p>{item.title}</p>
+                    <div key={index} className="project-modal-screenshot">
+                      <img src={item.src} alt={`${project.name} screenshot ${index + 1}`} loading="lazy" />
+                    </div>
+                  </>
                 ))}
               </div>
             </section>

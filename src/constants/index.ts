@@ -51,16 +51,15 @@ const projectsData = [
   {
     id: 'pt',
     name: 'Power Thesaurus',
-    stack: 'React, TypeScript, GraphQL, Node.js',
+    stack: 'React, React Native, Plasmo, custom UI library',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-    role: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Responsible for frontend architecture and performance optimization.',
+      'Power Thesaurus is the largest crowdsourced English thesaurus with over 5 million users per month. 10 years in production. Web, mobile apps (Android/iOS), browser extensions for all browsers.',
+    role: 'Over 1.5 years: developed React web app, React Native mobile apps, Plasmo browser extensions, contributed to internal UI library, optimized performance by 35%, built AI content module.',
     screenshots: [
-      '/images/project-pt.webp',
-      '/images/project-pt.webp',
-      '/images/project-pt.webp',
+      { src: '/images/project-screenshots-1-1.webp', title: 'Promo page' },
+      { src: '/images/project-screenshots-1-2.webp', title: 'Extension settings' },
     ],
-    color: '#168be8',
+    color: 'linear-gradient(126.6deg, rgba(22, 139, 232, 1) 30.4% 3.4%, rgba(148, 208, 255, 1) 127.9%)',
     mainImage: '/images/project-pt.webp',
   },
   {
@@ -71,11 +70,11 @@ const projectsData = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     role: 'Lorem ipsum dolor sit amet. Led the frontend development team.',
     screenshots: [
-      '/images/project-index.webp',
-      '/images/project-index.webp',
+      { src: '/images/project-screenshots-1-1.webp', title: 'Promo page' },
+      { src: '/images/project-screenshots-1-2.webp', title: 'Extension settings' },
     ],
     color: 'linear-gradient(126.6deg, rgba(44, 115, 210, 1) 3.4%, rgba(251, 234, 255, 1) 127.9%)',
-    mainImage: '/images/project-index.webp',
+    mainImage: '/images/project-index1.webp',
   },
   {
     id: 'sagama',
@@ -85,11 +84,11 @@ const projectsData = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     role: 'Lorem ipsum dolor sit amet. Full-stack development and deployment.',
     screenshots: [
-      '/images/project-sagama.webp',
-      '/images/project-sagama.webp',
+      { src: '/images/project-screenshots-1-1.webp', title: 'Promo page' },
+      { src: '/images/project-screenshots-1-2.webp', title: 'Extension settings' },
     ],
     color: 'linear-gradient(109.6deg, rgba(163, 213, 255, 1) 11.3%, rgba(4, 137, 137, 1) 86.7%)',
-    mainImage: '/images/project-sagama.webp',
+    mainImage: '/images/project-sagama1.webp',
   },
 ];
 

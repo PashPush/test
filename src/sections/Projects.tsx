@@ -156,7 +156,7 @@ const Projects = () => {
                 aria-label={t('projects.index.name')}
               >
                 <div className="image-wrapper project-index" style={getTransitionStyles('index', 'image')}>
-                  <img src="/images/project-index.webp" alt="Index Marketing" loading="lazy" />
+                  <img src="/images/project-index1.webp" alt="Index Marketing" loading="lazy" />
                 </div>
                 <h2 style={getTransitionStyles('index', 'title')}>{t('projects.index.name')}</h2>
               </div>
@@ -171,7 +171,7 @@ const Projects = () => {
                 aria-label={t('projects.sagama.name')}
               >
                 <div className="image-wrapper project-sagama" style={getTransitionStyles('sagama', 'image')}>
-                  <img src="/images/project-sagama.webp" alt="Sagama" loading="lazy" />
+                  <img src="/images/project-sagama1.webp" alt="Sagama" loading="lazy" />
                 </div>
                 <h2 style={getTransitionStyles('sagama', 'title')}>{t('projects.sagama.name')}</h2>
               </div>

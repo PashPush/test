@@ -40,7 +40,7 @@
       "info": "Australian product. Dictionaries.",
       "title": "Frontend Developer",
       "subtitle": "Achievements",
-      "date": "February 2024 - Present",
+      "date": "August 2024 - Present",
       "responsibilities": [
         "Improved website and app performance, accelerating load time by 35%.",
         "Identified and fixed critical bugs.",
@@ -52,7 +52,7 @@
       "info": "Digital agency. Website creation and promotion.",
       "title": "Frontend Developer",
       "subtitle": "Results",
-      "date": "May 2022 - February 2024",
+      "date": "May 2022 - August 2024",
       "responsibilities": [
         "Developed and launched 10+ projects from scratch.",
         "Added functionality to existing projects, redesign, refactoring, migration from jQuery to React.",
@@ -80,7 +80,9 @@
   "projects": {
     "pt": {
       "name": "Power Thesaurus",
-      "stack": "Stack: React, React Native, Plasmo."
+      "stack": "React, React Native, Plasmo, custom UI library",
+      "description": "Power Thesaurus is the largest crowdsourced English thesaurus with an audience of over 5 million users per month. The product has been in production for 10 years and continues to actively evolve.\n\nThe platform includes a web version, native mobile applications for Android and iOS, as well as browser extensions for all popular browsers (Chrome, Firefox, Safari, Edge). The modern technology stack allows maintaining a unified codebase across different platforms while ensuring high performance.",
+      "role": "Over 1.5 years with the team, I participated in all key company projects. Developed new features for the React web application, contributed to the React Native mobile apps, created and maintained browser extensions built on Plasmo. Made significant contributions to the internal UI component library. Optimized application performance, accelerating load times by 35%. Developed an AI module for content generation and enhancement. Worked in close collaboration with an international team."
     },
     "index": {
       "name": "Index Marketing"
@@ -88,6 +90,11 @@
     "sagama": {
       "name": "Sagama Group"
     }
+  },
+  "modal": {
+    "description": "About the projects",
+    "role": "My role",
+    "screenshots": "Screenshots"
   },
   "approach": {
     "my": "",
