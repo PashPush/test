@@ -19,6 +19,8 @@ body {
   top: 0;
   left: 0;
   outline: none;
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 canvas {
@@ -238,7 +240,7 @@ canvas {
   }
 
   .click-it {
-    @apply text-gray-200 text-base ml-3 sm:ml-4 transition-all duration-300 cursor-pointer;
+    @apply text-gray-200 absolute mt-[13px] w-[50px] text-base ml-3 sm:ml-4 transition-all duration-300 cursor-pointer;
   }
 
   .strong-team {

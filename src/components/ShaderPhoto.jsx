@@ -15,6 +15,11 @@ const ShaderPhoto = () => {
     const canvas = document.querySelector('#webgl');
     if (!canvas) return;
 
+    if (window.outerWidth === 0 || window.outerHeight === 0) {
+      const deferredId = requestAnimationFrame(() => run());
+      return () => cancelAnimationFrame(deferredId);
+    }
+
     // Scene
     const scene = new THREE.Scene();
 
@@ -24,7 +29,7 @@ const ShaderPhoto = () => {
     const gap = horizontal ? 0 : isMobile ? 150 : 100;
 
     /**
-     * Sizes
+     * Sizes - use outerWidth/outerHeight to avoid reacting to browser panel changes
      */
     const sizes = {
       width: window.outerWidth,
@@ -137,9 +142,12 @@ const ShaderPhoto = () => {
     scene.add(camera);
 
     const handleResize = () => {
-      if (sizes.width === window.outerWidth) return;
-      sizes.width = window.outerWidth;
-      sizes.height = window.outerHeight - gap;
+      const newWidth = window.outerWidth;
+      const newHeight = window.outerHeight - gap;
+
+      if (sizes.width === newWidth && sizes.height === newHeight) return;
+      sizes.width = newWidth;
+      sizes.height = newHeight;
       sizes.pixelRatio = Math.min(window.devicePixelRatio, 2);
 
       particlesMaterial.uniforms.uResolution.value.set(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio);
@@ -151,7 +159,18 @@ const ShaderPhoto = () => {
       renderer.setPixelRatio(sizes.pixelRatio);
     };
 
+    const orientationTimeouts = [];
+
+    const handleOrientationChange = () => {
+      orientationTimeouts.forEach(clearTimeout);
+      orientationTimeouts.length = 0;
+      [100, 200, 400].forEach(delay => {
+        orientationTimeouts.push(setTimeout(handleResize, delay));
+      });
+    };
+
     window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientationChange);
 
     // Controls
     const controls = new OrbitControls(camera, canvas);
@@ -203,9 +222,17 @@ const ShaderPhoto = () => {
 
     tick();
 
+    const initialResizeId = requestAnimationFrame(() => {
+      requestAnimationFrame(handleResize);
+    });
+
     return () => {
+      orientationTimeouts.forEach(clearTimeout);
+
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleOrientationChange);
       window.removeEventListener('pointermove', handlePointerMove);
+      cancelAnimationFrame(initialResizeId);
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
