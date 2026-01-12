@@ -1,18 +1,14 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
-type TScreenshot = {
-  src: string;
-  title: string;
-};
 export interface ProjectData {
   id: string;
   name: string;
   stack: string;
   description: string;
   role: string;
-  screenshots: TScreenshot[];
+  screenshots: string[];
   color: string;
   mainImage: string;
 }
@@ -123,13 +119,13 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             <section className="project-modal-section">
               <h3>{t('modal.screenshots')}</h3>
               <div className="project-modal-screenshots">
-                {project.screenshots.map((item, index) => (
-                  <>
-                    <p>{item.title}</p>
-                    <div key={index} className="project-modal-screenshot">
-                      <img src={item.src} alt={`${project.name} screenshot ${index + 1}`} loading="lazy" />
+                {project.screenshots.map((src, index) => (
+                  <Fragment key={index}>
+                    <p>{t(`projects.${project.id}.screenshots.${index}`)}</p>
+                    <div className="project-modal-screenshot">
+                      <img src={src} alt={`${project.name} screenshot ${index + 1}`} loading="lazy" />
                     </div>
-                  </>
+                  </Fragment>
                 ))}
               </div>
             </section>

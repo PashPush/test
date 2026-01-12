@@ -25,6 +25,10 @@ const Skills = () => {
 
       if (!skillsElement) return;
 
+      if (canvas) {
+        canvas.removeAttribute('data-visible');
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: skillsElement,
@@ -34,13 +38,17 @@ const Skills = () => {
           fastScrollEnd: true,
           preventOverlaps: true,
           end: () => `+=${skillsElement.scrollWidth - document.documentElement.clientWidth}`,
-          onUpdate: self => {
-            if (!canvas) return;
-            if (self.progress >= 0.95) {
-              canvas.setAttribute('data-visible', 'true');
-            } else {
-              canvas.removeAttribute('data-visible');
-            }
+          onLeave: () => {
+            if (canvas) canvas.setAttribute('data-visible', 'true');
+          },
+          onEnterBack: () => {
+            if (canvas) canvas.removeAttribute('data-visible');
+          },
+          onEnter: () => {
+            if (canvas) canvas.removeAttribute('data-visible');
+          },
+          onLeaveBack: () => {
+            if (canvas) canvas.removeAttribute('data-visible');
           },
         },
       });

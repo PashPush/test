@@ -37,8 +37,8 @@ const Projects = () => {
         ...project,
         name: t(`projects.${project.id}.name`),
         stack: t(`projects.${project.id}.stack`),
-        description: t(`projects.${project.id}.description`, project.description),
-        role: t(`projects.${project.id}.role`, project.role),
+        description: t(`projects.${project.id}.description`),
+        role: t(`projects.${project.id}.role`),
       };
 
       if (document.startViewTransition) {
