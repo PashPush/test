@@ -24,6 +24,8 @@ const Second = () => {
   const smallScreen = useMediaQuery({ maxWidth: 1024 });
 
   const isSafari = useRef(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+  const stickersAnimated = useRef(false);
+  const lineAnimated = useRef(false);
 
   const getRotate = (index: number) => {
     const rotations = [-1, 2, 1];
@@ -37,9 +39,8 @@ const Second = () => {
     const svg = document.querySelector(smallScreen ? '#curved-line-mobile' : '#curved-line');
     const line = svg?.querySelector('path');
 
-    // Defer ScrollTrigger creation to ensure parent pin is initialized
     const setupAnimations = () => {
-      if (line && !isSafari.current && skillsEl) {
+      if (line && !isSafari.current && skillsEl && !lineAnimated.current) {
         const offsetLineStart = isMobile
           ? skillsEl.scrollWidth / 50
           : smallScreen
@@ -64,41 +65,67 @@ const Second = () => {
               end: `bottom top-=${offsetLineEnd}%`,
               scrub: 1,
               once: true,
+              onEnter: () => {
+                lineAnimated.current = true;
+              },
             },
           }
         );
       }
 
-      const stickers = sectionRef.current?.querySelectorAll('.sticker');
+      if (stickersAnimated.current) return;
+
+      const stickerElements = sectionRef.current?.querySelectorAll('.sticker');
+      if (!stickerElements?.length) return;
 
       const offsetStickers = isMobile ? 800 : 1200;
 
-      stickers?.forEach((sticker, index) => {
-        gsap.fromTo(
-          sticker,
-          {
-            x: 30,
-            opacity: 0,
-            rotate: -10,
-            transformOrigin: 'center top',
-          },
-          {
+      const firstSticker = stickerElements[0];
+      const rect = firstSticker.getBoundingClientRect();
+      const triggerPoint = window.innerHeight - offsetStickers;
+
+      if (rect.top < triggerPoint) {
+        stickerElements.forEach((sticker, index) => {
+          gsap.set(sticker, {
             x: 0,
-            rotate: getRotate(index),
             opacity: 1,
-            duration: 0.5,
-            delay: 0.3 * (index + 1),
-            scrollTrigger: {
-              trigger: sticker,
-              start: `top bottom-=${offsetStickers}`,
-              once: true,
+            rotate: getRotate(index),
+          });
+        });
+        stickersAnimated.current = true;
+        return;
+      }
+
+      stickerElements.forEach((sticker, index) => {
+        gsap.set(sticker, {
+          x: 30,
+          opacity: 0,
+          rotate: -10,
+          transformOrigin: 'center top',
+        });
+
+        gsap.to(sticker, {
+          x: 0,
+          rotate: getRotate(index),
+          opacity: 1,
+          duration: 0.5,
+          delay: 0.3 * (index + 1),
+          scrollTrigger: {
+            trigger: sticker,
+            start: `top bottom-=${offsetStickers}`,
+            once: true,
+            onEnter: () => {
+              if (index === stickerElements.length - 1) {
+                stickersAnimated.current = true;
+              }
             },
-          }
-        );
+          },
+        });
       });
+
+      stickersAnimated.current = true;
     };
 
-    // Wait for parent ScrollTrigger with pin to be ready
     requestAnimationFrame(() => {
       requestAnimationFrame(setupAnimations);
     });
