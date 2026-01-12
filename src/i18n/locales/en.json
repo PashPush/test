@@ -201,6 +201,7 @@
     "messagePlaceholder": "Have a vacancy or an interesting project? Write a few words :)",
     "sending": "Sending...",
     "send": "Send",
-    "success": "Message sent!"
+    "success": "Message sent!",
+    "prefer": "Most convenient Telegram"
   }
 }

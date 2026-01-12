@@ -101,9 +101,12 @@ const Contact = () => {
               </div>
             </button>
           </form>
+          <span className="absolute text-base -bottom-2 md:-bottom-3 px-3 py-1 rounded-2xl border-[1px] bg-black/60 border-[#404245] text-white-50">
+            {t('contact.prefer')}
+          </span>
           <div
             className={classNames(
-              'absolute flex-center rounded-2xl px-4 py-2 bg-[#50a2ff] text-lg transition-all duration-300 ease-in-out opacity-0 bottom-0',
+              'absolute flex-center rounded-2xl px-4 py-2 bg-[#50a2ff] text-lg transition-all duration-300 ease-in-out opacity-0 bottom-0 z-50',
               {
                 'opacity-100': isSent,
                 'translate-y-5': isSent,
@@ -114,7 +117,12 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
       <div className="socials">
+        <span className="absolute text-base left-3.5 -top-5 md:-top-7 ">
+          <img src="/images/arrow-white.svg" alt="arrow" className="animate-bounce" />
+        </span>
+
         <a href="https://t.me/pah0v" aria-label="telegram" target="_blank" className="bg-[#00aaff]">
           <SiTelegram size={44} color="#fff" />
         </a>
