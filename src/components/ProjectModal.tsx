@@ -19,10 +19,33 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
+const SWIPE_THRESHOLD = 100;
+
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const { t } = useTranslation();
   const modalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (scrollRef.current && scrollRef.current.scrollTop <= 0) {
+      touchStartY.current = e.touches[0].clientY;
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartY.current !== null && (scrollRef.current?.scrollTop ?? 1) <= 0) {
+        const diff = e.changedTouches[0].clientY - touchStartY.current;
+        if (diff > SWIPE_THRESHOLD) {
+          onClose();
+        }
+      }
+      touchStartY.current = null;
+    },
+    [onClose]
+  );
 
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
@@ -88,7 +111,12 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           </svg>
         </button>
 
-        <div className="project-modal-scroll">
+        <div
+          ref={scrollRef}
+          className="project-modal-scroll"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
             className="project-modal-hero"
             style={{
@@ -123,7 +151,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   <Fragment key={index}>
                     <p>{t(`projects.${project.id}.screenshots.${index}`)}</p>
                     <div className="project-modal-screenshot">
-                      <img src={src} alt={`${project.name} screenshot ${index + 1}`} loading="lazy" />
+                      <img src={src} alt={`${project.name} screenshot ${index + 1}`} />
                     </div>
                   </Fragment>
                 ))}
