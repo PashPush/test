@@ -60,7 +60,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
       document.addEventListener('keydown', handleEscape);
       contentRef.current?.focus();
     } else {
-      document.documentElement.classList.remove('no-scroll');
+      setTimeout(() => {
+        document.documentElement.classList.remove('no-scroll');
+      }, 250);
     }
 
     return () => {
