@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { navLinks } from '../constants';
 import { classNames } from '../lib/classNames';
 import LanguageSwitcher from './LanguageSwitcher';
+import MobileMenu from './MobileMenu';
 
 const NavBar = () => {
   const { t } = useTranslation();
   const [currentLink, setCurrentLink] = useState('#hero');
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
     let ticking = false;
@@ -64,34 +68,49 @@ const NavBar = () => {
   });
 
   return (
-    <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
-      <div className="inner">
-        <a href="#" onClick={scrollToTop} className="logo">
-          <span className={lettersClass}>Pa</span>vel K<span className={lettersClass}>hov</span>alkin
-        </a>
+    <>
+      <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
+        <div className="inner">
+          <a href="#" onClick={scrollToTop} className="logo">
+            <span className={lettersClass}>Pa</span>vel K<span className={lettersClass}>hov</span>alkin
+          </a>
 
-        <nav className="desktop">
-          <ul>
-            {navLinks.slice(1, 6).map(({ link, key }) => (
-              <li key={key} className="group">
-                <a href={link}>
-                  <span>{t(`nav.${key}`)}</span>
-                  <span className={classNames('underline', { active: link === currentLink })} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <nav className="desktop">
+            <ul>
+              {navLinks.slice(1, 6).map(({ link, key }) => (
+                <li key={key} className="group">
+                  <a href={link}>
+                    <span>{t(`nav.${key}`)}</span>
+                    <span className={classNames('underline', { active: link === currentLink })} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <LanguageSwitcher />
+          <LanguageSwitcher />
 
-        <a href="#contact" className="contact-btn group">
-          <div className={classNames('inner', { active: currentLink === '#contact' })}>
-            <span>{t('nav.contactBtn')}</span>
-          </div>
-        </a>
-      </div>
-    </header>
+          <a href="#contact" className="contact-btn group hidden md:flex">
+            <div className={classNames('inner', { active: currentLink === '#contact' })}>
+              <span>{t('nav.contactBtn')}</span>
+            </div>
+          </a>
+
+          <button
+            className={classNames('hamburger md:hidden', { active: menuOpen })}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+        </div>
+      </header>
+
+      <MobileMenu isOpen={menuOpen} onClose={closeMenu} currentLink={currentLink} />
+    </>
   );
 };
 

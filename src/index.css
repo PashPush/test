@@ -253,7 +253,7 @@ canvas {
   }
 
   .navbar {
-    @apply fixed w-full left-1/2 py-5 px-5 md:px-12 lg:px-20 -translate-x-1/2 z-[100] transition-all duration-300 ease-in-out;
+    @apply fixed w-full left-1/2 py-5 px-5 md:px-12 lg:px-20 -translate-x-1/2 z-[200] transition-all duration-300 ease-in-out;
 
     &.scrolled {
       @apply top-0;
@@ -270,7 +270,7 @@ canvas {
     }
 
     .logo {
-      @apply text-white text-xl md:text-2xl font-semibold transition-transform duration-300 hover:scale-105;
+      @apply text-white text-xl md:text-2xl md:mr-0 mr-auto font-semibold transition-transform duration-300 hover:scale-105;
 
       span {
         @apply transition-all duration-300 ease-in-out;
@@ -339,6 +339,104 @@ canvas {
 
       .logo {
         @apply text-xl;
+      }
+    }
+  }
+
+  /* Hamburger button */
+  .hamburger {
+    @apply flex flex-col gap-1.5 bg-transparent border-none cursor-pointer ml-4;
+
+    .hamburger-line {
+      @apply w-6 h-[2px] bg-white rounded-sm;
+      transition:
+        transform 0.3s,
+        opacity 0.2s;
+    }
+
+    &.active .hamburger-line:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    &.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    &.active .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+
+  /* Mobile menu backdrop */
+  .mobile-menu-backdrop {
+    @apply fixed inset-0 bg-black/60 z-[150] opacity-0 pointer-events-none transition-opacity duration-300;
+
+    &.open {
+      @apply opacity-100 pointer-events-auto;
+    }
+  }
+
+  /* Mobile menu slide-in panel */
+  .mobile-menu {
+    @apply fixed top-0 right-0 h-full w-[70%] max-w-[320px] z-[160] flex flex-col py-20 px-8;
+    background-color: #0e0e10;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  .mobile-menu-nav {
+    @apply flex-1;
+
+    ul {
+      @apply flex flex-col;
+    }
+
+    li {
+      @apply w-full;
+    }
+
+    li a {
+      @apply block w-full py-3.5 -mx-8 px-8 text-white text-lg transition-all duration-200;
+
+      &:active {
+        @apply bg-white/10;
+      }
+
+      span {
+        @apply relative inline-block;
+
+        &::after {
+          content: '';
+          @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300;
+        }
+      }
+
+      &.active span::after {
+        @apply w-full;
+      }
+    }
+  }
+
+  .mobile-menu-contact {
+    @apply w-full px-5 py-2 bg-white text-black text-lg text-center rounded-lg mt-auto transition-colors duration-300 hover:bg-black-50 hover:text-white;
+
+    &.active {
+      @apply bg-blue-400 text-white;
+    }
+  }
+
+  @media (height <= 600px) {
+    .mobile-menu {
+      @apply py-14;
+    }
+
+    .mobile-menu-nav {
+      li a {
+        @apply text-base py-3;
       }
     }
   }

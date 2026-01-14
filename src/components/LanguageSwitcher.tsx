@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { ScrollTrigger } from 'gsap/all';
 import { useEffect, useRef } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 const languages = [
   { code: 'ru', label: 'RU' },
@@ -10,6 +11,7 @@ const languages = [
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const handleChange = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -24,13 +26,22 @@ const LanguageSwitcher = () => {
     };
   }, []);
 
+  const currentLang = i18n.resolvedLanguage;
+  const alternateLang = languages.find(l => l.code !== currentLang) || languages[1];
+
   return (
     <div className="lang-switcher">
-      {languages.map(({ code, label }) => (
-        <button key={code} onClick={() => handleChange(code)} className={i18n.resolvedLanguage === code ? 'active' : ''}>
-          {label}
+      {isMobile ? (
+        <button onClick={() => handleChange(alternateLang.code)} className="text-white text-base">
+          {alternateLang.label}
         </button>
-      ))}
+      ) : (
+        languages.map(({ code, label }) => (
+          <button key={code} onClick={() => handleChange(code)} className={currentLang === code ? 'active' : ''}>
+            {label}
+          </button>
+        ))
+      )}
     </div>
   );
 };
