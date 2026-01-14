@@ -171,7 +171,7 @@ canvas {
   }
 
   .hero-text {
-    @apply flex flex-col absolute z-10 md:p-20 p-4 md:bottom-0 bottom-5 w-full;
+    @apply flex flex-col absolute z-10 md:p-20 py-9 px-4 bottom-0 w-full;
   }
 
   .hero-button {
@@ -227,7 +227,7 @@ canvas {
       }
 
       .chainsaw {
-        @apply translate-y-5;
+        @apply md:translate-y-6;
       }
     }
 
