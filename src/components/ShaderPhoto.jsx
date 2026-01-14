@@ -29,11 +29,11 @@ const ShaderPhoto = () => {
     const gap = horizontal ? 0 : isMobile ? 150 : 100;
 
     /**
-     * Sizes - use outerWidth/outerHeight to avoid reacting to browser panel changes
+     * Sizes - use clientWidth/clientHeight for Safari iOS compatibility
      */
     const sizes = {
-      width: window.outerWidth,
-      height: window.outerHeight - gap,
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight - gap,
       pixelRatio: Math.min(window.devicePixelRatio, 2),
     };
 
@@ -142,8 +142,8 @@ const ShaderPhoto = () => {
     scene.add(camera);
 
     const handleResize = () => {
-      const newWidth = window.outerWidth;
-      const newHeight = window.outerHeight - gap;
+      const newWidth = document.documentElement.clientWidth;
+      const newHeight = document.documentElement.clientHeight - gap;
 
       if (sizes.width === newWidth && sizes.height === newHeight) return;
       sizes.width = newWidth;

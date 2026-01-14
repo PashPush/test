@@ -21,7 +21,7 @@ const Skills = () => {
       const canvas = document.querySelector('canvas#neuro');
       const skillsElement = skillsRef.current;
 
-      const endPause = isMobile || horizontal ? 0 : 0.1;
+      const endPause = isMobile || horizontal ? 0.04 : 0.1;
 
       if (!skillsElement) return;
 
