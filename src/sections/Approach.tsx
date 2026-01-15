@@ -81,7 +81,7 @@ const Approach = () => {
               className={classNames('abs-center masked-img size-full object-contain', {
                 'masked-img-mobile': isMobile,
               })}
-              loading="lazy"
+              fetchPriority="low"
               width={400}
               height={320}
             />

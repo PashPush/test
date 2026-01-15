@@ -597,7 +597,7 @@ canvas {
         }
 
         div {
-          @apply opacity-0 w-full sm:px-0 px-5 space-y-5 absolute sm:bottom-5 bottom-10 left-1/2 -translate-x-1/2 py-4 bg-[rgb(0,0,0,0.6)];
+          @apply opacity-0 w-full sm:px-0 px-5 space-y-5 absolute sm:bottom-5 bottom-10 left-0 right-0 py-4 bg-[rgb(0,0,0,0.6)];
 
           h3 {
             @apply sm:text-5xl xl:text-7xl text-3xl text-center w-full font-yeseva-one text-white flex flex-wrap justify-center;
