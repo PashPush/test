@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Chainsaw from './Chainsaw';
@@ -13,10 +11,10 @@ const Interface = () => {
   const isMobile = useMediaQuery({ maxWidth: 460 });
   const [count, setCount] = useState(0);
   const [isActivated, setIsActivated] = useState(true);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLAnchorElement>(null);
   const isPlayingRef = useRef(false);
-  const activeTimelinesRef = useRef([]);
-  const reactivateTimerRef = useRef(null);
+  const activeTimelinesRef = useRef<gsap.core.Timeline[]>([]);
+  const reactivateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     reactivateTimerRef.current = setTimeout(() => {
@@ -38,7 +36,7 @@ const Interface = () => {
     };
   }, []);
 
-  const runStage = stage => {
+  const runStage = (stage: number) => {
     const container = containerRef.current;
     if (!container) return Promise.resolve();
 
@@ -47,12 +45,12 @@ const Interface = () => {
     const chips = container.querySelector('.wood-chips');
     const team = document.querySelector('.strong-team');
 
-    const tlToPromise = tl =>
-      new Promise(resolve => {
+    const tlToPromise = (tl: gsap.core.Timeline) =>
+      new Promise<void>(resolve => {
         tl.eventCallback('onComplete', () => {
           resolve();
         });
-        tl.eventCallback('onKill', () => {
+        tl.eventCallback('onInterrupt', () => {
           resolve();
         });
       });
@@ -189,7 +187,7 @@ const Interface = () => {
     return Promise.resolve();
   };
 
-  const handleClick = e => {
+  const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isPlayingRef.current) return;
     if (count > 2) return;
