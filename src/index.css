@@ -716,7 +716,7 @@ canvas {
         @apply cursor-pointer filter-[none];
 
         .skill-icon {
-          @apply transform scale-110 filter-[saturate(1.6)];
+          @apply transform scale-110 filter-[saturate(1.3)];
         }
       }
     }

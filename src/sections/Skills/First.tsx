@@ -8,6 +8,7 @@ import {
   SiGit,
   SiFigma,
   SiStorybook,
+  SiTestinglibrary,
   SiJest,
   SiNodedotjs,
   SiMobx,
@@ -70,6 +71,7 @@ const backendAndTools: Skill[] = [
 
 const testing: Skill[] = [
   { id: 'jest', name: 'Jest', Icon: SiJest, color: '#8d4e58', colorBack: '#583238' },
+  { id: 'rtl', name: 'RTL', Icon: SiTestinglibrary, color: '#d11b2d', colorBack: '#9f1825' },
   { id: 'playwright', name: 'Playwright', Icon: Playwright as IconType, color: '#3c8dd1', colorBack: '#275783' },
   { id: 'storybook', name: 'Storybook', Icon: SiStorybook, color: '#e75d8c', colorBack: '#a24364' },
   { id: 'figma', name: 'Figma', Icon: SiFigma, color: '#dd8fa9', colorBack: '#ab637d' },
