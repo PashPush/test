@@ -16,6 +16,12 @@ CLAUDE.md
 WARP.md
 .mcp.json
 
+# Testing
+playwright-report/
+test-results/
+playwright/.cache/
+coverage/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
