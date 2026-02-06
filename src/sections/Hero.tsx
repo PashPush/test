@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import Button from '../components/Button';
 // @ts-expect-error jsx
@@ -29,12 +29,17 @@ const Hero = () => {
             {t('hero.greeting')}
             <br />
             {t('hero.myName')}
-            <br />{t('hero.loveToBuild')}
+            <br />
+            {t('hero.loveToBuild')}
             {isMobile ? <br /> : ' '}
             <Interface />
             <br />
             <span className="strong-team">{t('hero.readyToJoin')}</span>
             <br />
+            <span className="h-2 w-2 block"></span>
+            <span className="hero-stats">
+              <Trans i18nKey="hero.stats" components={{ b: <strong /> }} />
+            </span>
           </div>
           <Button text={t('hero.cta')} className="hero-button" id="work" />
         </div>

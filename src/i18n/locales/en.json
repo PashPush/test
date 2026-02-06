@@ -16,6 +16,7 @@
     "myName": "my name is Pavel",
     "loveToBuild": "I cut through",
     "readyToJoin": "Ready to strengthen your team",
+    "stats": "<b>4.5+</b> years in dev \u00a0|\u00a0 <b>20+</b> projects",
     "cta": "projects",
     "inter": "comp",
     "faces": "lexity"
@@ -31,7 +32,7 @@
     "wishes": "Wishes"
   },
   "experience": {
-    "title": "Work Experience 4.5+ years",
+    "title": "Work Experience",
     "subtitle": "My Career"
   },
   "expCards": {
