@@ -170,6 +170,10 @@ canvas {
     @apply relative text-white md:text-4xl md:leading-11 text-2xl z-20 mb-10;
   }
 
+  .hero-line {
+    @apply inline-block opacity-0;
+  }
+
   .hero-text {
     @apply flex flex-col absolute z-10 md:p-20 py-12 px-4 bottom-0 w-full;
   }

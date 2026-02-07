@@ -13,6 +13,11 @@ const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 460 });
   useGSAP(() => {
     gsap.fromTo('.title', { y: 50, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.4, duration: 1, ease: 'power2.inOut' });
+    gsap.fromTo(
+      '.hero-line',
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'power2.out', delay: 0.3 }
+    );
   });
 
   return (
@@ -26,22 +31,24 @@ const Hero = () => {
         </div>
         <div className="hero-text">
           <div className="subtitle">
-            {t('hero.greeting')}
+            <span className="hero-line">{t('hero.greeting')}</span>
             <br />
-            {t('hero.myName')}
+            <span className="hero-line">{t('hero.myName')}</span>
             <br />
-            {t('hero.loveToBuild')}
-            {isMobile ? <br /> : ' '}
-            <Interface />
+            <span className="hero-line">
+              {t('hero.loveToBuild')}
+              {isMobile ? <br /> : ' '}
+              <Interface />
+            </span>
             <br />
-            <span className="strong-team">{t('hero.readyToJoin')}</span>
+            <span className="hero-line strong-team">{t('hero.readyToJoin')}</span>
             <br />
             <span className="h-2 w-2 block"></span>
-            <span className="hero-stats">
+            <span className="hero-line hero-stats">
               <Trans i18nKey="hero.stats" components={{ b: <strong /> }} />
             </span>
           </div>
-          <Button text={t('hero.cta')} className="hero-button" id="work" />
+          <Button text={t('hero.cta')} className="hero-line hero-button" id="work" />
         </div>
       </section>
       <ShaderPhoto />
