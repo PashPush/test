@@ -249,7 +249,7 @@ canvas {
   }
 
   .hero-stats {
-    @apply absolute px-3 py-1 rounded-sm bg-[#232a34] text-[18px] md:text-3xl tracking-wide text-gray-200 inline-block;
+    @apply absolute px-3 py-1 rounded-lg bg-black-200 text-[18px] md:text-3xl tracking-wide text-gray-200 inline-block;
 
     strong {
       @apply text-white font-bold;
