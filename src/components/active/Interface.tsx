@@ -82,7 +82,7 @@ const Interface = () => {
         .to(
           stats,
           {
-            translateY: 118,
+            translateY: 112,
             duration: 1,
             ease: 'power2.inOut',
           },

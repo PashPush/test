@@ -175,7 +175,7 @@ canvas {
   }
 
   .hero-button {
-    @apply md:w-80 md:mb-5 mt-6 h-12;
+    @apply md:w-80 md:mb-4 mt-4 h-12;
   }
 
   @media (height <= 600px) {

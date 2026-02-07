@@ -16,7 +16,7 @@
     "myName": "my name is Pavel",
     "loveToBuild": "I cut through",
     "readyToJoin": "Ready to strengthen your team",
-    "stats": "<b>4.5+</b> years in dev \u00a0|\u00a0 <b>20+</b> projects",
+    "stats": "<b>4.5+</b> years in dev \u00a0|\u00a0 <b>15+</b> projects",
     "cta": "projects",
     "inter": "comp",
     "faces": "lexity"
@@ -83,7 +83,7 @@
       "name": "Power Thesaurus",
       "stack": "React, React Native, Plasmo, custom UI library",
       "description": "Power Thesaurus is the largest crowdsourced English thesaurus with an audience of over 5 million users per month. The product has been in production for 10 years and continues to actively evolve.\n\nThe platform includes a web version, native mobile applications for Android and iOS, as well as browser extensions for all popular browsers (Chrome, Firefox, Safari, Edge). The modern technology stack allows maintaining a unified codebase across different platforms while ensuring high performance.",
-      "role": "Over 1.5 years with the team, I participated in all key company projects. Developed new features for the React web application, contributed to the React Native mobile apps, created and maintained browser extensions built on Plasmo. Made significant contributions to the internal UI component library. Optimized application performance, accelerating load times by 35%. Developed an AI module for content generation and enhancement. Worked in close collaboration with an international team.",
+      "role": "1.5+ years in an international product team. Worked across the full frontend stack: React, React Native, Plasmo extensions, UI library. Key results: +310% five-star ratings, Lighthouse 96-100, AI rewriting module, push system with +17% conversion, E2E coverage of critical flows.",
       "screenshots": ["Promo page", "Extension settings"]
     },
     "index": {
