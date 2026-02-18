@@ -99,9 +99,6 @@ const Experience = () => {
                         <div>
                           <h2 className="font-semibold sm:text-3xl text-2xl">{t(`expCards.${card.index}.title`)}</h2>
                           <p className="my-5 text-white-50">🗓️ {t(`expCards.${card.index}.date`)}</p>
-                          {responsibilities.length > 0 && (
-                            <p className="text-[#899aae] italic">{t(`expCards.${card.index}.subtitle`)}</p>
-                          )}
                           <ul className="exp-ul">
                             {responsibilities.map((responsibility, idx) => (
                               <li key={idx}>{responsibility}</li>

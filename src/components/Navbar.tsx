@@ -1,16 +1,25 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { navLinks } from '../constants';
 import { classNames } from '../lib/classNames';
 import LanguageSwitcher from './LanguageSwitcher';
 import MobileMenu from './MobileMenu';
+import { useAB } from '../ab/ABContext.tsx';
+
+const navLinkMap = Object.fromEntries(navLinks.map(link => [link.key, link]));
 
 const NavBar = () => {
   const { t } = useTranslation();
+  const { sectionOrder } = useAB();
   const [currentLink, setCurrentLink] = useState('#hero');
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const orderedNavLinks = useMemo(
+    () => sectionOrder.map(key => navLinkMap[key]).filter(Boolean),
+    [sectionOrder],
+  );
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -33,7 +42,7 @@ const NavBar = () => {
   }, []);
 
   useEffect(() => {
-    const sections = navLinks.map(({ link }) => document.querySelector(link));
+    const sections = orderedNavLinks.map(({ link }) => document.querySelector(link));
     if (!sections.length) return;
 
     const observer = new IntersectionObserver(
@@ -51,7 +60,7 @@ const NavBar = () => {
     sections.forEach(section => section && observer.observe(section));
 
     return () => observer.disconnect();
-  }, []);
+  }, [orderedNavLinks]);
 
   const scrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -77,7 +86,7 @@ const NavBar = () => {
 
           <nav className="desktop">
             <ul>
-              {navLinks.slice(1, 6).map(({ link, key }) => (
+              {orderedNavLinks.map(({ link, key }) => (
                 <li key={key} className="group">
                   <a href={link}>
                     <span>{t(`nav.${key}`)}</span>
@@ -109,7 +118,7 @@ const NavBar = () => {
         </div>
       </header>
 
-      <MobileMenu isOpen={menuOpen} onClose={closeMenu} currentLink={currentLink} />
+      <MobileMenu isOpen={menuOpen} onClose={closeMenu} currentLink={currentLink} navLinks={orderedNavLinks} />
     </>
   );
 };

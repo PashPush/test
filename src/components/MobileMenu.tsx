@@ -1,17 +1,22 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { navLinks } from '../constants';
 import { classNames } from '../lib/classNames';
 import { useMediaQuery } from 'react-responsive';
+
+interface NavLink {
+  key: string;
+  link: string;
+}
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   currentLink: string;
+  navLinks: NavLink[];
 }
 
-const MobileMenu = ({ isOpen, onClose, currentLink }: MobileMenuProps) => {
+const MobileMenu = ({ isOpen, onClose, currentLink, navLinks }: MobileMenuProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const touchStartX = useRef(0);
@@ -75,7 +80,7 @@ const MobileMenu = ({ isOpen, onClose, currentLink }: MobileMenuProps) => {
       >
         <nav className="mobile-menu-nav">
           <ul>
-            {navLinks.slice(1, 6).map(({ link, key }) => (
+            {navLinks.map(({ link, key }) => (
               <li key={key}>
                 <a href={link} onClick={handleLinkClick} className={classNames('', { active: link === currentLink })}>
                   <span>{t(`nav.${key}`)}</span>

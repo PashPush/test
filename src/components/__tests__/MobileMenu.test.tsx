@@ -9,10 +9,19 @@ vi.mock('react-responsive', () => ({
 }));
 
 describe('MobileMenu', () => {
+  const defaultNavLinks = [
+    { key: 'projects', link: '#projects' },
+    { key: 'experience', link: '#experience' },
+    { key: 'approach', link: '#approach' },
+    { key: 'reviews', link: '#reviews' },
+    { key: 'skills', link: '#skills' },
+  ];
+
   const defaultProps = {
     isOpen: false,
     onClose: vi.fn(),
     currentLink: '#hero',
+    navLinks: defaultNavLinks,
   };
 
   beforeEach(() => {
