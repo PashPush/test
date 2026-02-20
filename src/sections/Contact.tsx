@@ -24,6 +24,10 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const honeypot = formRef.current?.querySelector<HTMLInputElement>('[name="website"]');
+    if (honeypot?.value) return;
+
     setLoading(true);
 
     try {
@@ -52,6 +56,7 @@ const Contact = () => {
       <div className="form-wrapper">
         <div className="form-body">
           <form ref={formRef} onSubmit={handleSubmit} className="w-full flex flex-col sm:gap-7 gap-4">
+            <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div>
               <label htmlFor="name">{t('contact.name')}</label>
               <input
@@ -123,13 +128,25 @@ const Contact = () => {
           <img src="/images/arrow-white.svg" alt="arrow" className="animate-bounce" />
         </span>
 
-        <a href="https://t.me/pah0v" aria-label="telegram" target="_blank" className="bg-[#00aaff]">
+        <a
+          href="https://t.me/pah0v"
+          aria-label="telegram"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#00aaff]"
+        >
           <SiTelegram size={44} color="#fff" />
         </a>
-        <a href="https://wa.me/79934690793" aria-label="whatsapp" target="_blank" className="bg-[#4ac959]">
+        <a href={atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw==')} aria-label="whatsapp" target="_blank" rel="noopener noreferrer" className="bg-[#4ac959]">
           <SiWhatsapp size={44} color="#fff" />
         </a>
-        <a href="mailto:pahovdev@gmail.com" aria-label="email" target="_blank" className="bg-[#2e2d38]">
+        <a
+          href="mailto:pahovdev@gmail.com"
+          aria-label="email"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#2e2d38]"
+        >
           <MdMail size={24} color="#fff" />
         </a>
       </div>
