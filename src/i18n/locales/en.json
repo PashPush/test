@@ -203,6 +203,7 @@
     "sending": "Sending...",
     "send": "Send",
     "success": "Message sent!",
+    "error": "Couldn't send. Please try again or message me on",
     "prefer": "Most convenient Telegram"
   }
 }

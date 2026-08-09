@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, waitFor, act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Contact from '../Contact';
 
@@ -14,6 +14,10 @@ import emailjs from '@emailjs/browser';
 describe('Contact', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   describe('rendering', () => {
@@ -124,26 +128,119 @@ describe('Contact', () => {
       await user.click(screen.getByRole('button', { name: /contact.send/i }));
 
       await waitFor(() => {
-        const successElement = screen.getByText('contact.success').closest('div');
-        expect(successElement?.className).toContain('opacity-100');
+        const successToast = screen
+          .getAllByText('contact.success')
+          .find(el => el.tagName === 'P')
+          ?.closest('div');
+        expect(successToast?.className).toContain('opacity-100');
       });
     });
 
-    it('clears form after successful submission', async () => {
+    it('announces submission result in the live region', async () => {
       const user = userEvent.setup();
       vi.mocked(emailjs.sendForm).mockResolvedValue({ status: 200, text: 'OK' });
 
       render(<Contact />);
 
-      const nameInput = screen.getByLabelText('contact.name');
-      await user.type(nameInput, 'John');
+      await user.type(screen.getByLabelText('contact.name'), 'John');
       await user.type(screen.getByLabelText('contact.email'), 'john@test.com');
       await user.type(screen.getByLabelText('contact.message'), 'Message');
       await user.click(screen.getByRole('button', { name: /contact.send/i }));
 
       await waitFor(() => {
-        expect(nameInput).toHaveValue('');
+        expect(screen.getByRole('status')).toHaveTextContent('contact.success');
       });
+    });
+
+    it('keeps form values while toast is visible and clears them after it hides', async () => {
+      vi.useFakeTimers();
+      vi.mocked(emailjs.sendForm).mockResolvedValue({ status: 200, text: 'OK' });
+
+      render(<Contact />);
+
+      const nameInput = screen.getByLabelText('contact.name');
+      fireEvent.change(nameInput, { target: { value: 'John' } });
+      fireEvent.change(screen.getByLabelText('contact.email'), { target: { value: 'john@test.com' } });
+      fireEvent.change(screen.getByLabelText('contact.message'), { target: { value: 'Message' } });
+      fireEvent.submit(nameInput.closest('form') as HTMLFormElement);
+
+      await act(async () => {
+        await Promise.resolve();
+      });
+      expect(screen.getByRole('status')).toHaveTextContent('contact.success');
+      expect(nameInput).toHaveValue('John');
+
+      act(() => {
+        vi.advanceTimersByTime(5000);
+      });
+      expect(nameInput).toHaveValue('');
+    });
+
+    it('disables submit button while sending', async () => {
+      const user = userEvent.setup();
+      vi.mocked(emailjs.sendForm).mockImplementation(
+        () => new Promise(resolve => setTimeout(() => resolve({ status: 200, text: 'OK' }), 100))
+      );
+
+      render(<Contact />);
+
+      await user.type(screen.getByLabelText('contact.name'), 'John');
+      await user.type(screen.getByLabelText('contact.email'), 'john@test.com');
+      await user.type(screen.getByLabelText('contact.message'), 'Message');
+      await user.click(screen.getByRole('button', { name: /contact.send/i }));
+
+      expect(screen.getByRole('button', { name: /contact.sending/i })).toBeDisabled();
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /contact.send/i })).toBeEnabled();
+      });
+    });
+
+    it('shows error toast with Telegram fallback link on failure', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      vi.mocked(emailjs.sendForm).mockRejectedValue(new Error('Network error'));
+
+      const user = userEvent.setup();
+      render(<Contact />);
+
+      await user.type(screen.getByLabelText('contact.name'), 'John');
+      await user.type(screen.getByLabelText('contact.email'), 'john@test.com');
+      await user.type(screen.getByLabelText('contact.message'), 'Message');
+      await user.click(screen.getByRole('button', { name: /contact.send/i }));
+
+      await waitFor(() => {
+        expect(screen.getByRole('status')).toHaveTextContent('contact.error');
+      });
+
+      const errorToast = screen.getByText('contact.error').closest('div');
+      expect(errorToast?.className).toContain('opacity-100');
+      expect(screen.getByRole('link', { name: 'Telegram' })).toHaveAttribute('href', 'https://t.me/pah0v');
+    });
+
+    it('hides error toast after timeout', async () => {
+      vi.useFakeTimers();
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      vi.mocked(emailjs.sendForm).mockRejectedValue(new Error('Network error'));
+
+      render(<Contact />);
+
+      const nameInput = screen.getByLabelText('contact.name');
+      fireEvent.change(nameInput, { target: { value: 'John' } });
+      fireEvent.change(screen.getByLabelText('contact.email'), { target: { value: 'john@test.com' } });
+      fireEvent.change(screen.getByLabelText('contact.message'), { target: { value: 'Message' } });
+      fireEvent.submit(nameInput.closest('form') as HTMLFormElement);
+
+      await act(async () => {
+        await Promise.resolve();
+      });
+      expect(screen.getByRole('status')).toHaveTextContent('contact.error');
+
+      act(() => {
+        vi.advanceTimersByTime(6000);
+      });
+      const errorToast = screen.getByText('contact.error').closest('div');
+      expect(errorToast?.className).not.toContain('opacity-100');
+      expect(nameInput).toHaveValue('John');
     });
 
     it('logs error on submission failure', async () => {

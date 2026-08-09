@@ -1,21 +1,29 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import emailjs from '@emailjs/browser';
 import { SiTelegram, SiWhatsapp } from 'react-icons/si';
 import { MdMail } from 'react-icons/md';
 import { classNames } from '../lib/classNames';
 
+type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
+
 const Contact = () => {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [loading, setLoading] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  const hideToastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [status, setStatus] = useState<SubmitStatus>('idle');
   const [form, setForm] = useState({
     name: '',
     email: '',
     message: '',
   });
+
+  useEffect(() => {
+    return () => {
+      if (hideToastTimeout.current) clearTimeout(hideToastTimeout.current);
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -24,11 +32,13 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === 'sending') return;
 
     const honeypot = formRef.current?.querySelector<HTMLInputElement>('[name="website"]');
     if (honeypot?.value) return;
 
-    setLoading(true);
+    if (hideToastTimeout.current) clearTimeout(hideToastTimeout.current);
+    setStatus('sending');
 
     try {
       await emailjs.sendForm(
@@ -38,15 +48,18 @@ const Contact = () => {
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
       );
 
-      setForm({ name: '', email: '', message: '' });
-      setIsSent(true);
-      setTimeout(() => {
-        setIsSent(false);
+      setStatus('success');
+      hideToastTimeout.current = setTimeout(() => {
+        setForm({ name: '', email: '', message: '' });
+        formRef.current?.reset();
+        setStatus('idle');
       }, 5000);
     } catch (error) {
       console.error('EmailJS Error:', error);
-    } finally {
-      setLoading(false);
+      setStatus('error');
+      hideToastTimeout.current = setTimeout(() => {
+        setStatus('idle');
+      }, 6000);
     }
   };
 
@@ -55,7 +68,12 @@ const Contact = () => {
       <div className="title">{t('contact.title')}</div>
       <div className="form-wrapper">
         <div className="form-body">
-          <form ref={formRef} onSubmit={handleSubmit} className="w-full flex flex-col sm:gap-7 gap-4">
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            aria-busy={status === 'sending'}
+            className="w-full flex flex-col sm:gap-7 gap-4"
+          >
             <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div>
               <label htmlFor="name">{t('contact.name')}</label>
@@ -66,6 +84,7 @@ const Contact = () => {
                 value={form.name}
                 onChange={handleChange}
                 placeholder={t('contact.namePlaceholder')}
+                autoComplete="name"
                 required
               />
             </div>
@@ -79,6 +98,8 @@ const Contact = () => {
                 value={form.email}
                 onChange={handleChange}
                 placeholder={t('contact.emailPlaceholder')}
+                autoComplete="email"
+                inputMode="email"
                 required
               />
             </div>
@@ -91,15 +112,19 @@ const Contact = () => {
                 value={form.message}
                 onChange={handleChange}
                 placeholder={t('contact.messagePlaceholder')}
-                rows={2}
+                rows={3}
                 required
               />
             </div>
 
-            <button type="submit">
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="disabled:opacity-70 disabled:cursor-wait transition-opacity duration-300"
+            >
               <div className="cta-button group">
                 <div className="bg-circle" />
-                <p className="text">{loading ? t('contact.sending') : t('contact.send')}</p>
+                <p className="text">{status === 'sending' ? t('contact.sending') : t('contact.send')}</p>
                 <div className="arrow-wrapper">
                   <img src="/images/mail-login.svg" alt="email" className="animate-pulse" />
                 </div>
@@ -109,16 +134,43 @@ const Contact = () => {
           <span className="absolute text-base -bottom-2 md:-bottom-3 px-3 py-1 rounded-2xl border-[1px] bg-black/60 border-[#404245] text-white-50">
             {t('contact.prefer')}
           </span>
+          <span className="sr-only" role="status">
+            {status === 'success' && t('contact.success')}
+            {status === 'error' && `${t('contact.error')} Telegram`}
+          </span>
           <div
             className={classNames(
-              'absolute flex-center rounded-2xl px-4 py-2 bg-[#50a2ff] text-lg transition-all duration-300 ease-in-out opacity-0 bottom-0 z-50',
+              'absolute flex-center rounded-2xl px-4 py-2 bg-[#50a2ff] text-lg transition-all duration-300 ease-in-out opacity-0 invisible bottom-0 z-50',
               {
-                'opacity-100': isSent,
-                'translate-y-5': isSent,
+                'opacity-100': status === 'success',
+                'translate-y-5': status === 'success',
+                visible: status === 'success',
               }
             )}
           >
             <p>{t('contact.success')}</p>
+          </div>
+          <div
+            className={classNames(
+              'absolute flex-center rounded-2xl px-4 py-2 bg-[#e5484d] text-lg transition-all duration-300 ease-in-out opacity-0 invisible bottom-0 z-50',
+              {
+                'opacity-100': status === 'error',
+                'translate-y-5': status === 'error',
+                visible: status === 'error',
+              }
+            )}
+          >
+            <p>
+              {t('contact.error')}{' '}
+              <a
+                href="https://t.me/pah0v"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 font-semibold"
+              >
+                Telegram
+              </a>
+            </p>
           </div>
         </div>
       </div>
