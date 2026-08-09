@@ -137,7 +137,13 @@ const Contact = () => {
         >
           <SiTelegram size={44} color="#fff" />
         </a>
-        <a href={atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw==')} aria-label="whatsapp" target="_blank" rel="noopener noreferrer" className="bg-[#4ac959]">
+        <a
+          href={atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw==')}
+          aria-label="whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#4ac959]"
+        >
           <SiWhatsapp size={44} color="#fff" />
         </a>
         <a

@@ -19,6 +19,17 @@ vi.mock('../MobileMenu', () => ({
   ),
 }));
 
+// NavBar reads sectionOrder from the A/B context. Pinning it here keeps the
+// expected links independent of experiment config and avoids pulling ab/init.ts
+// (and the real i18n instance) into the test.
+vi.mock('../../ab/ABContext.tsx', () => ({
+  useAB: () => ({
+    variants: {},
+    sectionOrder: ['projects', 'experience', 'approach', 'reviews', 'skills'],
+    getVariant: () => 'control',
+  }),
+}));
+
 describe('NavBar', () => {
   let intersectionCallback: IntersectionObserverCallback;
   let mockObserve: Mock;
