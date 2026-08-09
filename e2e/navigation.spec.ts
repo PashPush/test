@@ -35,21 +35,25 @@ test.describe('Navigation', () => {
     expect(scrollY).toBeLessThan(100);
   });
 
-  test('navigation links scroll to sections', async ({ page }) => {
-    const projectsLink = page.locator('nav.desktop a[href="#projects"]');
-    await projectsLink.click();
-    await page.waitForTimeout(500);
+  test.describe('desktop', () => {
+    test.skip(({ browserName }) => browserName !== 'chromium', 'desktop-only layout');
 
-    const projectsSection = page.locator('#projects');
-    await expect(projectsSection).toBeInViewport();
-  });
+    test('navigation links scroll to sections', async ({ page }) => {
+      const projectsLink = page.locator('nav.desktop a[href="#projects"]');
+      await projectsLink.click();
+      await page.waitForTimeout(500);
 
-  test('contact button navigates to contact section', async ({ page }) => {
-    const contactBtn = page.locator('.contact-btn');
-    await contactBtn.click();
-    await page.waitForTimeout(500);
+      const projectsSection = page.locator('#projects');
+      await expect(projectsSection).toBeInViewport();
+    });
 
-    const contactSection = page.locator('#contacts');
-    await expect(contactSection).toBeInViewport();
+    test('contact button navigates to contact section', async ({ page }) => {
+      const contactBtn = page.locator('.contact-btn');
+      await contactBtn.click();
+      await page.waitForTimeout(500);
+
+      const contactSection = page.locator('#contacts');
+      await expect(contactSection).toBeInViewport();
+    });
   });
 });
