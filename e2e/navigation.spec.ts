@@ -50,10 +50,16 @@ test.describe('Navigation', () => {
     test('contact button navigates to contact section', async ({ page }) => {
       const contactBtn = page.locator('.contact-btn');
       await contactBtn.click();
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(1500);
 
       const contactSection = page.locator('#contacts');
       await expect(contactSection).toBeInViewport();
+
+      // Land on the section start, not somewhere inside it. toBeInViewport alone
+      // passes even when the anchor overshoots into the middle of the form.
+      await expect
+        .poll(() => page.evaluate(() => document.getElementById('contacts')!.getBoundingClientRect().top))
+        .toBeGreaterThan(-100);
     });
   });
 });

@@ -73,7 +73,7 @@ const NavBar = () => {
     'text-violet-200': currentLink === '#approach',
     'text-orange-200': currentLink === '#reviews',
     'text-teal-200': currentLink === '#skills',
-    'text-blue-300': currentLink === '#contact',
+    'text-blue-300': currentLink === '#contacts',
   });
 
   return (
@@ -99,8 +99,8 @@ const NavBar = () => {
 
           <LanguageSwitcher />
 
-          <a href="#contact" className="contact-btn group hidden md:flex">
-            <div className={classNames('inner', { active: currentLink === '#contact' })}>
+          <a href="#contacts" className="contact-btn group hidden md:flex">
+            <div className={classNames('inner', { active: currentLink === '#contacts' })}>
               <span>{t('nav.contactBtn')}</span>
             </div>
           </a>

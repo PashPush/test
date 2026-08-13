@@ -91,8 +91,8 @@ const MobileMenu = ({ isOpen, onClose, currentLink, navLinks }: MobileMenuProps)
         </nav>
 
         <a
-          href="#contact"
-          className={classNames('mobile-menu-contact', { active: currentLink === '#contact' })}
+          href="#contacts"
+          className={classNames('mobile-menu-contact', { active: currentLink === '#contacts' })}
           onClick={handleLinkClick}
         >
           {t('nav.contactBtn')}

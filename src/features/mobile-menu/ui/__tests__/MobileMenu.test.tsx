@@ -206,8 +206,8 @@ describe('MobileMenu', () => {
       expect(projectsLink).toHaveClass('active');
     });
 
-    it('highlights contact button when current link is #contact', () => {
-      render(<MobileMenu {...defaultProps} isOpen={true} currentLink="#contact" />);
+    it('highlights contact button when current link is #contacts', () => {
+      render(<MobileMenu {...defaultProps} isOpen={true} currentLink="#contacts" />);
 
       const contactButton = screen.getByText('nav.contactBtn');
       expect(contactButton).toHaveClass('active');

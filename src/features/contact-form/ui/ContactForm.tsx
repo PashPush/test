@@ -32,7 +32,7 @@ const ContactForm = () => {
           />
         </div>
 
-        <div id="contact">
+        <div>
           <label htmlFor="email">{t('contact.email')}</label>
           <input
             type="text"

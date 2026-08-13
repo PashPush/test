@@ -5,7 +5,7 @@ const navLinks = [
   { key: 'approach', link: '#approach' },
   { key: 'reviews', link: '#reviews' },
   { key: 'skills', link: '#skills' },
-  { key: 'contact', link: '#contact' },
+  { key: 'contact', link: '#contacts' },
 ];
 
 export { navLinks };
