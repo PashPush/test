@@ -14,6 +14,9 @@ npm run dev
 
 Without nvm: `brew install nvm`, or any Node from the major line pinned in `.nvmrc`.
 
+Fill in `.env` before building — Vite inlines `import.meta.env` at build time, and a
+missing key ships a broken contact form without failing the build.
+
 ## Scripts
 
 | Command | Description |
@@ -26,7 +29,6 @@ Without nvm: `brew install nvm`, or any Node from the major line pinned in `.nvm
 | `npm run test:run` | Unit tests, single run |
 | `npm run test:e2e` | E2E tests (Playwright), starts the dev server itself |
 | `npm run test:e2e:install` | Download Playwright browsers |
-| `npm run deploy` | Build and publish to GitHub Pages |
 
 ## Reproducible installs
 
@@ -80,20 +82,19 @@ rebuild or a cache clean:
 npm run test:e2e:install
 ```
 
-## Deployment
-
-```bash
-npm run deploy    # vite build → dist/CNAME=pahov.ru → gh-pages -d dist
-```
-
-Make sure `.env` is populated first — Vite inlines `import.meta.env` at build time,
-and a missing key ships a broken contact form without failing the build.
-
 ## Project structure
 
-- `src/sections/` — page sections, in the order `App.tsx` renders them
-- `src/components/` — reusable components; `active/` holds the interactive ones
-- `src/shaders/particles/` — GLSL for the WebGL background
-- `src/constants/index.ts` — static data (nav links, experience, testimonials)
-- `src/ab/` — A/B experiments and tracking
+`src/` follows Feature-Sliced Design. A layer may only import from the layers below it,
+never from a sibling slice of its own layer — `eslint.config.js` enforces this.
+
+- `src/app/` — entry (`main.tsx`), `App.tsx` shell, `gsap.ts`, `styles/index.css`
+- `src/pages/home/` — the single page: Navbar + Hero + A/B-ordered sections + Contact
+- `src/widgets/` — navbar, hero, projects, experience, approach, reviews, skills, contact
+- `src/features/` — ab-testing, contact-form, language-switch, mobile-menu, chainsaw-interface
+- `src/entities/project/` — projects data, `ProjectModal`
+- `src/shared/` — `ui/`, `lib/`, `config/`, `i18n/`, `webgl/` (incl. GLSL shaders), `test/`
 - `e2e/` — Playwright specs
+
+Cross-slice imports use the `@/` alias; inside a slice they stay relative. Only
+`@/features/ab-testing` and `@/entities/project` expose a barrel — everything else is
+imported by direct path.
