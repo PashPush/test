@@ -11,8 +11,8 @@ import Review from './sections/Review';
 import Skills from './sections/Skills/Skills';
 import Contact from './sections/Contact';
 import { useViewportHeight } from './hooks/useViewportHeight';
-import { useAB } from './ab/ABContext.tsx';
-import type { SectionKey } from './ab/experiments.ts';
+import { useAB } from './ab/ABContext';
+import type { SectionKey } from './ab/experiments';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 

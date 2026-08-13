@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
-import type { VariantAssignments } from './engine.ts';
-import type { SectionKey } from './experiments.ts';
-import { variants, sectionOrder } from './init.ts';
+import type { VariantAssignments } from './engine';
+import type { SectionKey } from './experiments';
+import { variants, sectionOrder } from './init';
 
 interface ABContextValue {
   variants: VariantAssignments;

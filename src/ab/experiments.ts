@@ -1,4 +1,4 @@
-import type { ExperimentConfig } from './engine.ts';
+import type { ExperimentConfig } from './engine';
 
 // --- Section order experiment ---
 

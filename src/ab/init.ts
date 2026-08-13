@@ -1,9 +1,9 @@
 import i18n from '../i18n';
-import { resolveVariants, getVariantConfig } from './engine.ts';
-import type { ExperimentConfig, VariantAssignments } from './engine.ts';
-import { trackExposure } from './tracking.ts';
-import { allExperiments, sectionOrderExperiment } from './experiments.ts';
-import type { SectionKey } from './experiments.ts';
+import { resolveVariants, getVariantConfig } from './engine';
+import type { ExperimentConfig, VariantAssignments } from './engine';
+import { trackExposure } from './tracking';
+import { allExperiments, sectionOrderExperiment } from './experiments';
+import type { SectionKey } from './experiments';
 
 /**
  * Converts flat dot-notation keys into a nested object.

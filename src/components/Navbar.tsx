@@ -5,7 +5,7 @@ import { navLinks } from '../constants';
 import { classNames } from '../lib/classNames';
 import LanguageSwitcher from './LanguageSwitcher';
 import MobileMenu from './MobileMenu';
-import { useAB } from '../ab/ABContext.tsx';
+import { useAB } from '../ab/ABContext';
 
 const navLinkMap = Object.fromEntries(navLinks.map(link => [link.key, link]));
 

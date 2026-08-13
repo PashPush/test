@@ -1,4 +1,4 @@
-import type { VariantAssignments } from './engine.ts';
+import type { VariantAssignments } from './engine';
 
 const SESSION_KEY = 'ab_exposed';
 
