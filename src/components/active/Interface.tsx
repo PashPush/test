@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Chainsaw from './Chainsaw';
 import gsap from 'gsap';
 import { useMediaQuery } from 'react-responsive';
-import { classNames } from '../../lib/classNames';
+import { classNames } from '@/shared/lib/classNames';
 import Chips from './Chips';
 
 const Interface = () => {

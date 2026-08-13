@@ -10,7 +10,7 @@ import Approach from './sections/Approach';
 import Review from './sections/Review';
 import Skills from './sections/Skills/Skills';
 import Contact from './sections/Contact';
-import { useViewportHeight } from './hooks/useViewportHeight';
+import { useViewportHeight } from '@/shared/lib/useViewportHeight';
 import { useAB } from './ab/ABContext';
 import type { SectionKey } from './ab/experiments';
 

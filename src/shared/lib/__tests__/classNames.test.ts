@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { classNames } from '../../lib/classNames';
+import { classNames } from '../classNames';
 
 describe('classNames', () => {
   describe('base class handling', () => {

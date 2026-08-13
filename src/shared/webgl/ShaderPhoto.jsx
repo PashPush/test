@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import particlesVertexShader from '../shaders/particles/vertex.glsl';
-import particlesFragmentShader from '../shaders/particles/fragment.glsl';
+import particlesVertexShader from './shaders/particles/vertex.glsl';
+import particlesFragmentShader from './shaders/particles/fragment.glsl';
 import { useEffect, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 

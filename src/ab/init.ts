@@ -1,4 +1,4 @@
-import i18n from '../i18n';
+import i18n from '@/shared/i18n';
 import { resolveVariants, getVariantConfig } from './engine';
 import type { ExperimentConfig, VariantAssignments } from './engine';
 import { trackExposure } from './tracking';

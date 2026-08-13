@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import emailjs from '@emailjs/browser';
 import { SiTelegram, SiWhatsapp } from 'react-icons/si';
 import { MdMail } from 'react-icons/md';
-import { classNames } from '../lib/classNames';
+import { classNames } from '@/shared/lib/classNames';
 
 type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
 

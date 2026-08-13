@@ -11,7 +11,7 @@ import {
   IoCompassSharp,
   IoReaderOutline,
 } from 'react-icons/io5';
-import { classNames } from '../../lib/classNames';
+import { classNames } from '@/shared/lib/classNames';
 import { useMediaQuery } from 'react-responsive';
 
 type Language = {

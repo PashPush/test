@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
-import BlinkCard from '../components/BlinkCard';
+import BlinkCard from '@/shared/ui/BlinkCard';
 import { feedbacks } from '../constants';
 
 const Review = () => {

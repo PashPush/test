@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import { useMediaQuery } from 'react-responsive';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
-import { classNames } from '../lib/classNames';
+import { classNames } from '@/shared/lib/classNames';
 
 const Approach = () => {
   const { t } = useTranslation();

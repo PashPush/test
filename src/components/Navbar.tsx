@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { navLinks } from '../constants';
-import { classNames } from '../lib/classNames';
+import { navLinks } from '@/shared/config/navLinks';
+import { classNames } from '@/shared/lib/classNames';
 import LanguageSwitcher from './LanguageSwitcher';
 import MobileMenu from './MobileMenu';
 import { useAB } from '../ab/ABContext';

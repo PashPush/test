@@ -2,9 +2,9 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Trans, useTranslation } from 'react-i18next';
 
-import Button from '../components/Button';
+import Button from '@/shared/ui/Button';
 // @ts-expect-error jsx
-import ShaderPhoto from '../components/ShaderPhoto';
+import ShaderPhoto from '@/shared/webgl/ShaderPhoto';
 import Interface from '../components/active/Interface';
 import { useMediaQuery } from 'react-responsive';
 
