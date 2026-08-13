@@ -2,16 +2,7 @@ import { useEffect, useRef, useCallback, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
-export interface ProjectData {
-  id: string;
-  name: string;
-  stack: string;
-  description: string;
-  role: string;
-  screenshots: string[];
-  color: string;
-  mainImage: string;
-}
+import type { ProjectData } from '../model/types';
 
 interface ProjectModalProps {
   project: ProjectData | null;

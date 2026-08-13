@@ -3,8 +3,7 @@ import { flushSync } from 'react-dom';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
-import { ProjectModal, type ProjectData } from '../components/ProjectModal';
-import { projectsData } from '../constants';
+import { ProjectModal, projectsData, type ProjectData } from '@/entities/project';
 
 const Projects = () => {
   const { t } = useTranslation();

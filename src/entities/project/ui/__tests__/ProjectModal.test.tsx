@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ProjectModal, type ProjectData } from '../ProjectModal';
+import { ProjectModal } from '../ProjectModal';
+import type { ProjectData } from '../../model/types';
 
 const mockProject: ProjectData = {
   id: 'test-project',
