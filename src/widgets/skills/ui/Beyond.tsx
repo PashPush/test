@@ -23,6 +23,7 @@ type Language = {
 };
 
 type Drive = {
+  id: string;
   icon: typeof IoSparklesOutline;
   title: string;
   description: string;
@@ -81,7 +82,7 @@ const DriveCard = memo(({ drive }: { drive: Drive }) => {
   return (
     <div
       className={classNames('group drive-card', {
-        hidden: shortScreen && isMobile && drive.title === 'UX/UI дизайн и внимание к деталям',
+        hidden: shortScreen && isMobile && drive.id === 'ux',
       })}
     >
       <div className="flex sm:gap-4 gap-2">
@@ -103,37 +104,41 @@ const DriveCard = memo(({ drive }: { drive: Drive }) => {
 
 DriveCard.displayName = 'DriveCard';
 
-const Third = () => {
+const Beyond = () => {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLDivElement>(null);
   const horizontal = useMediaQuery({ maxHeight: 600 });
 
   const languages = [
-    { name: 'English', level: 'C1', levelText: t('skills.third.langLevels.advanced'), flag: '🇬🇧', percentage: 89 },
-    { name: 'Español', level: 'B1', levelText: t('skills.third.langLevels.intermediate'), flag: '🇪🇸', percentage: 61 },
-    { name: 'Русский', level: 'NS', levelText: t('skills.third.langLevels.native'), flag: '🇷🇺', percentage: 100 },
+    { name: 'English', level: 'C1', levelText: t('skills.beyond.langLevels.advanced'), flag: '🇬🇧', percentage: 89 },
+    { name: 'Español', level: 'B1', levelText: t('skills.beyond.langLevels.intermediate'), flag: '🇪🇸', percentage: 61 },
+    { name: 'Русский', level: 'NS', levelText: t('skills.beyond.langLevels.native'), flag: '🇷🇺', percentage: 100 },
   ];
 
-  const drives = [
+  const drives: Drive[] = [
     {
+      id: 'balance',
       icon: IoCompassSharp,
-      title: t('skills.third.driveItems.balance.title'),
-      description: t('skills.third.driveItems.balance.description'),
+      title: t('skills.beyond.driveItems.balance.title'),
+      description: t('skills.beyond.driveItems.balance.description'),
     },
     {
+      id: 'result',
       icon: IoReaderOutline,
-      title: t('skills.third.driveItems.result.title'),
-      description: t('skills.third.driveItems.result.description'),
+      title: t('skills.beyond.driveItems.result.title'),
+      description: t('skills.beyond.driveItems.result.description'),
     },
     {
+      id: 'learning',
       icon: IoRocketOutline,
-      title: t('skills.third.driveItems.learning.title'),
-      description: t('skills.third.driveItems.learning.description'),
+      title: t('skills.beyond.driveItems.learning.title'),
+      description: t('skills.beyond.driveItems.learning.description'),
     },
     {
+      id: 'ux',
       icon: IoColorPaletteOutline,
-      title: t('skills.third.driveItems.ux.title'),
-      description: t('skills.third.driveItems.ux.description'),
+      title: t('skills.beyond.driveItems.ux.title'),
+      description: t('skills.beyond.driveItems.ux.description'),
     },
   ];
 
@@ -251,10 +256,10 @@ const Third = () => {
   }, [sectionRef.current, horizontal]);
 
   return (
-    <section ref={sectionRef} className="third-wrapper">
+    <section ref={sectionRef} className="beyond-wrapper">
       <div className="max-w-7xl w-full">
         <div className="noise opacity-[0.03]"></div>
-        {!horizontal && <h2 className="beyond-code">{t('skills.third.beyondCode')}</h2>}
+        {!horizontal && <h2 className="beyond-code">{t('skills.beyond.title')}</h2>}
 
         <div className="additional">
           <div className="languages">
@@ -262,7 +267,7 @@ const Third = () => {
               <div className="lang-title-icon">
                 <IoLanguageSharp className="sm:size-6 size-5 text-blue-200" />
               </div>
-              <h3>{t('skills.third.languages')}</h3>
+              <h3>{t('skills.beyond.languages')}</h3>
             </div>
 
             <div className="flex sm:block flex-row gap-2 justify-between">
@@ -273,7 +278,7 @@ const Third = () => {
 
             {!horizontal && (
               <div className="lang-effective">
-                <p>{t('skills.third.langEffective')}</p>
+                <p>{t('skills.beyond.langEffective')}</p>
               </div>
             )}
           </div>
@@ -283,11 +288,11 @@ const Third = () => {
               <div className="drive-title-icon">
                 <IoSparklesOutline className="sm:size-6 size-5 text-purple-300" />
               </div>
-              <h3>{t('skills.third.drives')}</h3>
+              <h3>{t('skills.beyond.drives')}</h3>
             </div>
 
-            {drives.map((drive, index) => (
-              <DriveCard key={index} drive={drive} />
+            {drives.map(drive => (
+              <DriveCard key={drive.id} drive={drive} />
             ))}
           </div>
         </div>
@@ -295,8 +300,8 @@ const Third = () => {
         <div className="call-grow">
           <div>
             <p>
-              {t('skills.third.callGrow')}
-              <span> {t('skills.third.meaningful')}</span>
+              {t('skills.beyond.callGrow')}
+              <span> {t('skills.beyond.meaningful')}</span>
             </p>
           </div>
         </div>
@@ -305,4 +310,4 @@ const Third = () => {
   );
 };
 
-export default Third;
+export default Beyond;

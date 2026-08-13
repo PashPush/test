@@ -155,13 +155,13 @@
     }
   },
   "skills": {
-    "first": {
+    "techStack": {
       "frontend": "Frontend Base",
       "tooling": "Tooling",
       "testing": "Tests & UI"
     },
-    "third": {
-      "beyondCode": "Beyond Code",
+    "beyond": {
+      "title": "Beyond Code",
       "languages": "Language Proficiency",
       "drives": "What Drives Me",
       "langEffective": "I can effectively work with international teams and clients",

@@ -1,9 +1,10 @@
 import gsap from 'gsap';
 import { useLayoutEffect, useRef, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import First from './First';
-import Second from './Second';
-import Third from './Third';
+import { setNeuroVisible } from '@/shared/webgl/neuro';
+import TechStack from './TechStack';
+import Process from './Process';
+import Beyond from './Beyond';
 
 const Skills = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -18,16 +19,13 @@ const Skills = () => {
     const ctx = gsap.context(() => {
       const horizontalSections = gsap.utils.toArray('.horizontal-section');
       const xPercent = isMobile ? -112.52 : -100;
-      const canvas = document.querySelector('canvas#neuro');
       const skillsElement = skillsRef.current;
 
       const endPause = isMobile || horizontal ? 0.04 : 0.1;
 
       if (!skillsElement) return;
 
-      if (canvas) {
-        canvas.removeAttribute('data-visible');
-      }
+      setNeuroVisible(false);
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -38,18 +36,10 @@ const Skills = () => {
           fastScrollEnd: true,
           preventOverlaps: true,
           end: () => `+=${skillsElement.scrollWidth - document.documentElement.clientWidth}`,
-          onLeave: () => {
-            if (canvas) canvas.setAttribute('data-visible', 'true');
-          },
-          onEnterBack: () => {
-            if (canvas) canvas.removeAttribute('data-visible');
-          },
-          onEnter: () => {
-            if (canvas) canvas.removeAttribute('data-visible');
-          },
-          onLeaveBack: () => {
-            if (canvas) canvas.removeAttribute('data-visible');
-          },
+          onLeave: () => setNeuroVisible(true),
+          onEnterBack: () => setNeuroVisible(false),
+          onEnter: () => setNeuroVisible(false),
+          onLeaveBack: () => setNeuroVisible(false),
         },
       });
 
@@ -129,15 +119,15 @@ const Skills = () => {
         </h1>
       </div>
       <section className="horizontal-section">
-        <First />
+        <TechStack />
       </section>
 
       <section className="horizontal-section">
-        <Second />
+        <Process />
       </section>
 
       <section className="horizontal-section">
-        <Third />
+        <Beyond />
       </section>
     </main>
   );

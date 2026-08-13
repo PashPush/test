@@ -6,7 +6,7 @@ import Hero from '@/widgets/hero/ui/Hero';
 import Projects from '@/widgets/projects/ui/Projects';
 import Experience from '@/widgets/experience/ui/Experience';
 import Approach from '@/widgets/approach/ui/Approach';
-import Review from '@/widgets/reviews/ui/Review';
+import Reviews from '@/widgets/reviews/ui/Reviews';
 import Skills from '@/widgets/skills/ui/Skills';
 import Contact from '@/widgets/contact/ui/Contact';
 import { useAB, type SectionKey } from '@/features/ab-testing';
@@ -15,7 +15,7 @@ const sectionComponents: Record<SectionKey, React.FC> = {
   projects: Projects,
   experience: Experience,
   approach: Approach,
-  reviews: Review,
+  reviews: Reviews,
   skills: Skills,
 };
 

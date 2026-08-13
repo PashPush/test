@@ -17,7 +17,7 @@ const Sticker = memo(({ title, description }: { title: string; description: stri
 
 Sticker.displayName = 'Sticker';
 
-const Second = () => {
+const Process = () => {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery({ maxWidth: 640 });
@@ -151,4 +151,4 @@ const Second = () => {
   );
 };
 
-export default memo(Second);
+export default memo(Process);

@@ -10,7 +10,7 @@ const Hands = () => {
     const createAnim = (mainTrigger: ScrollTrigger) => {
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: '.second-bg',
+          trigger: '.process-bg',
           scrub: 1,
           containerAnimation: mainTrigger.animation,
           start: 'left 80%',
@@ -54,7 +54,7 @@ const Hands = () => {
           '-=0.25'
         )
         .to(
-          '.second-bg',
+          '.process-bg',
           {
             backgroundColor: '#000',
             duration: 0.2,
@@ -178,7 +178,7 @@ const Hands = () => {
   }, []);
 
   return (
-    <div className="second-bg">
+    <div className="process-bg">
       <span className="hand wait-hand">🖐</span>
       <span className="hand like-hand">👎</span>
       <span className="hand boom-hand">💥</span>

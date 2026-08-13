@@ -32,6 +32,17 @@ export function initNeuro() {
   initWebGL();
 }
 
+export function setNeuroVisible(visible: boolean) {
+  const el = canvasEl ?? document.querySelector<HTMLCanvasElement>('canvas#neuro');
+  if (!el) return;
+
+  if (visible) {
+    el.setAttribute('data-visible', 'true');
+  } else {
+    el.removeAttribute('data-visible');
+  }
+}
+
 function initWebGL() {
   const contacts = document.getElementById('contacts');
 

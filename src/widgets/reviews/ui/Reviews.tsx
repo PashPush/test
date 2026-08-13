@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import BlinkCard from '@/shared/ui/BlinkCard';
 import { feedbacks } from '../model/feedbacks';
 
-const Review = () => {
+const Reviews = () => {
   const { t } = useTranslation();
   const sectionRef = useRef(null);
 
@@ -34,8 +34,8 @@ const Review = () => {
     );
   }, []);
   return (
-    <div ref={sectionRef} id="reviews" className="review">
-      <div className="review-wrapper">
+    <div ref={sectionRef} id="reviews" className="reviews">
+      <div className="reviews-wrapper">
         {feedbacks.map((feedback, index) => (
           <BlinkCard
             card={{ ...feedback, review: t(`feedbacks.${feedback.index}.review`) }}
@@ -69,4 +69,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default Reviews;

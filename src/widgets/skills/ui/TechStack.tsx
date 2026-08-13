@@ -103,7 +103,7 @@ const SkillBadge = memo(({ skill, iconSize }: { skill: Skill; iconSize: number }
 
 SkillBadge.displayName = 'SkillBadge';
 
-const First = () => {
+const TechStack = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const horizontal = useMediaQuery({ maxHeight: 600 });
@@ -158,12 +158,12 @@ const First = () => {
   }, []);
 
   return (
-    <section className="first-wrapper">
+    <section className="tech-stack-wrapper">
       <AnimatedGears ref={sectionRef} />
       <div className="skills-wrapper">
         <div ref={frontendRef}>
           <div className="skill-list">
-            <h2 className="first-title">{t('skills.first.frontend')}</h2>
+            <h2 className="tech-stack-title">{t('skills.techStack.frontend')}</h2>
             <ul>
               {frontend.map(s => (
                 <SkillBadge key={s.id} skill={s} iconSize={iconSize} />
@@ -174,7 +174,7 @@ const First = () => {
 
         <div ref={backendRef}>
           <div className="skill-list">
-            <h2 className="first-title">{t('skills.first.tooling')}</h2>
+            <h2 className="tech-stack-title">{t('skills.techStack.tooling')}</h2>
             <ul>
               {backendAndTools.map(s => (
                 <SkillBadge key={s.id} skill={s} iconSize={iconSize} />
@@ -185,7 +185,7 @@ const First = () => {
 
         <div ref={componentsRef}>
           <div className="skill-list">
-            <h2 className="first-title">{t('skills.first.testing')}</h2>
+            <h2 className="tech-stack-title">{t('skills.techStack.testing')}</h2>
             <ul>
               {testing.map(s => (
                 <SkillBadge key={s.id} skill={s} iconSize={iconSize} />
@@ -199,4 +199,4 @@ const First = () => {
   );
 };
 
-export default First;
+export default TechStack;

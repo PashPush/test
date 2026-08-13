@@ -739,16 +739,16 @@ canvas {
       }
     }
 
-    .first-wrapper {
+    .tech-stack-wrapper {
       @apply max-w-7xl pt-22 pb-10 sm:px-5 lg:px-15 px-2;
     }
 
-    .first-title {
+    .tech-stack-title {
       @apply flex w-full sm:text-2xl xl:text-4xl text-xl text-white font-yeseva-one;
     }
 
     @media (height <= 600px) {
-      .first-wrapper {
+      .tech-stack-wrapper {
         @apply px-1;
       }
 
@@ -789,7 +789,7 @@ canvas {
       opacity: 0.6;
     }
 
-    .second-bg {
+    .process-bg {
       @apply h-[100vh] w-1/4 flex-center;
       background-image: url(/images/squares.png);
     }
@@ -932,7 +932,7 @@ canvas {
     }
   }
 
-  .third-wrapper {
+  .beyond-wrapper {
     @apply max-w-7xl pt-30 pb-10 xl:px-20 sm:px-10 px-4;
   }
 
@@ -1020,20 +1020,20 @@ canvas {
     }
   }
 
-  .review {
+  .reviews {
     @apply sm:py-40 py-20 relative;
 
-    .review-wrapper {
+    .reviews-wrapper {
       @apply flex lg:flex-row flex-col justify-around h-full gap-5 md:px-15 px-10 md:bg-none bg-[linear-gradient(0deg,#777777,transparent)];
     }
   }
 
   @media (height <= 600px) {
-    .review {
+    .reviews {
       @apply py-20;
     }
 
-    .third-wrapper {
+    .beyond-wrapper {
       @apply px-4 pt-24;
     }
 
