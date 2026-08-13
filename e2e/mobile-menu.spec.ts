@@ -71,7 +71,9 @@ test.describe('Mobile Menu', () => {
     await contactBtn.click();
     await page.waitForTimeout(500);
 
+    // Smooth-scrolling ~10000px to the last section is slow under parallel load,
+    // so this needs more than the default assertion timeout.
     const contactSection = page.locator('#contacts');
-    await expect(contactSection).toBeInViewport();
+    await expect(contactSection).toBeInViewport({ timeout: 15000 });
   });
 });
