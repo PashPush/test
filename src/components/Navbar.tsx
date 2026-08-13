@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { navLinks } from '@/shared/config/navLinks';
 import { classNames } from '@/shared/lib/classNames';
-import LanguageSwitcher from './LanguageSwitcher';
-import MobileMenu from './MobileMenu';
-import { useAB } from '../ab/ABContext';
+import LanguageSwitcher from '@/features/language-switch/ui/LanguageSwitcher';
+import MobileMenu from '@/features/mobile-menu/ui/MobileMenu';
+import { useAB } from '@/features/ab-testing';
 
 const navLinkMap = Object.fromEntries(navLinks.map(link => [link.key, link]));
 

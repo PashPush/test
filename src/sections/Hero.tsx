@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import Button from '@/shared/ui/Button';
 // @ts-expect-error jsx
 import ShaderPhoto from '@/shared/webgl/ShaderPhoto';
-import Interface from '../components/active/Interface';
+import Interface from '@/features/chainsaw-interface/ui/Interface';
 import { useMediaQuery } from 'react-responsive';
 
 const Hero = () => {

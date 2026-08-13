@@ -7,11 +7,11 @@ vi.mock('react-responsive', () => ({
   useMediaQuery: vi.fn(() => false),
 }));
 
-vi.mock('../LanguageSwitcher', () => ({
+vi.mock('@/features/language-switch/ui/LanguageSwitcher', () => ({
   default: () => <div data-testid="lang-switcher">LanguageSwitcher</div>,
 }));
 
-vi.mock('../MobileMenu', () => ({
+vi.mock('@/features/mobile-menu/ui/MobileMenu', () => ({
   default: ({ isOpen, onClose, currentLink }: { isOpen: boolean; onClose: () => void; currentLink: string }) => (
     <div data-testid="mobile-menu" data-open={isOpen} data-current={currentLink} onClick={onClose}>
       MobileMenu
@@ -20,9 +20,9 @@ vi.mock('../MobileMenu', () => ({
 }));
 
 // NavBar reads sectionOrder from the A/B context. Pinning it here keeps the
-// expected links independent of experiment config and avoids pulling ab/init.ts
-// (and the real i18n instance) into the test.
-vi.mock('../../ab/ABContext', () => ({
+// expected links independent of experiment config and avoids pulling the ab-testing init module
+// (and the real init module) into the test.
+vi.mock('@/features/ab-testing', () => ({
   useAB: () => ({
     variants: {},
     sectionOrder: ['projects', 'experience', 'approach', 'reviews', 'skills'],
