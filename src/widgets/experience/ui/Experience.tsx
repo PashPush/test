@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
-import { expCards } from '../constants';
+import { expCards } from '../model/expCards';
 import TitleHeader from '@/shared/ui/TitleHeader';
 import BlinkCard from '@/shared/ui/BlinkCard';
 import { useMediaQuery } from 'react-responsive';

@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
 import CurvedLine from './icons/CurvedLine';
-import { stickers } from '../../constants';
+import { stickers } from '../model/stickers';
 import CurvedLineMobile from './icons/CurvedLineMobile';
 import Hands from './Hands';
 

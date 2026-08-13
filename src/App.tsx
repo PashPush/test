@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger, SplitText } from 'gsap/all';
 
-import Navbar from './components/Navbar';
-import Hero from './sections/Hero';
-import Projects from './sections/Projects';
-import Experience from './sections/Experience';
-import Approach from './sections/Approach';
-import Review from './sections/Review';
-import Skills from './sections/Skills/Skills';
-import Contact from './sections/Contact';
+import Navbar from '@/widgets/navbar/ui/Navbar';
+import Hero from '@/widgets/hero/ui/Hero';
+import Projects from '@/widgets/projects/ui/Projects';
+import Experience from '@/widgets/experience/ui/Experience';
+import Approach from '@/widgets/approach/ui/Approach';
+import Review from '@/widgets/reviews/ui/Review';
+import Skills from '@/widgets/skills/ui/Skills';
+import Contact from '@/widgets/contact/ui/Contact';
 import { useViewportHeight } from '@/shared/lib/useViewportHeight';
 import { useAB, type SectionKey } from '@/features/ab-testing';
 
