@@ -720,19 +720,18 @@ canvas {
       box-shadow:
         var(--hi),
         0 18px 44px rgba(0, 0, 0, 0.34);
+      contain: layout paint style;
 
-      /* зерно */
       &::before {
         content: '';
 
         @apply absolute inset-0 -z-10 rounded-[inherit] pointer-events-none;
 
         background-image: url(/images/noise.png);
-        opacity: 0.055;
+        opacity: 0.035;
         mix-blend-mode: overlay;
       }
 
-      /* верхний блик */
       &::after {
         content: '';
 
@@ -747,7 +746,7 @@ canvas {
     }
 
     .skill-icon {
-      @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-all duration-500 ease-in-out;
+      @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-[background-color,scale] duration-500 ease-in-out;
 
       background: color-mix(in srgb, var(--skill-color) 72%, var(--skill-base));
       shape-rendering: geometricPrecision;
@@ -1076,12 +1075,13 @@ canvas {
     --hole: 2rem;
     --hole-inset: 0.5rem;
 
-    @apply relative isolate rounded-[20px] sm:p-3 p-2 xl:mb-[2vh] mb-[1vh] border transition-all duration-300 sm:[--hole:2.75rem] sm:[--hole-inset:0.75rem];
+    @apply relative isolate rounded-[20px] sm:p-3 p-2 xl:mb-[2vh] mb-[1vh] border transition-[translate,border-color] duration-300 sm:[--hole:2.75rem] sm:[--hole-inset:0.75rem];
 
     border-color: var(--edge);
     box-shadow:
       var(--hi),
       0 6px 18px rgba(0, 0, 0, 0.3);
+    contain: layout paint style;
 
     &::before {
       content: '';
@@ -1125,7 +1125,6 @@ canvas {
       @apply sm:size-5 size-4 transition-colors duration-300;
 
       color: #fff;
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
     }
 
     .drive-title {

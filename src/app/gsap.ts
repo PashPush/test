@@ -10,6 +10,7 @@ gsap.config({
 
 ScrollTrigger.config({
   ignoreMobileResize: true,
+  autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
 });
 
 console.log('%cЗдравствуй, дорогой друг!', 'color: #2cc800; font-weight: bold; font-size: 20px;');
