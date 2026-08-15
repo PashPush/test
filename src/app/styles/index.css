@@ -794,7 +794,11 @@ canvas {
       }
 
       .skills-wrapper {
-        @apply flex-center;
+        @apply flex-center ml-2;
+
+        div {
+          @apply m-0;
+        }
       }
 
       .skill-list {
@@ -1238,10 +1242,10 @@ canvas {
     }
 
     .lang-card {
-      @apply p-0;
+      @apply py-0;
 
       .lang-card-head {
-        @apply mb-0;
+        @apply mb-0 justify-center;
       }
     }
   }
