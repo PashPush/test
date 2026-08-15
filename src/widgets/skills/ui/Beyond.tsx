@@ -11,7 +11,6 @@ import {
   IoCompassSharp,
   IoReaderOutline,
 } from 'react-icons/io5';
-import { classNames } from '@/shared/lib/classNames';
 import { useMediaQuery } from 'react-responsive';
 
 type Language = {
@@ -34,7 +33,7 @@ const LanguageCard = memo(({ lang }: { lang: Language }) => {
 
   return (
     <div className="lang-card">
-      <div className="flex sm:justify-between justify-center lg:mb-4 mb-2">
+      <div className="lang-card-head">
         <div className="flex items-center lg:gap-x-4 gap-x-2 flex-wrap">
           <span className="text-4xl">{lang.flag}</span>
           <h4 className="text-xl text-white hidden sm:block">{lang.name}</h4>
@@ -57,16 +56,10 @@ LanguageCard.displayName = 'LanguageCard';
 
 const DriveCard = memo(({ drive }: { drive: Drive }) => {
   const horizontal = useMediaQuery({ maxHeight: 600 });
-  const shortScreen = useMediaQuery({ maxHeight: 740 });
-  const isMobile = useMediaQuery({ maxWidth: 460 });
   const Icon = drive.icon;
 
   return (
-    <div
-      className={classNames('drive-card', {
-        hidden: shortScreen && isMobile && drive.id === 'ux',
-      })}
-    >
+    <div className="drive-card">
       <div className="flex sm:gap-4 gap-2">
         <div className="flex-shrink-0">
           <div className="drive-icon-wrapper">

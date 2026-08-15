@@ -98,7 +98,7 @@ canvas {
   mask-image: url('/images/cogs.webp');
   mask-repeat: no-repeat;
   mask-position: center;
-  mask-size: 40%;
+  mask-size: 40% auto;
   translate: none;
 }
 
@@ -109,7 +109,7 @@ canvas {
 @media (height <= 600px) {
   .masked-img {
     top: 50%;
-    mask-size: 35%;
+    mask-size: 35% auto;
   }
   .masked-img.masked-img-mobile {
     top: 45%;
@@ -974,7 +974,7 @@ canvas {
   }
 
   .beyond-wrapper {
-    @apply max-w-7xl pt-30 pb-10 xl:px-20 sm:px-10 px-4;
+    @apply max-w-7xl pt-20 pb-10 xl:px-20 sm:px-10 px-4;
 
     --acc: #8ce0cf;
     --sub: #e6dae4;
@@ -1010,6 +1010,10 @@ canvas {
       @apply -translate-y-0.5;
 
       border-color: var(--acc);
+    }
+
+    .lang-card-head {
+      @apply flex sm:justify-between justify-center lg:mb-4 mb-2;
     }
 
     .lang-badge {
@@ -1053,7 +1057,7 @@ canvas {
   }
 
   .card-title {
-    @apply flex items-center gap-3 lg:mb-8 mb-4;
+    @apply flex items-center gap-3 lg:mb-8 mb-2;
   }
 
   .card-title-icon {
@@ -1224,6 +1228,20 @@ canvas {
 
       div {
         @apply px-5 py-2;
+      }
+    }
+  }
+
+  @media (height <= 700px) {
+    .lang-bar {
+      @apply hidden;
+    }
+
+    .lang-card {
+      @apply p-0;
+
+      .lang-card-head {
+        @apply mb-0;
       }
     }
   }

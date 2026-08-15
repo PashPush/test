@@ -44,7 +44,7 @@ const Approach = () => {
       .to('.will-fade', { opacity: 0, stagger: 0.2, ease: 'power1.inOut' })
       .to('.masked-img', {
         scale: 2,
-        maskSize: isMobile ? '450%' : '300%',
+        maskSize: isMobile ? '450% auto' : '300% auto',
         xPercent: -50,
         yPercent: -50,
         y: translateY,
