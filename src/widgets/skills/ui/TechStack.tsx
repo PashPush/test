@@ -23,7 +23,7 @@ import {
   SiSass,
 } from 'react-icons/si';
 import { useMediaQuery } from 'react-responsive';
-import { useRef, memo } from 'react';
+import { useRef, memo, type CSSProperties } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
@@ -83,11 +83,14 @@ const SkillBadge = memo(({ skill, iconSize }: { skill: Skill; iconSize: number }
   return (
     <li
       className="skill-badge opacity-0"
-      style={{
-        background: skill.colorBack ?? skill.color,
-      }}
+      style={
+        {
+          '--skill-color': skill.color,
+          '--skill-back': skill.colorBack ?? skill.color,
+        } as CSSProperties
+      }
     >
-      <span style={{ background: skill.color }} className="skill-icon">
+      <span className="skill-icon">
         {typeof Icon !== 'string' ? (
           <Icon size={iconSize} color="#fff" />
         ) : (

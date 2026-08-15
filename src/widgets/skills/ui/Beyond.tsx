@@ -29,43 +29,25 @@ type Drive = {
   description: string;
 };
 
-const LanguageCard = memo(({ lang, index }: { lang: Language; index: number }) => {
+const LanguageCard = memo(({ lang }: { lang: Language }) => {
   const horizontal = useMediaQuery({ maxHeight: 600 });
 
   return (
-    <div className="group lang-card">
+    <div className="lang-card">
       <div className="flex sm:justify-between justify-center lg:mb-4 mb-2">
         <div className="flex items-center lg:gap-x-4 gap-x-2 flex-wrap">
           <span className="text-4xl">{lang.flag}</span>
           <h4 className="text-xl text-white hidden sm:block">{lang.name}</h4>
 
           <div className="flex items-center lg:gap-4 gap-2">
-            <span
-              className={classNames('lang-badge group-hover:border-white/80', {
-                'bg-green-400/40': index === 0,
-                'bg-yellow-300/40': index === 1,
-                'bg-blue-400/40': index === 2,
-              })}
-            >
-              {lang.level}
-            </span>
-            {!horizontal && <span className="text-slate-100 text-sm hidden sm:block">{lang.levelText}</span>}
+            <span className="lang-badge">{lang.level}</span>
+            {!horizontal && <span className="lang-level-text hidden sm:block">{lang.levelText}</span>}
           </div>
         </div>
       </div>
 
-      <div className="relative h-2 bg-[#4b1c54] rounded-full overflow-hidden">
-        <div
-          className={classNames(
-            'absolute inset-y-0 left-0 bg-gradient-to-r rounded-full transition-all duration-1000',
-            {
-              'from-[#42857b] to-[#26ccb7]': index === 0,
-              'from-[#b6784b] to-[#f3c925]': index === 1,
-              'from-[#2555b1] to-[#d0e2ff]': index === 2,
-            }
-          )}
-          style={{ width: `${lang.percentage}%` }}
-        ></div>
+      <div className="lang-bar">
+        <div className="lang-bar-fill" style={{ width: `${lang.percentage}%` }}></div>
       </div>
     </div>
   );
@@ -81,21 +63,19 @@ const DriveCard = memo(({ drive }: { drive: Drive }) => {
 
   return (
     <div
-      className={classNames('group drive-card', {
+      className={classNames('drive-card', {
         hidden: shortScreen && isMobile && drive.id === 'ux',
       })}
     >
       <div className="flex sm:gap-4 gap-2">
         <div className="flex-shrink-0">
-          <div className="drive-icon-wrapper group-hover:border-white/80">
-            <Icon className="drive-icon group-hover:text-white" />
+          <div className="drive-icon-wrapper">
+            <Icon className="drive-icon" />
           </div>
         </div>
         <div className="flex-1">
-          <h4 className="drive-title group-hover:text-white">{drive.title}</h4>
-          {!horizontal && (
-            <p className="text-slate-200 md:text-sm xl:text-base text-xs leading-relaxed">{drive.description}</p>
-          )}
+          <h4 className="drive-title">{drive.title}</h4>
+          {!horizontal && <p className="drive-text">{drive.description}</p>}
         </div>
       </div>
     </div>
@@ -258,21 +238,19 @@ const Beyond = () => {
   return (
     <section ref={sectionRef} className="beyond-wrapper">
       <div className="max-w-7xl w-full">
-        <div className="noise opacity-[0.03]"></div>
+        <div className="noise opacity-[0.05]"></div>
         {!horizontal && <h2 className="beyond-code">{t('skills.beyond.title')}</h2>}
 
         <div className="additional">
           <div className="languages">
             <div className="card-title">
-              <div className="lang-title-icon">
-                <IoLanguageSharp className="sm:size-6 size-5 text-blue-200" />
-              </div>
+              <IoLanguageSharp className="card-title-icon" />
               <h3>{t('skills.beyond.languages')}</h3>
             </div>
 
             <div className="flex sm:block flex-row gap-2 justify-between">
-              {languages.map((lang, index) => (
-                <LanguageCard key={lang.name} lang={lang} index={index} />
+              {languages.map(lang => (
+                <LanguageCard key={lang.name} lang={lang} />
               ))}
             </div>
 
@@ -285,9 +263,7 @@ const Beyond = () => {
 
           <div className="drive">
             <div className="card-title">
-              <div className="drive-title-icon">
-                <IoSparklesOutline className="sm:size-6 size-5 text-purple-300" />
-              </div>
+              <IoSparklesOutline className="card-title-icon" />
               <h3>{t('skills.beyond.drives')}</h3>
             </div>
 

@@ -14,6 +14,8 @@ const Skills = () => {
   const touchStartY = useRef<number>(0);
   const currentScrollY = useRef<number>(0);
   const isHorizontalSwipe = useRef<boolean>(false);
+  const latestDiffX = useRef<number>(0);
+  const touchRafId = useRef<number | null>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -84,8 +86,14 @@ const Skills = () => {
 
       if (isHorizontalSwipe.current) {
         e.preventDefault();
-        const scrollAmount = currentScrollY.current + diffX * 2;
-        window.scrollTo(0, scrollAmount);
+        latestDiffX.current = diffX;
+
+        if (touchRafId.current === null) {
+          touchRafId.current = requestAnimationFrame(() => {
+            window.scrollTo(0, currentScrollY.current + latestDiffX.current * 2);
+            touchRafId.current = null;
+          });
+        }
       }
     };
 
@@ -93,6 +101,11 @@ const Skills = () => {
       touchStartX.current = 0;
       touchStartY.current = 0;
       isHorizontalSwipe.current = false;
+
+      if (touchRafId.current !== null) {
+        cancelAnimationFrame(touchRafId.current);
+        touchRafId.current = null;
+      }
     };
 
     skillsElement.addEventListener('touchstart', handleTouchStart, { passive: true });
@@ -103,6 +116,11 @@ const Skills = () => {
       skillsElement.removeEventListener('touchstart', handleTouchStart);
       skillsElement.removeEventListener('touchmove', handleTouchMove);
       skillsElement.removeEventListener('touchend', handleTouchEnd);
+
+      if (touchRafId.current !== null) {
+        cancelAnimationFrame(touchRafId.current);
+        touchRafId.current = null;
+      }
     };
   }, [isMobile, horizontal]);
 

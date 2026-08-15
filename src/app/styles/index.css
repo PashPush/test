@@ -664,6 +664,11 @@ canvas {
     @apply relative h-fix md:w-[370%] w-[425%] flex flex-nowrap z-10 overflow-hidden;
     perspective: 1000px;
 
+    --edge: rgba(255, 255, 255, 0.1);
+    --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.045));
+    --hi: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    --skill-base: #19413f;
+
     .skills-word {
       @apply h-fix md:w-[20vw] w-[25vw] flex items-center justify-center pt-16 bg-black z-10 ml-0.5;
     }
@@ -693,11 +698,8 @@ canvas {
       z-index: 30;
     } */
     .horizontal-section:nth-child(4) {
-      background-image: radial-gradient(
-        circle farthest-corner at 10% 20%,
-        rgba(100, 43, 115, 1) 0%,
-        rgb(32, 2, 32) 90%
-      );
+      background-image: radial-gradient(circle farthest-corner at 12% 6%, #7d4874 0%, #48214c 40%, #1d0a20 100%);
+      box-shadow: inset 0 0 160px 40px rgba(12, 3, 14, 0.55);
       z-index: 10;
       margin-left: -1px;
     }
@@ -711,7 +713,32 @@ canvas {
     }
 
     .skill-list {
-      @apply flex flex-row flex-wrap rounded-2xl min-h-fit md:p-4 xl:p-5 p-3 bg-[rgba(255,255,255,0.1)] shadow-md;
+      @apply relative isolate flex flex-row flex-wrap rounded-2xl min-h-fit md:p-4 xl:p-5 p-3;
+
+      background: var(--glass);
+      border: 1px solid var(--edge);
+      box-shadow:
+        var(--hi),
+        0 18px 44px rgba(0, 0, 0, 0.34);
+      contain: layout paint style;
+
+      &::before {
+        content: '';
+
+        @apply absolute inset-0 -z-10 rounded-[inherit] pointer-events-none;
+
+        background-image: url(/images/noise.png);
+        opacity: 0.035;
+        mix-blend-mode: overlay;
+      }
+
+      &::after {
+        content: '';
+
+        @apply absolute inset-x-0 top-0 h-1/2 -z-10 rounded-[inherit] pointer-events-none;
+
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent);
+      }
 
       ul {
         @apply flex flex-row md:gap-3 xl:gap-[2vh] gap-2 flex-wrap md:pt-3 xl:pt-[2vh] pt-2;
@@ -719,7 +746,9 @@ canvas {
     }
 
     .skill-icon {
-      @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-all duration-500 ease-in-out;
+      @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-[background-color,scale] duration-500 ease-in-out;
+
+      background: color-mix(in srgb, var(--skill-color) 72%, var(--skill-base));
       shape-rendering: geometricPrecision;
     }
 
@@ -728,13 +757,25 @@ canvas {
     }
 
     .skill-badge {
-      @apply flex items-center md:gap-2 xl:gap-3 gap-1 rounded-full shadow-md md:pr-3 xl:pr-5 pr-2.5 md:h-12 xl:h-14 h-9 w-fit will-change-[transform,opacity];
+      @apply flex items-center md:gap-2 xl:gap-3 gap-1 rounded-full md:pr-3 xl:pr-5 pr-2.5 md:h-12 xl:h-14 h-9 w-fit will-change-[transform,opacity] transition-[background,box-shadow] duration-400;
+
+      background: color-mix(in srgb, var(--skill-back) 55%, var(--skill-base));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 6px 16px rgba(0, 0, 0, 0.28);
 
       &:hover {
-        @apply cursor-pointer filter-[none];
+        @apply cursor-pointer;
+
+        background: color-mix(in srgb, var(--skill-back) 85%, var(--skill-base));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.16),
+          0 10px 22px rgba(0, 0, 0, 0.34);
 
         .skill-icon {
-          @apply transform scale-110 filter-[saturate(1.3)];
+          @apply transform scale-110;
+
+          background: var(--skill-color);
         }
       }
     }
@@ -934,18 +975,14 @@ canvas {
 
   .beyond-wrapper {
     @apply max-w-7xl pt-30 pb-10 xl:px-20 sm:px-10 px-4;
-  }
 
-  .lang-title-icon {
-    @apply sm:p-3 p-2 bg-gradient-to-br from-gray-500/20 to-purple-500/20 rounded-xl border border-blue-500/20;
-  }
-
-  .drive-title-icon {
-    @apply sm:p-3 p-2 bg-gradient-to-br from-purple-500/20 to-[#532a5b]/20 rounded-xl border border-purple-500/20;
+    --acc: #8ce0cf;
+    --sub: #e6dae4;
+    --hole-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44"><rect width="44" height="44" rx="12" fill="%23000"/></svg>');
   }
 
   .beyond-code {
-    @apply relative lg:text-6xl text-5xl text-white font-yeseva-one lg:mb-8 mb-6 text-center z-20 hidden md:block;
+    @apply relative lg:text-6xl text-5xl text-white font-yeseva-one lg:mb-10 mb-6 text-center z-20 hidden md:block;
   }
 
   .additional {
@@ -961,23 +998,69 @@ canvas {
   }
 
   .lang-card {
-    @apply relative w-full xl:mb-[2vh] sm:mb-[1vh] mb-0 bg-gradient-to-br from-white/20 to-white/30  rounded-2xl sm:py-3 sm:px-6 py-2 px-2 border border-white/30 hover:border-white/80 transition-all duration-300 shadow-md shadow-black/10 hover:shadow-lg;
+    @apply relative w-full xl:mb-[2vh] sm:mb-[1vh] mb-0 rounded-[20px] sm:py-3 sm:px-6 py-2 px-2 border transition-all duration-300;
+
+    background: var(--glass);
+    border-color: var(--edge);
+    box-shadow:
+      var(--hi),
+      0 6px 18px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      @apply -translate-y-0.5;
+
+      border-color: var(--acc);
+    }
 
     .lang-badge {
-      @apply px-3 py-1 rounded-full text-white font-bold text-sm border transition-all duration-300 border-white/30;
+      @apply px-3 py-1 rounded-full font-bold text-sm border transition-colors duration-300;
+
+      color: #9fe8d8;
+      border-color: rgba(140, 224, 207, 0.6);
+    }
+
+    .lang-level-text {
+      @apply text-sm;
+
+      color: var(--sub);
     }
   }
 
+  .lang-bar {
+    @apply relative h-1 rounded-full overflow-hidden;
+
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  .lang-bar-fill {
+    @apply absolute inset-y-0 left-0 rounded-full transition-all duration-1000;
+
+    background: linear-gradient(90deg, #5fb3a6, #a8ede0);
+  }
+
   .lang-effective {
-    @apply mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl hidden sm:block;
+    @apply mt-4 p-4 rounded-[20px] border border-l-2 hidden sm:block;
+
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--edge);
+    border-left-color: var(--acc);
 
     p {
-      @apply text-slate-100 md:text-sm xl:text-base text-xs text-center;
+      @apply md:text-sm xl:text-base text-xs text-center;
+
+      color: var(--sub);
     }
   }
 
   .card-title {
     @apply flex items-center gap-3 lg:mb-8 mb-4;
+  }
+
+  .card-title-icon {
+    @apply sm:size-6 size-5;
+
+    color: var(--acc);
+    filter: drop-shadow(0 0 10px rgba(140, 224, 207, 0.5));
   }
 
   .drive {
@@ -989,18 +1072,69 @@ canvas {
   }
 
   .drive-card {
-    @apply relative bg-gradient-to-br from-white/20 to-white/30 rounded-2xl sm:p-3 p-2 xl:mb-[2vh] mb-[1vh] border border-white/30 hover:border-white/80 transition-all duration-300 hover:shadow-lg hover:shadow-white/10 hover:translate-x-1;
+    --hole: 2rem;
+    --hole-inset: 0.5rem;
+
+    @apply relative isolate rounded-[20px] sm:p-3 p-2 xl:mb-[2vh] mb-[1vh] border transition-[translate,border-color] duration-300 sm:[--hole:2.75rem] sm:[--hole-inset:0.75rem];
+
+    border-color: var(--edge);
+    box-shadow:
+      var(--hi),
+      0 6px 18px rgba(0, 0, 0, 0.3);
+    contain: layout paint style;
+
+    &::before {
+      content: '';
+
+      @apply absolute inset-0 -z-10 rounded-[inherit] pointer-events-none;
+
+      background: var(--glass);
+      -webkit-mask:
+        var(--hole-mask) var(--hole-inset) var(--hole-inset) / var(--hole) var(--hole) no-repeat,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        var(--hole-mask) var(--hole-inset) var(--hole-inset) / var(--hole) var(--hole) no-repeat,
+        linear-gradient(#000 0 0);
+      mask-composite: exclude;
+    }
+
+    &:hover {
+      @apply -translate-y-0.5;
+
+      border-color: var(--acc);
+
+      .drive-icon {
+        color: var(--acc);
+        filter: drop-shadow(0 0 6px rgba(140, 224, 207, 0.45));
+      }
+    }
 
     .drive-icon-wrapper {
-      @apply sm:p-3 p-2 bg-[#4b1c54] rounded-xl border border-white/50 transition-colors;
+      @apply sm:size-11 size-8 flex-center rounded-xl border;
+
+      background: transparent;
+      border-color: rgba(0, 0, 0, 0.35);
+      box-shadow:
+        inset 0 2px 8px rgba(0, 0, 0, 0.45),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .drive-icon {
-      @apply sm:size-5 size-4 text-white-50 transition-colors;
+      @apply sm:size-5 size-4 transition-colors duration-300;
+
+      color: #fff;
     }
 
     .drive-title {
-      @apply text-slate-100 mb-2 sm:text-base xl:text-lg text-sm transition-colors;
+      @apply text-white mb-2 sm:text-base xl:text-lg text-sm;
+    }
+
+    .drive-text {
+      @apply md:text-sm xl:text-base text-xs leading-relaxed;
+
+      color: var(--sub);
     }
   }
 
@@ -1008,7 +1142,10 @@ canvas {
     @apply sm:mt-4 lg:mt-8 mt-0 text-center z-20 relative will-change-[transform,opacity];
 
     div {
-      @apply inline-block px-6 py-3 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl border border-purple-500/20;
+      @apply inline-block px-6 py-3 rounded-2xl border;
+
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(140, 224, 207, 0.25);
     }
 
     p {
@@ -1016,7 +1153,9 @@ canvas {
     }
 
     span {
-      @apply text-transparent font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text;
+      @apply font-bold;
+
+      color: var(--acc);
     }
   }
 
@@ -1035,11 +1174,6 @@ canvas {
 
     .beyond-wrapper {
       @apply px-4 pt-24;
-    }
-
-    .lang-title-icon,
-    .drive-title-icon {
-      @apply p-2;
     }
 
     .lang-card {
@@ -1069,12 +1203,15 @@ canvas {
     .drive-card {
       @apply p-2 mb-1;
 
+      --hole: 2rem;
+      --hole-inset: 0.5rem;
+
       .drive-title {
         @apply text-sm;
       }
 
       .drive-icon-wrapper {
-        @apply p-2;
+        @apply size-8;
       }
 
       .drive-icon {
