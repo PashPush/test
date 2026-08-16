@@ -2,6 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <script>
+      (function () {
+        var RU = (navigator.language || '').indexOf('ru') === 0;
+        var T = RU
+          ? ['Страница не загрузилась', 'Попробуйте обновить. Если не помогло — напишите, я отвечу.', 'Обновить']
+          : ['The page failed to load', 'Try reloading. If that does not help, drop me a line.', 'Reload'];
+
+        function fail(detail) {
+          var boot = document.getElementById('boot');
+          if (!boot) return;
+          console.error('[boot]', detail);
+
+          boot.textContent = '';
+          boot.style.cssText =
+            'min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;' +
+            'gap:20px;padding:24px;text-align:center;font-family:sans-serif;color:#fff';
+
+          function add(tag, text, style) {
+            var node = document.createElement(tag);
+            node.textContent = text;
+            node.style.cssText = style;
+            boot.appendChild(node);
+            return node;
+          }
+
+          add('h1', T[0], 'font-size:28px;font-weight:700');
+          add('p', T[1], 'color:#839cb5;max-width:32em;line-height:1.5');
+          add(
+            'button',
+            T[2],
+            'padding:10px 28px;border-radius:8px;border:0;background:#fff;color:#000;font-size:16px;cursor:pointer'
+          ).onclick = function () {
+            location.reload();
+          };
+          add('a', 'pahovdev@gmail.com', 'color:#839cb5').href = 'mailto:pahovdev@gmail.com';
+        }
+
+        addEventListener(
+          'error',
+          function (e) {
+            var t = e.target;
+            if (t === window) return fail((e.error && e.error.stack) || e.message);
+
+            if (t.tagName === 'SCRIPT' && t.src.indexOf(location.origin + '/') === 0) fail('failed to load ' + t.src);
+          },
+          true
+        );
+
+        addEventListener('unhandledrejection', function (e) {
+          fail((e.reason && e.reason.stack) || e.reason);
+        });
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/images/chainsaw.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,15 +78,21 @@
 
       gtag('config', 'G-2QX4PNFEPB');
     </script>
-    <script type="module" crossorigin src="/assets/index-C9yVYMI0.js"></script>
+    <script type="module" crossorigin src="/assets/index-BPBqpB2S.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/vendor-Dk_g0iDH.js">
     <link rel="modulepreload" crossorigin href="/assets/vendor_gsap-BcqCOEh8.js">
     <link rel="modulepreload" crossorigin href="/assets/vendor_three-BHQEjw8I.js">
     <link rel="modulepreload" crossorigin href="/assets/vendor_misc-DfBlkqaH.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-tJ-iWnO8.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-B-FGQXaJ.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="boot">
+        <noscript style="display: block; padding: 24px; text-align: center; font-family: sans-serif">
+          Для работы сайта нужен JavaScript. / This site requires JavaScript.
+        </noscript>
+      </div>
+    </div>
     <canvas id="neuro"></canvas>
 
   </body>
