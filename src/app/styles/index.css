@@ -221,7 +221,8 @@ canvas {
       }
 
       &.faces {
-        @apply absolute rounded-tr-md rounded-br-md pb-[1px] pr-2.5 z-40 leading-9 translate-y-1 -translate-x-[1px];
+        @apply absolute rounded-tr-md rounded-br-md pb-[1px] pr-2.5 z-40 leading-9;
+        transform: translate(-1px, 4px);
       }
     }
 
@@ -865,15 +866,18 @@ canvas {
     }
 
     .hit-hand {
-      @apply translate-y-6/2 rotate-15 z-50 -translate-x-[100px];
+      @apply z-50;
+      transform: translate(-100px, 300%) rotate(15deg);
     }
 
     .point-hand {
-      @apply z-50 text-[190px] opacity-0 -rotate-75 translate-y-[60px] -translate-x-[4px];
+      @apply z-50 text-[190px] opacity-0;
+      transform: translate(-4px, 60px) rotate(-75deg);
     }
 
     .call-hand {
-      @apply z-50 text-[160px] opacity-0 translate-y-[245px] -translate-x-[21px];
+      @apply z-50 text-[160px] opacity-0;
+      transform: translate(-21px, 245px);
     }
 
     #curved-line {
@@ -981,7 +985,8 @@ canvas {
       }
 
       .call-hand {
-        @apply text-[110px] translate-y-[100px] -translate-x-[21px];
+        @apply text-[110px];
+        transform: translate(-21px, 100px);
       }
     }
   }
