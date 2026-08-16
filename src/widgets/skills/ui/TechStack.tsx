@@ -111,7 +111,6 @@ const TechStack = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const horizontal = useMediaQuery({ maxHeight: 600 });
   const iconSize = isMobile || horizontal ? 24 : 40;
-  const sectionRef = useRef<HTMLDivElement>(null);
   const frontendRef = useRef<HTMLDivElement>(null);
   const backendRef = useRef<HTMLDivElement>(null);
   const componentsRef = useRef<HTMLDivElement>(null);
@@ -162,7 +161,7 @@ const TechStack = () => {
 
   return (
     <section className="tech-stack-wrapper">
-      <AnimatedGears ref={sectionRef} />
+      <AnimatedGears />
       <div className="skills-wrapper">
         <div ref={frontendRef}>
           <div className="skill-list">

@@ -707,7 +707,11 @@ canvas {
     }
 
     .gears {
-      @apply absolute z-30 top-[38%] right-[-250px] rotate-65 md:opacity-30 opacity-15;
+      @apply absolute z-30 top-[38%] right-[-250px] w-[600px] h-[600px] rotate-65 md:opacity-30 opacity-15 pointer-events-none;
+    }
+
+    .gear {
+      @apply absolute will-change-transform;
     }
 
     .skills-wrapper {
@@ -760,8 +764,6 @@ canvas {
     }
 
     .skill-badge {
-      /* No will-change: the entrance tween is `once: true`, so a permanent layer per
-         badge only burns compositor memory. GSAP promotes during the tween itself. */
       @apply flex items-center md:gap-2 xl:gap-3 gap-1 rounded-full md:pr-3 xl:pr-5 pr-2.5 md:h-12 xl:h-14 h-9 w-fit transition-[background,box-shadow] duration-400;
 
       background: var(--skill-back);

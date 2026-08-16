@@ -166,7 +166,7 @@ const Hands = () => {
     gsap.set('.hit-hand', { scale: 3 });
 
     const checkTrigger = () => {
-      const mainTrigger = ScrollTrigger.getAll().find(st => st.trigger && st.trigger.id === 'skills');
+      const mainTrigger = ScrollTrigger.getAll().find(st => st.pin && st.trigger?.id === 'skills');
       if (mainTrigger?.animation) {
         createAnim(mainTrigger);
       } else {
