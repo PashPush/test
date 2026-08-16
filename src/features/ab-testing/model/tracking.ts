@@ -14,7 +14,11 @@ function getExposed(): Set<string> {
 function markExposed(key: string): void {
   const set = getExposed();
   set.add(key);
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify([...set]));
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify([...set]));
+  } catch {
+    // storage unavailable — skip persistence
+  }
 }
 
 export function trackExposure(experimentId: string, variantId: string): void {

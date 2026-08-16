@@ -15,11 +15,31 @@ export type VariantAssignments = Record<string, string>;
 const STORAGE_KEY_USER_ID = 'ab_userId';
 const STORAGE_KEY_VARIANTS = 'ab_variants';
 
+function safeGet(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSet(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // storage unavailable — run without persistence
+  }
+}
+
+function randomId(): string {
+  return crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
 export function getOrCreateUserId(): string {
-  let userId = localStorage.getItem(STORAGE_KEY_USER_ID);
+  let userId = safeGet(STORAGE_KEY_USER_ID);
   if (!userId) {
-    userId = crypto.randomUUID();
-    localStorage.setItem(STORAGE_KEY_USER_ID, userId);
+    userId = randomId();
+    safeSet(STORAGE_KEY_USER_ID, userId);
   }
   return userId;
 }
@@ -64,7 +84,7 @@ export function resolveVariants(experiments: ExperimentConfig[]): VariantAssignm
   // Check for cached assignments (skip if URL overrides exist)
   const hasOverrides = experiments.some(e => e.enabled && getUrlOverride(e.id) !== null);
   if (!hasOverrides) {
-    const cached = localStorage.getItem(STORAGE_KEY_VARIANTS);
+    const cached = safeGet(STORAGE_KEY_VARIANTS);
     if (cached) {
       try {
         const parsed = JSON.parse(cached) as VariantAssignments;
@@ -85,7 +105,7 @@ export function resolveVariants(experiments: ExperimentConfig[]): VariantAssignm
     assignments[experiment.id] = pickVariant(experiment, userId).id;
   }
 
-  localStorage.setItem(STORAGE_KEY_VARIANTS, JSON.stringify(assignments));
+  safeSet(STORAGE_KEY_VARIANTS, JSON.stringify(assignments));
   return assignments;
 }
 

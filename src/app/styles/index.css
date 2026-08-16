@@ -269,8 +269,13 @@ canvas {
 
     &.scrolled {
       @apply top-0;
-      background-color: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
+
+      background-color: rgba(0, 0, 0, 0.92);
+
+      @supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+      }
     }
 
     &.not-scrolled {
@@ -662,7 +667,6 @@ canvas {
 
   #skills {
     @apply relative h-fix md:w-[370%] w-[425%] flex flex-nowrap z-10 overflow-hidden;
-    perspective: 1000px;
 
     --edge: rgba(255, 255, 255, 0.1);
     --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.045));
@@ -678,7 +682,7 @@ canvas {
     }
 
     section.horizontal-section {
-      @apply md:w-[80vw] w-[100vw] flex-center flex-col bg-black h-fix bg-center bg-no-repeat will-change-transform;
+      @apply md:w-[80vw] w-[100vw] flex-center flex-col bg-black h-fix bg-center bg-no-repeat;
     }
 
     .heading {
@@ -720,7 +724,7 @@ canvas {
       box-shadow:
         var(--hi),
         0 18px 44px rgba(0, 0, 0, 0.34);
-      contain: layout paint style;
+      contain: layout style;
 
       &::before {
         content: '';
@@ -729,7 +733,6 @@ canvas {
 
         background-image: url(/images/noise.png);
         opacity: 0.035;
-        mix-blend-mode: overlay;
       }
 
       &::after {
@@ -748,6 +751,7 @@ canvas {
     .skill-icon {
       @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-[background-color,scale] duration-500 ease-in-out;
 
+      background: var(--skill-color);
       background: color-mix(in srgb, var(--skill-color) 72%, var(--skill-base));
       shape-rendering: geometricPrecision;
     }
@@ -757,8 +761,9 @@ canvas {
     }
 
     .skill-badge {
-      @apply flex items-center md:gap-2 xl:gap-3 gap-1 rounded-full md:pr-3 xl:pr-5 pr-2.5 md:h-12 xl:h-14 h-9 w-fit will-change-[transform,opacity] transition-[background,box-shadow] duration-400;
+      @apply flex items-center md:gap-2 xl:gap-3 gap-1 rounded-full md:pr-3 xl:pr-5 pr-2.5 md:h-12 xl:h-14 h-9 w-fit transition-[background,box-shadow] duration-400;
 
+      background: var(--skill-back);
       background: color-mix(in srgb, var(--skill-back) 55%, var(--skill-base));
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -767,6 +772,7 @@ canvas {
       &:hover {
         @apply cursor-pointer;
 
+        background: var(--skill-back);
         background: color-mix(in srgb, var(--skill-back) 85%, var(--skill-base));
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.16),

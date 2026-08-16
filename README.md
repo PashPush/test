@@ -1,4 +1,4 @@
-# pahov.ru
+# pаhоv.ru
 
 Portfolio landing page. React 19 + TypeScript + Vite + Tailwind CSS v4, GSAP-driven
 animations, WebGL background on Three.js.
@@ -19,16 +19,16 @@ missing key ships a broken contact form without failing the build.
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Dev server on http://localhost:5173 |
-| `npm run build` | `tsc -b` + production build into `dist/` |
-| `npm run preview` | Serve the built `dist/` locally |
-| `npm run lint` | ESLint |
-| `npm run test` | Unit tests (Vitest, watch mode) |
-| `npm run test:run` | Unit tests, single run |
-| `npm run test:e2e` | E2E tests (Playwright), starts the dev server itself |
-| `npm run test:e2e:install` | Download Playwright browsers |
+| Command                    | Description                                          |
+| -------------------------- | ---------------------------------------------------- |
+| `npm run dev`              | Dev server on http://localhost:5173                  |
+| `npm run build`            | `tsc -b` + production build into `dist/`             |
+| `npm run preview`          | Serve the built `dist/` locally                      |
+| `npm run lint`             | ESLint                                               |
+| `npm run test`             | Unit tests (Vitest, watch mode)                      |
+| `npm run test:run`         | Unit tests, single run                               |
+| `npm run test:e2e`         | E2E tests (Playwright), starts the dev server itself |
+| `npm run test:e2e:install` | Download Playwright browsers                         |
 
 ## Reproducible installs
 
