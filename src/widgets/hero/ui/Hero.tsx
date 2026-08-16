@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Button from '@/shared/ui/Button';
+import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 // @ts-expect-error jsx
 import ShaderPhoto from '@/shared/webgl/ShaderPhoto';
 import Interface from '@/features/chainsaw-interface/ui/Interface';
@@ -51,7 +52,9 @@ const Hero = () => {
           <Button text={t('hero.cta')} className="hero-line hero-button" id="work" />
         </div>
       </section>
-      <ShaderPhoto />
+      <ErrorBoundary>
+        <ShaderPhoto />
+      </ErrorBoundary>
     </>
   );
 };
