@@ -369,25 +369,36 @@ canvas {
 
   /* Hamburger button */
   .hamburger {
-    @apply flex flex-col gap-1.5 bg-transparent border-none cursor-pointer ml-4;
+    @apply relative w-6 h-[18px] p-0 bg-transparent border-none cursor-pointer ml-4;
 
     .hamburger-line {
-      @apply w-6 h-[2px] bg-white rounded-sm;
+      @apply absolute left-0 w-6 h-[2px] bg-white rounded-sm;
       transition:
         transform 0.3s,
         opacity 0.2s;
     }
 
+    .hamburger-line:nth-child(1) {
+      top: 0;
+    }
+    .hamburger-line:nth-child(2) {
+      top: 8px;
+    }
+    .hamburger-line:nth-child(3) {
+      top: 16px;
+    }
+
     &.active .hamburger-line:nth-child(1) {
-      transform: translateY(9px) rotate(45deg);
+      transform: translateY(8px) rotate(45deg);
     }
 
     &.active .hamburger-line:nth-child(2) {
       opacity: 0;
+      transform: scaleX(0);
     }
 
     &.active .hamburger-line:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
+      transform: translateY(-8px) rotate(-45deg);
     }
   }
 
