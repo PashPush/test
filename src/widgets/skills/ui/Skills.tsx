@@ -1,7 +1,6 @@
 import gsap from 'gsap';
 import { useLayoutEffect, useRef, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { setNeuroVisible } from '@/shared/webgl/neuro';
 import TechStack from './TechStack';
 import Process from './Process';
 import Beyond from './Beyond';
@@ -16,6 +15,12 @@ const Skills = () => {
   const isHorizontalSwipe = useRef<boolean>(false);
   const latestDiffX = useRef<number>(0);
   const touchRafId = useRef<number | null>(null);
+  const setNeuroVisible = (visible: boolean) => {
+    const canvas = document.querySelector('canvas#neuro');
+    if (!canvas) return;
+    if (visible) canvas.setAttribute('data-visible', 'true');
+    else canvas.removeAttribute('data-visible');
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {

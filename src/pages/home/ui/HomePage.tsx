@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from '@/widgets/navbar/ui/Navbar';
 import Hero from '@/widgets/hero/ui/Hero';
@@ -21,6 +21,48 @@ const sectionComponents: Record<SectionKey, React.FC> = {
 
 const HomePage = () => {
   const { sectionOrder } = useAB();
+
+  useEffect(() => {
+    let disposed = false;
+    let disposeNeuro: (() => void) | undefined;
+    const targets = ['skills', 'contacts']
+      .map(id => document.getElementById(id))
+      .filter((target): target is HTMLElement => target !== null);
+
+    const loadNeuro = () => {
+      observer?.disconnect();
+      void import('@/shared/webgl/neuro')
+        .then(({ initNeuro }) => {
+          if (!disposed) disposeNeuro = initNeuro();
+        })
+        .catch(error => {
+          document.getElementById('contacts')?.classList.add('fallback-bg');
+          console.warn('Contact WebGL could not be loaded; using the static fallback.', error);
+        });
+    };
+
+    const observer =
+      'IntersectionObserver' in window
+        ? new IntersectionObserver(
+            entries => {
+              if (entries.some(entry => entry.isIntersecting)) loadNeuro();
+            },
+            { rootMargin: '800px 0px' }
+          )
+        : null;
+
+    if (observer && targets.length) {
+      targets.forEach(target => observer.observe(target));
+    } else {
+      loadNeuro();
+    }
+
+    return () => {
+      disposed = true;
+      observer?.disconnect();
+      disposeNeuro?.();
+    };
+  }, []);
 
   useEffect(() => {
     ScrollTrigger.refresh();

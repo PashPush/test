@@ -6,7 +6,6 @@ import '@/features/ab-testing';
 import './styles/index.css';
 import App from './App';
 import { ABProvider } from '@/features/ab-testing';
-import { initNeuro } from '@/shared/webgl/neuro';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,5 +14,3 @@ createRoot(document.getElementById('root')!).render(
     </ABProvider>
   </StrictMode>
 );
-
-initNeuro();
