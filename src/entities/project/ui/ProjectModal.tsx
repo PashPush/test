@@ -117,7 +117,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
               viewTransitionName: `project-image-${project.id}`,
             }}
           >
-            <img src={project.mainImage} alt={project.name} />
+            <img src={project.mainImage} alt={project.name} decoding="async" />
           </div>
 
           <div className="project-modal-body">
@@ -144,7 +144,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   <Fragment key={index}>
                     <p>{t(`projects.${project.id}.screenshots.${index}`)}</p>
                     <div className="project-modal-screenshot">
-                      <img src={src} alt={`${project.name} screenshot ${index + 1}`} />
+                      <img src={src} alt={`${project.name} screenshot ${index + 1}`} loading="lazy" decoding="async" />
                     </div>
                   </Fragment>
                 ))}

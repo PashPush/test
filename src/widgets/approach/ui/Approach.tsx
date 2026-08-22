@@ -81,9 +81,9 @@ const Approach = () => {
               className={classNames('abs-center masked-img size-full object-contain', {
                 'masked-img-mobile': isMobile,
               })}
-              fetchPriority="low"
-              width={400}
-              height={320}
+              decoding="async"
+              width={1920}
+              height={1683}
             />
           </div>
 

@@ -82,7 +82,14 @@ const Experience = () => {
                       className="timeline-card"
                     >
                       <a href={card.url} target="_blank" className="relative z-10">
-                        <img src={card.imgPath} alt={card.logoAlt} />
+                        <img
+                          src={card.imgPath}
+                          alt={card.logoAlt}
+                          width={card.imgWidth}
+                          height={card.imgHeight}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </a>
                     </BlinkCard>
                   </div>
@@ -94,7 +101,7 @@ const Experience = () => {
                       </div>
                       <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-20">
                         <div className="timeline-logo">
-                          <img src={card.logoPath} alt={card.logoAlt} width={50} height={50} loading="lazy" />
+                          <img src={card.logoPath} alt={card.logoAlt} width={50} height={50} loading="lazy" decoding="async" />
                         </div>
                         <div>
                           <h2 className="font-semibold sm:text-3xl text-2xl">{t(`expCards.${card.index}.title`)}</h2>

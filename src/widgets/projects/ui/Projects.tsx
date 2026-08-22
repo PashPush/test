@@ -136,7 +136,7 @@ const Projects = () => {
               aria-label={t('projects.pt.name')}
             >
               <div className="image-wrapper bg-[#168be8]" style={getTransitionStyles('pt', 'image')}>
-                <img src="/images/project-pt.webp" alt="Power Thesaurus" loading="lazy" />
+                <img src="/images/project-pt.webp" alt="Power Thesaurus" loading="lazy" decoding="async" width={1400} height={992} />
               </div>
               <div className="text-content">
                 <h2 style={getTransitionStyles('pt', 'title')}>{t('projects.pt.name')}</h2>
@@ -155,7 +155,7 @@ const Projects = () => {
                 aria-label={t('projects.index.name')}
               >
                 <div className="image-wrapper project-index" style={getTransitionStyles('index', 'image')}>
-                  <img src="/images/project-index1.webp" alt="Index Marketing" loading="lazy" />
+                  <img src="/images/project-index1.webp" alt="Index Marketing" loading="lazy" decoding="async" width={799} height={500} />
                 </div>
                 <h2 style={getTransitionStyles('index', 'title')}>{t('projects.index.name')}</h2>
               </div>
@@ -170,7 +170,7 @@ const Projects = () => {
                 aria-label={t('projects.sagama.name')}
               >
                 <div className="image-wrapper project-sagama" style={getTransitionStyles('sagama', 'image')}>
-                  <img src="/images/project-sagama1.webp" alt="Sagama" loading="lazy" />
+                  <img src="/images/project-sagama1.webp" alt="Sagama" loading="lazy" decoding="async" width={799} height={500} />
                 </div>
                 <h2 style={getTransitionStyles('sagama', 'title')}>{t('projects.sagama.name')}</h2>
               </div>
