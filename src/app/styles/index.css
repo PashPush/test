@@ -1311,15 +1311,23 @@ form {
 
   input,
   textarea {
-    @apply w-full px-4 py-4 md:text-base text-sm placeholder:text-blue-50 bg-[#212224] rounded-md border border-transparent outline-none transition-[border-color,box-shadow] duration-200;
+    @apply w-full px-4 py-4 md:text-base text-sm placeholder:text-blue-50 bg-[#212224] rounded-md border border-transparent outline-none transition-[border-color,box-shadow,opacity] duration-200;
 
-    &:user-invalid {
+    &[aria-invalid='true'] {
       @apply border-[#e5484d]/60;
+    }
+
+    &:read-only {
+      @apply opacity-60 cursor-default;
     }
 
     &:focus-visible {
       @apply border-blue-50/70 shadow-[0_0_0_3px_rgba(131,156,181,0.15)];
     }
+  }
+
+  .form-error {
+    @apply mt-1.5 text-sm text-[#ff8a8d];
   }
 
   textarea {

@@ -202,8 +202,16 @@
     "messagePlaceholder": "Have a vacancy or an interesting project? Write a few words :)",
     "sending": "Sending...",
     "send": "Send",
+    "sent": "Sent ✓",
+    "retry": "Try again",
+    "dismiss": "Close notification",
     "success": "Message sent!",
     "error": "Couldn't send. Please try again or message me on",
-    "prefer": "Most convenient Telegram"
+    "prefer": "Most convenient Telegram",
+    "errors": {
+      "required": "Please fill in this field",
+      "contactShort": "Leave a contact I can reply to",
+      "messageShort": "A few more words, please — at least {{min}} characters"
+    }
   }
 }
