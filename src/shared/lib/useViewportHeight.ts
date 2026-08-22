@@ -1,61 +1,56 @@
 import { useEffect, useRef } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+const isZoomed = () => (window.visualViewport?.scale ?? 1) > 1.01;
+
 export const useViewportHeight = () => {
-  const maxHeightRef = useRef<number>(0);
+  const maxHeightRef = useRef(0);
+  const widthRef = useRef(0);
   const isInitializedRef = useRef(false);
 
   useEffect(() => {
     const setViewportHeight = (height: number) => {
-      const vh = height * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      document.documentElement.style.setProperty('--vh', `${height * 0.01}px`);
     };
 
     if (!isInitializedRef.current) {
       maxHeightRef.current = window.innerHeight;
+      widthRef.current = document.documentElement.clientWidth;
       setViewportHeight(maxHeightRef.current);
       isInitializedRef.current = true;
     }
 
+    const apply = (height: number) => {
+      maxHeightRef.current = height;
+      widthRef.current = document.documentElement.clientWidth;
+      setViewportHeight(height);
+      ScrollTrigger.refresh();
+    };
+
+    const measure = () => {
+      if (isZoomed()) return;
+
+      const width = document.documentElement.clientWidth;
+      const height = window.innerHeight;
+      if (width !== widthRef.current || height > maxHeightRef.current) apply(height);
+    };
+
     let resizeTimeout: number | null = null;
-
-    const handleResize = () => {
-      const currentHeight = window.innerHeight;
-
-      if (currentHeight > maxHeightRef.current) {
-        setTimeout(() => {
-          maxHeightRef.current = currentHeight;
-          setViewportHeight(currentHeight);
-
-          ScrollTrigger.refresh();
-        }, 100);
-      }
+    const schedule = (delay: number) => () => {
+      if (resizeTimeout) window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(measure, delay);
     };
 
-    const handleOrientationChange = () => {
-      setTimeout(() => {
-        const currentHeight = window.innerHeight;
-        maxHeightRef.current = currentHeight;
-        setViewportHeight(currentHeight);
+    const onResize = schedule(150);
+    const onOrientationChange = schedule(300);
 
-        ScrollTrigger.refresh();
-      }, 200);
-    };
-
-    const debouncedResize = () => {
-      if (resizeTimeout) {
-        window.clearTimeout(resizeTimeout);
-      }
-      resizeTimeout = window.setTimeout(handleResize, 150);
-    };
-
-    window.addEventListener('resize', debouncedResize);
-    window.addEventListener('orientationchange', handleOrientationChange);
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('orientationchange', onOrientationChange, { passive: true });
 
     return () => {
       if (resizeTimeout) window.clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', debouncedResize);
-      window.removeEventListener('orientationchange', handleOrientationChange);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onOrientationChange);
     };
   }, []);
 };

@@ -5,6 +5,11 @@ import fragmentShader from './shaders/particles/fragment.glsl';
 import { useEffect, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
+const layoutSize = gap => ({
+  width: document.documentElement.clientWidth,
+  height: Math.max(1, document.documentElement.clientHeight - gap),
+});
+
 const ShaderPhoto = () => {
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const horizontal = useMediaQuery({ maxHeight: 600 });
@@ -16,7 +21,7 @@ const ShaderPhoto = () => {
     const start = () => {
       if (disposed) return;
       const canvas = document.querySelector('#webgl');
-      if (!canvas || !window.innerWidth || !window.innerHeight) {
+      if (!canvas || !document.documentElement.clientWidth || !document.documentElement.clientHeight) {
         deferredId = requestAnimationFrame(start);
         return;
       }
@@ -29,10 +34,9 @@ const ShaderPhoto = () => {
       }
 
       const gap = horizontal ? 0 : isMobile ? 150 : 100;
-      const quality = isMobile ? { dpr: 2, segments: 104, frameMs: 1000 / 60 } : { dpr: 2, segments: 128, frameMs: 0 };
+      const quality = isMobile ? { dpr: 2, segments: 104 } : { dpr: 2, segments: 128 };
       const sizes = {
-        width: innerWidth,
-        height: Math.max(1, innerHeight - gap),
+        ...layoutSize(gap),
         pixelRatio: Math.min(devicePixelRatio, quality.dpr),
       };
       renderer.setClearColor('#000');
@@ -143,8 +147,10 @@ const ShaderPhoto = () => {
           );
       };
       const resize = () => {
-        sizes.width = innerWidth;
-        sizes.height = Math.max(1, innerHeight - gap);
+        const { width, height } = layoutSize(gap);
+        if (width === sizes.width && height === sizes.height) return;
+        sizes.width = width;
+        sizes.height = height;
         sizes.pixelRatio = Math.min(devicePixelRatio, quality.dpr);
         material.uniforms.uResolution.value.set(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio);
         camera.aspect = sizes.width / sizes.height;

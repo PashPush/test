@@ -74,6 +74,7 @@ const MobileMenu = ({ isOpen, onClose, currentLink, navLinks }: MobileMenuProps)
 
       <div
         className={classNames('mobile-menu', { open: isOpen })}
+        inert={!isOpen}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

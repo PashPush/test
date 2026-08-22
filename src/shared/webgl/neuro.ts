@@ -90,7 +90,8 @@ export function initNeuro() {
     pointer.x += (pointer.targetX - pointer.x) * 0.2;
     pointer.y += (pointer.targetY - pointer.y) * 0.2;
     gl.uniform1f(uniforms.time, time);
-    gl.uniform2f(uniforms.pointer, pointer.x / innerWidth, 1 - pointer.y / innerHeight);
+    const { clientWidth, clientHeight } = document.documentElement;
+    gl.uniform2f(uniforms.pointer, pointer.x / clientWidth, 1 - pointer.y / clientHeight);
     gl.uniform1f(uniforms.scroll, scrollY / (2 * innerHeight));
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     raf = requestAnimationFrame(render);
@@ -100,11 +101,16 @@ export function initNeuro() {
   };
   const resize = () => {
     if (lost) return;
-    const dpr = Math.min(devicePixelRatio, innerWidth < 768 ? 1 : 2);
-    canvas.width = innerWidth * dpr;
-    canvas.height = innerHeight * dpr;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform1f(uniforms.ratio, canvas.width / canvas.height);
+    const { clientWidth, clientHeight } = document.documentElement;
+    if (!clientWidth || !clientHeight) return;
+    const dpr = Math.min(devicePixelRatio, clientWidth < 768 ? 1 : 2);
+    const width = Math.round(clientWidth * dpr);
+    const height = Math.round(clientHeight * dpr);
+    if (canvas.width === width && canvas.height === height) return;
+    canvas.width = width;
+    canvas.height = height;
+    gl.viewport(0, 0, width, height);
+    gl.uniform1f(uniforms.ratio, width / height);
   };
   const move = (event: PointerEvent) => {
     pointer.targetX = event.clientX;
