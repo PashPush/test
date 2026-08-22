@@ -29,7 +29,7 @@ const ShaderPhoto = () => {
       }
 
       const gap = horizontal ? 0 : isMobile ? 150 : 100;
-      const quality = isMobile ? { dpr: 1, segments: 96, frameMs: 1000 / 60 } : { dpr: 2, segments: 128, frameMs: 0 };
+      const quality = isMobile ? { dpr: 2, segments: 104, frameMs: 1000 / 60 } : { dpr: 2, segments: 128, frameMs: 0 };
       const sizes = {
         width: innerWidth,
         height: Math.max(1, innerHeight - gap),

@@ -1311,7 +1311,7 @@ form {
 
   input,
   textarea {
-    @apply w-full px-4 py-4 md:text-base text-sm placeholder:text-blue-50 bg-[#212224] rounded-md border border-transparent outline-none transition-[border-color,box-shadow,opacity] duration-200;
+    @apply w-full px-4 py-4 md:text-base text-base placeholder:text-blue-50 bg-[#212224] rounded-md border border-transparent outline-none transition-[border-color,box-shadow,opacity] duration-200;
 
     &[aria-invalid='true'] {
       @apply border-[#e5484d]/60;
