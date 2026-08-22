@@ -1,267 +1,213 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import particlesVertexShader from './shaders/particles/vertex.glsl';
-import particlesFragmentShader from './shaders/particles/fragment.glsl';
+import vertexShader from './shaders/particles/vertex.glsl';
+import fragmentShader from './shaders/particles/fragment.glsl';
 import { useEffect, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const ShaderPhoto = () => {
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const horizontal = useMediaQuery({ maxHeight: 600 });
-  const mountedRef = useRef(false);
   const cleanupRef = useRef(null);
 
-  function run() {
-    const canvas = document.querySelector('#webgl');
-    if (!canvas) return;
+  useEffect(() => {
+    let disposed = false;
+    let deferredId = 0;
+    const start = () => {
+      if (disposed) return;
+      const canvas = document.querySelector('#webgl');
+      if (!canvas || !window.innerWidth || !window.innerHeight) {
+        deferredId = requestAnimationFrame(start);
+        return;
+      }
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, powerPreference: 'low-power' });
+      } catch (error) {
+        console.warn('Hero WebGL is unavailable.', error);
+        return;
+      }
 
-    if (window.outerWidth === 0 || window.outerHeight === 0) {
-      const deferredId = requestAnimationFrame(() => run());
-      return () => cancelAnimationFrame(deferredId);
-    }
-
-    // Scene
-    const scene = new THREE.Scene();
-
-    // Loaders
-    const textureLoader = new THREE.TextureLoader();
-    // todo: make it dynamic based on screen size
-    const gap = horizontal ? 0 : isMobile ? 150 : 100;
-
-    /**
-     * Sizes - use clientWidth/clientHeight for Safari iOS compatibility
-     */
-    const sizes = {
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight - gap,
-      pixelRatio: Math.min(window.devicePixelRatio, 2),
-    };
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
-      antialias: true,
-    });
-    renderer.setClearColor('#000');
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(sizes.pixelRatio);
-
-    // Displacement
-    const displacement = {};
-
-    // 2D Canvas
-    displacement.canvas = document.createElement('canvas');
-    displacement.canvas.width = 128;
-    displacement.canvas.height = 128;
-
-    // Context
-    displacement.context = displacement.canvas.getContext('2d', { willReadFrequently: true });
-    displacement.context.fillRect(0, 0, displacement.canvas.width, displacement.canvas.height);
-
-    // Glow image
-    displacement.glowImage = new Image();
-    displacement.glowImage.src = '/images/glow.png';
-
-    // Texture
-    displacement.texture = new THREE.CanvasTexture(displacement.canvas);
-    displacement.texture.minFilter = THREE.LinearFilter;
-    displacement.texture.magFilter = THREE.LinearFilter;
-    displacement.texture.generateMipmaps = false;
-    displacement.texture.flipY = false;
-
-    /**
-     * Particles
-     */
-    const particlesGeometry = new THREE.PlaneGeometry(10, 10, 128, 128);
-    particlesGeometry.setIndex(null);
-    particlesGeometry.deleteAttribute('normal');
-
-    const intensitesArray = new Float32Array(particlesGeometry.attributes.position.count);
-    const anglesArray = new Float32Array(particlesGeometry.attributes.position.count);
-
-    for (let i = 0; i < particlesGeometry.attributes.position.count; i++) {
-      intensitesArray[i] = Math.random();
-      anglesArray[i] = Math.random() * Math.PI * 2;
-    }
-
-    particlesGeometry.setAttribute('aIntensity', new THREE.BufferAttribute(intensitesArray, 1));
-    particlesGeometry.setAttribute('aAngle', new THREE.BufferAttribute(anglesArray, 1));
-
-    // Picture texture
-    const pictureTexture = textureLoader.load('/images/pavel-bw.webp');
-    pictureTexture.minFilter = THREE.LinearFilter;
-    pictureTexture.magFilter = THREE.LinearFilter;
-    pictureTexture.generateMipmaps = false;
-
-    const particlesMaterial = new THREE.ShaderMaterial({
-      vertexShader: particlesVertexShader,
-      fragmentShader: particlesFragmentShader,
-      uniforms: {
-        uResolution: new THREE.Uniform(
-          new THREE.Vector2(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio)
-        ),
-        uPictureTexture: new THREE.Uniform(pictureTexture),
-        uDisplacementTexture: new THREE.Uniform(displacement.texture),
-      },
-    });
-
-    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particles);
-
-    // Interactive plane
-    displacement.interactivePlane = new THREE.Mesh(
-      new THREE.PlaneGeometry(10, 10),
-      new THREE.MeshBasicMaterial({ color: 'red', side: THREE.DoubleSide })
-    );
-    displacement.interactivePlane.visible = false;
-    scene.add(displacement.interactivePlane);
-
-    // Raycaster
-    displacement.raycaster = new THREE.Raycaster();
-
-    // Coordinates
-    displacement.screenCursor = new THREE.Vector2(9999, 9999);
-    displacement.canvasCursor = new THREE.Vector2(9999, 9999);
-    displacement.canvasCursorPrevious = new THREE.Vector2(9999, 9999);
-
-    const handlePointerMove = e => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      displacement.screenCursor.x = (x / rect.width) * 2 - 1;
-      displacement.screenCursor.y = -(y / rect.height) * 2 + 1;
-    };
-
-    window.addEventListener('pointermove', handlePointerMove);
-
-    /**
-     * Camera
-     */
-    const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100);
-    camera.position.set(0, 0, isMobile ? 27 : 20);
-    scene.add(camera);
-
-    const handleResize = () => {
-      const newWidth = document.documentElement.clientWidth;
-      const newHeight = document.documentElement.clientHeight - gap;
-
-      if (sizes.width === newWidth && sizes.height === newHeight) return;
-      sizes.width = newWidth;
-      sizes.height = newHeight;
-      sizes.pixelRatio = Math.min(window.devicePixelRatio, 2);
-
-      particlesMaterial.uniforms.uResolution.value.set(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio);
-
-      camera.aspect = sizes.width / sizes.height;
-      camera.updateProjectionMatrix();
-
+      const gap = horizontal ? 0 : isMobile ? 150 : 100;
+      const quality = isMobile ? { dpr: 1, segments: 96, frameMs: 1000 / 60 } : { dpr: 2, segments: 128, frameMs: 0 };
+      const sizes = {
+        width: innerWidth,
+        height: Math.max(1, innerHeight - gap),
+        pixelRatio: Math.min(devicePixelRatio, quality.dpr),
+      };
+      renderer.setClearColor('#000');
       renderer.setSize(sizes.width, sizes.height);
       renderer.setPixelRatio(sizes.pixelRatio);
-    };
-
-    const orientationTimeouts = [];
-
-    const handleOrientationChange = () => {
-      orientationTimeouts.forEach(clearTimeout);
-      orientationTimeouts.length = 0;
-      [100, 200, 400].forEach(delay => {
-        orientationTimeouts.push(setTimeout(handleResize, delay));
+      const scene = new THREE.Scene();
+      const paint = document.createElement('canvas');
+      paint.width = paint.height = isMobile ? 96 : 128;
+      const context = paint.getContext('2d', { willReadFrequently: true });
+      if (!context) {
+        renderer.dispose();
+        return;
+      }
+      context.fillRect(0, 0, paint.width, paint.height);
+      const displacement = new THREE.CanvasTexture(paint);
+      displacement.minFilter = displacement.magFilter = THREE.LinearFilter;
+      displacement.generateMipmaps = false;
+      displacement.flipY = false;
+      const glow = new Image();
+      glow.src = '/images/glow.png';
+      const geometry = new THREE.PlaneGeometry(10, 10, quality.segments, quality.segments);
+      geometry.setIndex(null);
+      geometry.deleteAttribute('normal');
+      const intensity = new Float32Array(geometry.attributes.position.count),
+        angle = new Float32Array(geometry.attributes.position.count);
+      for (let i = 0; i < intensity.length; i++) {
+        intensity[i] = Math.random();
+        angle[i] = Math.random() * Math.PI * 2;
+      }
+      geometry.setAttribute('aIntensity', new THREE.BufferAttribute(intensity, 1));
+      geometry.setAttribute('aAngle', new THREE.BufferAttribute(angle, 1));
+      let stop = () => {};
+      const image = new THREE.TextureLoader().load('/images/pavel-bw.webp', undefined, undefined, () => {
+        stop();
       });
-    };
-
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleOrientationChange);
-
-    // Controls
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableDamping = true;
-    controls.enableZoom = false;
-
-    /**
-     * Animate
-     */
-    let animationFrameId;
-    const tick = () => {
-      controls.update();
-
-      displacement.raycaster.setFromCamera(displacement.screenCursor, camera);
-      const intersections = displacement.raycaster.intersectObject(displacement.interactivePlane);
-
-      if (intersections.length) {
-        const uv = intersections[0].uv;
-        displacement.canvasCursor.x = uv.x * displacement.canvas.width;
-        displacement.canvasCursor.y = uv.y * displacement.canvas.height;
-      }
-
-      displacement.context.globalCompositeOperation = 'source-over';
-      displacement.context.globalAlpha = 0.02;
-      displacement.context.fillRect(0, 0, displacement.canvas.width, displacement.canvas.height);
-
-      const cursorDistance = displacement.canvasCursorPrevious.distanceTo(displacement.canvasCursor);
-      displacement.canvasCursorPrevious.copy(displacement.canvasCursor);
-      const alpha = Math.min(cursorDistance * 0.1, 1);
-
-      const glowSize = displacement.canvas.width * 0.25;
-      displacement.context.globalCompositeOperation = 'lighten';
-      displacement.context.globalAlpha = alpha;
-
-      displacement.context.drawImage(
-        displacement.glowImage,
-        displacement.canvasCursor.x - glowSize * 0.5,
-        displacement.canvasCursor.y - glowSize * 0.5,
-        glowSize,
-        glowSize
+      image.minFilter = image.magFilter = THREE.LinearFilter;
+      image.generateMipmaps = false;
+      const material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: {
+          uResolution: new THREE.Uniform(
+            new THREE.Vector2(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio)
+          ),
+          uPictureTexture: new THREE.Uniform(image),
+          uDisplacementTexture: new THREE.Uniform(displacement),
+        },
+      });
+      scene.add(new THREE.Points(geometry, material));
+      const plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(10, 10),
+        new THREE.MeshBasicMaterial({ side: THREE.DoubleSide })
       );
-
-      displacement.texture.needsUpdate = true;
-
-      renderer.render(scene, camera);
-
-      animationFrameId = window.requestAnimationFrame(tick);
+      plane.visible = false;
+      scene.add(plane);
+      const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100);
+      camera.position.set(0, 0, isMobile ? 27 : 20);
+      scene.add(camera);
+      const controls = new OrbitControls(camera, canvas);
+      controls.enableDamping = true;
+      controls.enableZoom = false;
+      const raycaster = new THREE.Raycaster(),
+        screen = new THREE.Vector2(9999, 9999),
+        cursor = new THREE.Vector2(9999, 9999),
+        previous = new THREE.Vector2(9999, 9999);
+      let raf = 0,
+        pageVisible = !document.hidden,
+        inViewport = true,
+        lastFrame = 0;
+      stop = () => {
+        if (raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      };
+      const tick = now => {
+        if (!pageVisible || !inViewport || disposed) return stop();
+        raf = requestAnimationFrame(tick);
+        if (quality.frameMs && now - lastFrame < quality.frameMs) return;
+        lastFrame = now;
+        controls.update();
+        raycaster.setFromCamera(screen, camera);
+        const hit = raycaster.intersectObject(plane)[0];
+        if (hit?.uv) cursor.set(hit.uv.x * paint.width, hit.uv.y * paint.height);
+        context.globalCompositeOperation = 'source-over';
+        context.globalAlpha = 0.02;
+        context.fillRect(0, 0, paint.width, paint.height);
+        const alpha = Math.min(previous.distanceTo(cursor) * 0.1, 1);
+        previous.copy(cursor);
+        const glowSize = paint.width * 0.25;
+        if (glow.complete) {
+          context.globalCompositeOperation = 'lighten';
+          context.globalAlpha = alpha;
+          context.drawImage(glow, cursor.x - glowSize / 2, cursor.y - glowSize / 2, glowSize, glowSize);
+        }
+        displacement.needsUpdate = true;
+        renderer.render(scene, camera);
+      };
+      const play = () => {
+        if (!raf && pageVisible && inViewport && !disposed) raf = requestAnimationFrame(tick);
+      };
+      const pointer = event => {
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width && rect.height)
+          screen.set(
+            ((event.clientX - rect.left) / rect.width) * 2 - 1,
+            -((event.clientY - rect.top) / rect.height) * 2 + 1
+          );
+      };
+      const resize = () => {
+        sizes.width = innerWidth;
+        sizes.height = Math.max(1, innerHeight - gap);
+        sizes.pixelRatio = Math.min(devicePixelRatio, quality.dpr);
+        material.uniforms.uResolution.value.set(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio);
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(sizes.pixelRatio);
+      };
+      const visibility = () => {
+        pageVisible = !document.hidden;
+        pageVisible ? play() : stop();
+      };
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          inViewport = entry.isIntersecting;
+          inViewport ? play() : stop();
+        },
+        { threshold: 0.01 }
+      );
+      const lost = event => {
+        event.preventDefault();
+        stop();
+      };
+      const restored = () => {
+        if (!disposed) {
+          cleanup();
+          start();
+        }
+      };
+      const cleanup = () => {
+        stop();
+        observer.disconnect();
+        window.removeEventListener('pointermove', pointer);
+        window.removeEventListener('resize', resize);
+        document.removeEventListener('visibilitychange', visibility);
+        canvas.removeEventListener('webglcontextlost', lost);
+        canvas.removeEventListener('webglcontextrestored', restored);
+        controls.dispose();
+        geometry.dispose();
+        material.dispose();
+        displacement.dispose();
+        image.dispose();
+        plane.geometry.dispose();
+        plane.material.dispose();
+        renderer.dispose();
+      };
+      window.addEventListener('pointermove', pointer, { passive: true });
+      window.addEventListener('resize', resize, { passive: true });
+      document.addEventListener('visibilitychange', visibility);
+      canvas.addEventListener('webglcontextlost', lost, false);
+      canvas.addEventListener('webglcontextrestored', restored, false);
+      observer.observe(canvas);
+      play();
+      cleanupRef.current = cleanup;
     };
-
-    tick();
-
-    const initialResizeId = requestAnimationFrame(() => {
-      requestAnimationFrame(handleResize);
-    });
-
+    start();
     return () => {
-      orientationTimeouts.forEach(clearTimeout);
-
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleOrientationChange);
-      window.removeEventListener('pointermove', handlePointerMove);
-      cancelAnimationFrame(initialResizeId);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-
-      particlesGeometry.dispose();
-      particlesMaterial.dispose();
-      displacement.texture.dispose();
-      pictureTexture.dispose();
-      renderer.dispose();
-      controls.dispose();
-    };
-  }
-
-  useEffect(() => {
-    if (mountedRef.current) return;
-    mountedRef.current = true;
-
-    cleanupRef.current = run();
-
-    return () => {
-      if (cleanupRef.current) {
-        cleanupRef.current();
-        cleanupRef.current = null;
-      }
-      mountedRef.current = false;
+      disposed = true;
+      cancelAnimationFrame(deferredId);
+      cleanupRef.current?.();
+      cleanupRef.current = null;
     };
   }, [isMobile, horizontal]);
-
-  return <canvas id="webgl"></canvas>;
+  return <canvas id="webgl" aria-label="Interactive portrait" />;
 };
 
 export default ShaderPhoto;

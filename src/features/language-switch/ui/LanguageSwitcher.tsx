@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 

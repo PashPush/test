@@ -31,7 +31,7 @@ vi.mock('gsap', () => ({
   },
 }));
 
-vi.mock('gsap/all', () => ({
+vi.mock('gsap/ScrollTrigger', () => ({
   ScrollTrigger: {
     create: vi.fn(),
     refresh: vi.fn(),
@@ -39,12 +39,6 @@ vi.mock('gsap/all', () => ({
     kill: vi.fn(),
     config: vi.fn(),
   },
-  SplitText: vi.fn(() => ({
-    chars: [],
-    words: [],
-    lines: [],
-    revert: vi.fn(),
-  })),
 }));
 
 vi.mock('@gsap/react', () => ({

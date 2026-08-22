@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 
 type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
 
@@ -35,6 +34,7 @@ const useContactForm = () => {
     setStatus('sending');
 
     try {
+      const { default: emailjs } = await import('@emailjs/browser');
       await emailjs.sendForm(
         import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,

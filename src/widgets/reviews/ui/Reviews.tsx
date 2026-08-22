@@ -53,6 +53,7 @@ const Reviews = () => {
                   height={60}
                   className="rounded-full md:w-20 w-15 aspect-square object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div>

@@ -29,7 +29,7 @@ import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
 import AnimatedGears from './AnimatedGears';
 import CICD from './icons/CICD';
-import N8n from './icons/N8n';
+// import N8n from './icons/N8n';
 import Gsap from './icons/Gsap';
 import Playwright from './icons/Playwright';
 
@@ -66,7 +66,7 @@ const backendAndTools: Skill[] = [
   { id: 'docker', name: 'Docker', Icon: SiDocker, color: '#3f94d3', colorBack: '#295f82' },
   { id: 'ci', name: 'CI/CD', Icon: CICD as IconType, color: '#ea9238', colorBack: '#a76522' },
   { id: 'git', name: 'Git', Icon: SiGit, color: '#d8614c', colorBack: '#863f33' },
-  { id: 'n8n', name: 'n8n', Icon: N8n as IconType, color: '#d75c78', colorBack: '#843c4e' },
+  // { id: 'n8n', name: 'n8n', Icon: N8n as IconType, color: '#d75c78', colorBack: '#843c4e' },
 ];
 
 const testing: Skill[] = [

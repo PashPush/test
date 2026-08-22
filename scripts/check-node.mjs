@@ -14,17 +14,21 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 if (process.env.SKIP_NODE_CHECK) process.exit(0);
+const diagnosticOnly = process.argv.includes('--warn') && !process.env.CI;
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const want = readFileSync(join(root, '.nvmrc'), 'utf8').trim();
 const have = process.versions.node;
 
-const major = (v) => Number(v.split('.')[0]);
+const major = v => Number(v.split('.')[0]);
 
 if (major(have) !== major(want)) {
-  const red = (s) => (process.stdout.isTTY ? `\x1b[31m${s}\x1b[0m` : s);
-  console.error(`
-${red('✖ Wrong Node major version.')}
+  const color = (code, value) => (process.stdout.isTTY ? `\x1b[${code}m${value}\x1b[0m` : value);
+  const heading = diagnosticOnly
+    ? color(33, '⚠ Wrong Node major version; continuing for local diagnostics.')
+    : color(31, '✖ Wrong Node major version.');
+  const message = `
+${heading}
 
   required:  ${want}   (from .nvmrc)
   running:   ${have}
@@ -37,11 +41,15 @@ ${red('✖ Wrong Node major version.')}
   If the mismatch is intentional:
 
       SKIP_NODE_CHECK=1 npm ci
-`);
-  process.exit(1);
+`;
+  if (diagnosticOnly) console.warn(message);
+  else {
+    console.error(message);
+    process.exit(1);
+  }
 }
 
-if (have !== want) {
+if (major(have) === major(want) && have !== want) {
   console.warn(
     `⚠ Running Node ${have}, but this project is built and tested on ${want} ` +
       `(.nvmrc). The major version matches, so continuing.`

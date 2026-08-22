@@ -1,7 +1,7 @@
 import gsap from 'gsap';
-import { ScrollTrigger, SplitText } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 gsap.config({
   nullTargetWarn: false,
