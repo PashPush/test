@@ -1,17 +1,33 @@
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Button from '@/shared/ui/Button';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
-// @ts-expect-error jsx
-import ShaderPhoto from '@/shared/webgl/ShaderPhoto';
 import Interface from '@/features/chainsaw-interface/ui/Interface';
 import { useMediaQuery } from 'react-responsive';
+
+// @ts-expect-error ShaderPhoto remains JSX until its Three.js migration is complete.
+const ShaderPhoto = lazy(() => import('@/shared/webgl/ShaderPhoto'));
 
 const Hero = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 460 });
+  const [loadShader, setLoadShader] = useState(false);
+
+  useEffect(() => {
+    const requestIdle = (window as Partial<Window>).requestIdleCallback;
+    const cancelIdle = (window as Partial<Window>).cancelIdleCallback;
+    if (requestIdle && cancelIdle) {
+      const idleId = requestIdle(() => setLoadShader(true), { timeout: 1200 });
+      return () => cancelIdle(idleId);
+    }
+
+    const timeoutId = window.setTimeout(() => setLoadShader(true), 400);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
   useGSAP(() => {
     gsap.fromTo('.title', { y: 50, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.4, duration: 1, ease: 'power2.inOut' });
     gsap.fromTo(
@@ -24,6 +40,9 @@ const Hero = () => {
   return (
     <>
       <section className="h-[92vh]">
+        <ErrorBoundary>
+          <Suspense fallback={null}>{loadShader ? <ShaderPhoto /> : null}</Suspense>
+        </ErrorBoundary>
         <div id="hero"></div>
         <div className="hero-layout">
           <h1 className="title">
@@ -52,9 +71,6 @@ const Hero = () => {
           <Button text={t('hero.cta')} className="hero-line hero-button" id="work" />
         </div>
       </section>
-      <ErrorBoundary>
-        <ShaderPhoto />
-      </ErrorBoundary>
     </>
   );
 };
