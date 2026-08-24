@@ -1,19 +1,19 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
 import glsl from 'vite-plugin-glsl';
 // import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), glsl() /* , visualizer({ open: true }) */],
+  plugins: [react(), glsl() /* , visualizer({ open: true }) */],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   build: {
+    target: 'chrome84',
     manifest: true,
     rollupOptions: {
       output: {

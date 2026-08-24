@@ -145,7 +145,7 @@ const Process = () => {
           ))}
         </div>
       </div>
-      <div className="noise sm:w-3/4"></div>
+      <div className="noise sm:!w-3/4"></div>
       {!isMobile && <Hands />}
     </section>
   );

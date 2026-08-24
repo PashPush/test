@@ -32,7 +32,7 @@ const LanguageSwitcher = () => {
   return (
     <div className="lang-switcher">
       {isMobile ? (
-        <button onClick={() => handleChange(alternateLang.code)} className="text-white text-base">
+        <button onClick={() => handleChange(alternateLang.code)} className="!text-white !text-base">
           {alternateLang.label}
         </button>
       ) : (

@@ -51,7 +51,7 @@ const Reviews = () => {
                   alt={t(`feedbacks.${feedback.index}.name`)}
                   width={60}
                   height={60}
-                  className="rounded-full md:w-20 w-15 aspect-square object-cover"
+                  className="rounded-full md:size-20 size-15 object-cover"
                   loading="lazy"
                   decoding="async"
                 />
@@ -65,7 +65,7 @@ const Reviews = () => {
         ))}
       </div>
 
-      <div className="absolute bottom-0 left-0 bg-gradient-to-b to-black w-full h-full"></div>
+      <div className="absolute bottom-0 left-0 bg-gradient-to-b from-transparent to-black w-full h-full"></div>
     </div>
   );
 };

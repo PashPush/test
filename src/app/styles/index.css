@@ -1,10 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yeseva+One&display=swap');
 
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* No explicit width here on purpose: viewport units include the classic scrollbar,
-   and an html/body sized in them is re-resolved mid-rotation on iOS, which is one
-   of the ways Safari talks itself into a wrong initial-scale. */
+@layer base {
+  button,
+  input[type='button'],
+  input[type='reset'],
+  input[type='submit'] {
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+  }
+
+  [hidden] {
+    display: none;
+  }
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -31,31 +45,6 @@ canvas {
   image-rendering: -webkit-optimize-contrast;
 }
 
-@theme {
-  --font-sans: sans-serif;
-  --font-yeseva-one: 'Yeseva One', serif;
-  --color-white-50: #d9ecff;
-  --color-black-50: #1c1c21;
-  --color-black-100: #0e0e10;
-  --color-black-200: #282732;
-  --color-blue-50: #839cb5;
-  --color-blue-100: #2d2d38;
-  --animate-wiggle: wiggle 2.5s ease-in-out infinite;
-  @keyframes wiggle {
-    0%,
-    10% {
-      transform: rotate(-2.5deg);
-    }
-    5% {
-      transform: rotate(2.5deg);
-    }
-    15%,
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-}
-
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
@@ -63,37 +52,32 @@ canvas {
   .flex-col-center {
     @apply flex flex-col justify-center items-center;
   }
-}
+  .col-center {
+    @apply flex flex-col justify-center items-center;
+  }
 
-@utility flex-center {
-  @apply flex justify-center items-center;
-}
+  .col-between {
+    @apply flex flex-col justify-between items-center;
+  }
 
-@utility col-center {
-  @apply flex flex-col justify-center items-center;
-}
+  .abs-center {
+    @apply absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
 
-@utility col-between {
-  @apply flex flex-col justify-between items-center;
-}
+  .text-gradient {
+    background: linear-gradient(to bottom, #ffffff, #898989);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-@utility abs-center {
-  @apply absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2;
-}
+  .radial-gradient {
+    background: radial-gradient(circle at center, #434343 0%, #000 50%, transparent 100%);
+  }
 
-@utility text-gradient {
-  background: linear-gradient(to bottom, #ffffff, #898989);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@utility radial-gradient {
-  background: radial-gradient(circle at center, #434343 0%, #000 50%, transparent 100%);
-}
-
-@utility h-fix {
-  height: calc(var(--vh, 1vh) * 100);
+  .h-fix {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 }
 
 .masked-img {
@@ -101,7 +85,7 @@ canvas {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: 40% auto;
-  translate: none;
+  transform: none;
 }
 
 .masked-img.masked-img-mobile {
@@ -264,7 +248,9 @@ canvas {
   }
 
   .chainsaw {
-    @apply absolute top-0 right-0 w-40 z-30 transform -rotate-60 translate-y-7 translate-x-5;
+    @apply absolute top-0 right-0 w-40 z-30;
+
+    transform: translate(20px, 28px) rotate(110deg) scale(1, -1);
   }
 
   .navbar {
@@ -311,10 +297,14 @@ canvas {
           }
 
           .underline {
-            @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full;
+            @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300;
           }
 
           .underline.active {
+            @apply w-full;
+          }
+
+          &:hover .underline {
             @apply w-full;
           }
         }
@@ -322,16 +312,22 @@ canvas {
     }
 
     .contact-btn {
-      @apply flex;
-
       .inner {
-        @apply px-5 py-2 rounded-lg bg-white text-black group-hover:bg-black-50 transition-colors duration-300;
+        @apply px-5 py-2 rounded-lg bg-white text-black transition-colors duration-300;
 
         span {
-          @apply group-hover:text-white transition-colors duration-300;
+          @apply transition-colors duration-300;
         }
         &.active {
           @apply text-white bg-blue-400;
+        }
+      }
+
+      &:hover .inner:not(.active) {
+        @apply bg-black-50;
+
+        span {
+          @apply text-white;
         }
       }
     }
@@ -374,7 +370,7 @@ canvas {
     @apply relative w-6 h-[18px] p-0 bg-transparent border-none cursor-pointer ml-4;
 
     .hamburger-line {
-      @apply absolute left-0 w-6 h-[2px] bg-white rounded-sm;
+      @apply absolute left-0 w-6 h-[2px] bg-white rounded;
       transition:
         transform 0.3s,
         opacity 0.2s;
@@ -487,21 +483,39 @@ canvas {
 
     .bg-circle {
       @apply absolute -right-6 origin-center top-1/2 -translate-y-1/2 
-        w-[120%] h-[120%] group-hover:size-10 group-hover:right-6
+        w-[120%] h-[120%]
         rounded-full bg-white transition-all duration-500;
     }
 
     .text {
       @apply uppercase md:text-lg text-black transition-all duration-500
-        group-hover:text-white group-hover:-translate-x-5 xl:translate-x-0 -translate-x-5;
+        xl:translate-x-0 -translate-x-5;
     }
 
     .arrow-wrapper {
-      @apply group-hover:bg-white size-10 rounded-full absolute right-6 top-1/2 
+      @apply size-10 rounded-full absolute right-6 top-1/2 
         -translate-y-1/2 flex justify-center items-center overflow-hidden;
 
       img {
-        @apply size-5 xl:-translate-y-32 translate-y-0 animate-bounce group-hover:translate-y-0 transition-all duration-500;
+        @apply size-5 xl:-translate-y-32 translate-y-0 animate-bounce transition-all duration-500;
+      }
+    }
+
+    &:hover {
+      .bg-circle {
+        @apply size-10 right-6;
+      }
+
+      .text {
+        @apply text-white -translate-x-5;
+      }
+
+      .arrow-wrapper {
+        @apply bg-white;
+      }
+
+      .arrow-wrapper img {
+        @apply translate-y-0;
       }
     }
   }
@@ -605,7 +619,9 @@ canvas {
       @apply col-between sm:pt-12 container mx-auto h-full pt-14;
 
       h2 {
-        @apply relative sm:text-[16vw] text-6xl text-nowrap leading-none text-center font-yeseva-one text-[#505050];
+        @apply relative sm:text-[16vw] text-6xl leading-none text-center font-yeseva-one text-[#505050];
+
+        white-space: nowrap;
 
         span {
           @apply sm:text-[4vw] text-[8vw] inline-flex relative left-[-2vw];
@@ -766,7 +782,7 @@ canvas {
     }
 
     .skill-icon {
-      @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-[background-color,scale] duration-500 ease-in-out;
+      @apply rounded-full md:p-2 xl:p-3 p-1.5 transition-[background-color,transform] duration-500 ease-in-out;
 
       background: var(--skill-color);
       background: color-mix(in srgb, var(--skill-color) 72%, var(--skill-base));
@@ -894,7 +910,7 @@ canvas {
     }
 
     #curved-line {
-      @apply absolute md:top-[12%] left-[5%] z-100 opacity-80 w-[94%];
+      @apply absolute md:top-[12%] left-[5%] z-100 opacity-80 w-[94%] h-[84%];
     }
 
     #curved-line-mobile {
@@ -1099,7 +1115,7 @@ canvas {
   }
 
   .drive {
-    @apply space-y-6 col-span-3;
+    @apply col-span-3;
 
     h3 {
       @apply text-xl text-white font-yeseva-one;
@@ -1167,8 +1183,9 @@ canvas {
     }
 
     .drive-text {
-      @apply md:text-sm xl:text-base text-xs leading-relaxed;
+      @apply md:text-sm xl:text-base text-xs;
 
+      line-height: 1.625;
       color: var(--sub);
     }
   }
@@ -1278,6 +1295,7 @@ canvas {
   }
 
   .contacts {
+    min-height: 100vh;
     @apply flex-center flex-col md:gap-12 gap-8 min-h-[100dvh];
 
     .title {
@@ -1449,7 +1467,8 @@ form {
 }
 
 .card .icon {
-  @apply absolute md:text-[70px] text-[55px] md:top-[-45px] top-[-33px] filter-[saturate(0.7)] md:left-[-25px] left-[-23px];
+  @apply absolute md:text-[70px] text-[55px] md:top-[-45px] top-[-33px] md:left-[-25px] left-[-23px];
+  filter: saturate(0.7);
 }
 
 canvas#neuro {
@@ -1707,16 +1726,33 @@ canvas#neuro[data-visible='true'] {
 }
 
 .project-modal-screenshot {
-  aspect-ratio: 16 / 10;
+  position: relative;
+  height: 0;
+  padding-top: 62.5%;
   border-radius: 0.75rem;
   overflow: hidden;
   margin-bottom: 0.5rem;
 }
 
 .project-modal-screenshot img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@supports (aspect-ratio: 16 / 10) {
+  .project-modal-screenshot {
+    height: auto;
+    padding-top: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .project-modal-screenshot img {
+    position: static;
+  }
 }
 
 /* View Transition Styles */

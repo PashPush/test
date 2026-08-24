@@ -5,7 +5,6 @@ const Chainsaw = () => {
       width="305"
       viewBox="0 0 305 98"
       className="chainsaw"
-      style={{ transform: 'rotate(170deg) scale(1, -1)' }}
       fill="none"
     >
       <g id="chainsaw">
