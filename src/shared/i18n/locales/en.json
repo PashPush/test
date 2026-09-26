@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "Pavel Khovalkin — Frontend Developer (React, TypeScript)",
+    "description": "I build fast, reliable interfaces for a product with 3.1M monthly users. Core Web Vitals, React Native, browser extensions."
+  },
   "nav": {
     "intro": "Intro",
     "projects": "Projects",
@@ -19,7 +23,10 @@
     "stats": "<b>5+</b> years in dev \u00a0|\u00a0 <b>15+</b> projects",
     "cta": "experience",
     "inter": "comp",
-    "faces": "lexity"
+    "faces": "lexity",
+    "chainsawLabel": "Complexity — start the chainsaw",
+    "clickIt": "click it",
+    "tapIt": "tap it"
   },
   "words": {
     "ideas": "Ideas",
@@ -103,7 +110,8 @@
   "modal": {
     "description": "About the projects",
     "role": "My role",
-    "screenshots": "Screenshots"
+    "screenshots": "Screenshots",
+    "close": "Close"
   },
   "approach": {
     "my": "",
@@ -132,6 +140,7 @@
     "2": {
       "name": "Sergey Butuzov",
       "position": "TechLead. Mercury Development",
+      "context": "Joint project with Index Marketing",
       "review": "A responsible specialist attentive to details. If he takes a task — you can be sure it will be completed on time, with thoughtful UX and clean code. It's nice to see such a professional approach."
     }
   },

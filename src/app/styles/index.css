@@ -191,7 +191,7 @@ canvas {
   }
 
   .interface {
-    @apply inline-block relative text-black w-48 select-none text-3xl leading-11 cursor-pointer;
+    @apply inline-block relative text-black w-48 select-none text-3xl leading-11 text-left cursor-pointer;
 
     clip-path: polygon(-200% -500%, 160% -300%, 150% 92%, 0px 92%);
 

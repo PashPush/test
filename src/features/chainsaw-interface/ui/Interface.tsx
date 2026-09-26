@@ -9,9 +9,10 @@ import Chips from './Chips';
 const Interface = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 460 });
+  const canHover = useMediaQuery({ query: '(hover: hover)' });
   const [count, setCount] = useState(0);
   const [isActivated, setIsActivated] = useState(true);
-  const containerRef = useRef<HTMLAnchorElement>(null);
+  const containerRef = useRef<HTMLButtonElement>(null);
   const isPlayingRef = useRef(false);
   const activeTimelinesRef = useRef<gsap.core.Timeline[]>([]);
   const reactivateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -197,8 +198,7 @@ const Interface = () => {
     return Promise.resolve();
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleClick = () => {
     if (isPlayingRef.current) return;
     if (count > 2) return;
 
@@ -230,24 +230,26 @@ const Interface = () => {
 
   return (
     <>
-      <a
-        href="#"
+      <button
+        type="button"
         ref={containerRef}
         onClick={handleClick}
+        aria-label={t('hero.chainsawLabel')}
         className={classNames('interface', { done: count > 2, 'animate-wiggle': !isActivated })}
       >
         <span className={classNames('inter', { 'no-margin': isMobile })}>{t('hero.inter')}</span>
         <Chips />
         <Chainsaw />
         <span className="faces">{t('hero.faces')}</span>
-      </a>
+      </button>
       <span
+        aria-hidden="true"
         onClick={handleClick}
         className={classNames('click-it', {
           'opacity-0': isActivated || count > 1,
         })}
       >
-        Click it
+        {t(canHover ? 'hero.clickIt' : 'hero.tapIt')}
       </span>
     </>
   );

@@ -59,6 +59,9 @@ const Reviews = () => {
               <div>
                 <p className="font-bold">{t(`feedbacks.${feedback.index}.name`)}</p>
                 <p className="text-white-50 sm:text-base text-sm">{t(`feedbacks.${feedback.index}.position`)}</p>
+                {t(`feedbacks.${feedback.index}.context`, { defaultValue: '' }) && (
+                  <p className="text-[#899aae] text-sm">{t(`feedbacks.${feedback.index}.context`)}</p>
+                )}
               </div>
             </div>
           </BlinkCard>

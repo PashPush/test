@@ -5,6 +5,13 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ru from './locales/ru.json';
 import en from './locales/en.json';
 
+// Registered before init so the initial language is applied too.
+i18n.on('languageChanged', () => {
+  document.documentElement.lang = i18n.resolvedLanguage ?? 'ru';
+  document.title = i18n.t('meta.title');
+  document.querySelector('meta[name="description"]')?.setAttribute('content', i18n.t('meta.description'));
+});
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

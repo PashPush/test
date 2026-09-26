@@ -88,7 +88,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
         <button
           className="project-modal-close"
           onClick={onClose}
-          aria-label={t('modal.close', 'Close')}
+          aria-label={t('modal.close')}
           style={{ viewTransitionName: 'modal-close-button' }}
         >
           <svg
