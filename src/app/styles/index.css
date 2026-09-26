@@ -332,6 +332,10 @@ canvas {
       }
     }
 
+    .cv-btn {
+      @apply items-center gap-1 mr-3 px-4 py-2 rounded-lg border border-white/40 text-white transition-colors duration-300 hover:bg-white/10;
+    }
+
     .lang-switcher {
       @apply flex gap-1 mr-2 md:mr-4;
 
@@ -460,6 +464,10 @@ canvas {
     &.active {
       @apply bg-blue-400 text-white;
     }
+  }
+
+  .mobile-menu-cv {
+    @apply w-full px-5 py-2 mt-3 text-lg text-center text-white rounded-lg border border-white/40 transition-colors duration-300 hover:bg-white/10;
   }
 
   @media (height <= 600px) {
@@ -1309,6 +1317,14 @@ canvas {
     a {
       @apply flex-center size-11 rounded-full shadow-[2px_2px_10px_rgba(0,0,0,0.8)] hover:shadow-[2px_2px_20px_rgba(0,0,0,0.8)] transition-all duration-300 hover:scale-110;
     }
+  }
+
+  .contacts-cv {
+    @apply flex flex-col items-center gap-1 px-6 py-3 rounded-xl border border-white/30 bg-black/60 text-lg text-white z-20 relative transition-colors duration-300 hover:bg-white/10;
+  }
+
+  .contacts-cv-meta {
+    @apply text-sm text-white-50;
   }
 }
 

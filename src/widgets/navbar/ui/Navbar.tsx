@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { navLinks } from '@/shared/config/navLinks';
 import { classNames } from '@/shared/lib/classNames';
+import { useCvLink } from '@/shared/lib/useCvLink';
 import LanguageSwitcher from '@/features/language-switch/ui/LanguageSwitcher';
 import MobileMenu from '@/features/mobile-menu/ui/MobileMenu';
 import { useAB } from '@/features/ab-testing';
@@ -15,6 +16,7 @@ const NavBar = () => {
   const [currentLink, setCurrentLink] = useState('#hero');
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const cvLink = useCvLink('header');
 
   const orderedNavLinks = useMemo(
     () => sectionOrder.map(key => navLinkMap[key]).filter(Boolean),
@@ -99,6 +101,10 @@ const NavBar = () => {
 
           <LanguageSwitcher />
 
+          <a {...cvLink} className="cv-btn hidden xl:flex">
+            {t('nav.cv')} <span aria-hidden="true">↓</span>
+          </a>
+
           <a href="#contacts" className="contact-btn group hidden md:flex">
             <div className={classNames('inner', { active: currentLink === '#contacts' })}>
               <span>{t('nav.contactBtn')}</span>
@@ -108,7 +114,7 @@ const NavBar = () => {
           <button
             className={classNames('hamburger md:hidden', { active: menuOpen })}
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={t(menuOpen ? 'nav.closeMenu' : 'nav.openMenu')}
             aria-expanded={menuOpen}
           >
             <span className="hamburger-line" />

@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
 import { ProjectModal, projectsData, type ProjectData } from '@/entities/project';
+import { trackEvent } from '@/shared/lib/analytics';
 
 const Projects = () => {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ const Projects = () => {
     (projectId: string) => {
       const project = projectsData.find(p => p.id === projectId);
       if (!project) return;
+      trackEvent('case_open', { project: projectId });
 
       const projectData: ProjectData = {
         ...project,

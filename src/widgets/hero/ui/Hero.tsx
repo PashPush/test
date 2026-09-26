@@ -5,6 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import Button from '@/shared/ui/Button';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
+import { useCvLink } from '@/shared/lib/useCvLink';
 import Interface from '@/features/chainsaw-interface/ui/Interface';
 import { useMediaQuery } from 'react-responsive';
 
@@ -14,6 +15,7 @@ const ShaderPhoto = lazy(() => import('@/shared/webgl/ShaderPhoto'));
 const Hero = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 460 });
+  const cvLink = useCvLink('hero');
   const [loadShader, setLoadShader] = useState(false);
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const Hero = () => {
               <Trans i18nKey="hero.stats" components={{ b: <strong /> }} />
             </span>
           </div>
-          <Button text={t('hero.cta')} className="hero-line hero-button" id="work" />
+          <Button text={t('cv.download')} className="hero-line hero-button" {...cvLink} />
         </div>
       </section>
     </>

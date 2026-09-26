@@ -11,7 +11,14 @@
     "reviews": "Reviews",
     "skills": "Skills",
     "contact": "Contacts",
-    "contactBtn": "Contacts"
+    "contactBtn": "Contacts",
+    "cv": "CV",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "cv": {
+    "download": "Download CV",
+    "updated": "PDF · updated September 2026"
   },
   "hero": {
     "title1": "Frontend",
@@ -21,7 +28,6 @@
     "loveToBuild": "I cut through",
     "readyToJoin": "Ready to strengthen your team",
     "stats": "<b>5+</b> years in dev \u00a0|\u00a0 <b>15+</b> projects",
-    "cta": "experience",
     "inter": "comp",
     "faces": "lexity",
     "chainsawLabel": "Complexity — start the chainsaw",

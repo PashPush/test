@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FieldName, FormErrors, FormValues } from './formSchema';
+import { trackEvent } from '@/shared/lib/analytics';
 import { DRAFT_KEY, EMPTY_FORM, FIELD_ORDER, sanitizeForm, validate } from './formSchema';
 
 type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
@@ -95,6 +96,7 @@ const useContactForm = () => {
       setErrors({});
       setLiveValidation(false);
       setStatus('success');
+      trackEvent('form_submit_success');
       statusTimeout.current = setTimeout(() => setStatus('idle'), SUCCESS_HOLD);
     } catch (error) {
       console.error('EmailJS Error:', error);

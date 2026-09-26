@@ -3,10 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { SiTelegram, SiWhatsapp } from 'react-icons/si';
 import { MdMail } from 'react-icons/md';
 import ContactForm from '@/features/contact-form/ui/ContactForm';
+import { trackEvent } from '@/shared/lib/analytics';
+import { useCvLink } from '@/shared/lib/useCvLink';
 
 const Contact = () => {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cvLink = useCvLink('contacts');
 
   return (
     <div ref={sectionRef} className="contacts" id="contacts">
@@ -28,6 +31,7 @@ const Contact = () => {
         <a
           href="https://t.me/pah0v"
           aria-label="telegram"
+          onClick={() => trackEvent('contact_click', { channel: 'telegram' })}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#00aaff]"
@@ -37,6 +41,7 @@ const Contact = () => {
         <a
           href={atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw==')}
           aria-label="whatsapp"
+          onClick={() => trackEvent('contact_click', { channel: 'whatsapp' })}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#4ac959]"
@@ -46,6 +51,7 @@ const Contact = () => {
         <a
           href="mailto:pahovdev@gmail.com"
           aria-label="email"
+          onClick={() => trackEvent('contact_click', { channel: 'email' })}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#2e2d38]"
@@ -53,6 +59,13 @@ const Contact = () => {
           <MdMail size={24} color="#fff" />
         </a>
       </div>
+
+      <a {...cvLink} className="contacts-cv">
+        <span>
+          {t('cv.download')} <span aria-hidden="true">↓</span>
+        </span>
+        <span className="contacts-cv-meta">{t('cv.updated')}</span>
+      </a>
       <div className="flex-center md:pb-4 pb-2">Pavel Khovalkin © {new Date().getFullYear()}</div>
     </div>
   );

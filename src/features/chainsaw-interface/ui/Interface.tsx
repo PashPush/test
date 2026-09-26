@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { useMediaQuery } from 'react-responsive';
 import { classNames } from '@/shared/lib/classNames';
 import Chips from './Chips';
+import { trackEvent } from '@/shared/lib/analytics';
 
 const Interface = () => {
   const { t } = useTranslation();
@@ -204,6 +205,7 @@ const Interface = () => {
 
     setIsActivated(true);
     isPlayingRef.current = true;
+    trackEvent('chainsaw_click');
 
     runStage(count)
       .then(() => {
