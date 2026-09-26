@@ -68,6 +68,12 @@ describe('ProjectModal', () => {
       expect(screen.getByText('Lead Developer')).toBeInTheDocument();
     });
 
+    it('renders <b> markup in role as strong', () => {
+      render(<ProjectModal {...defaultProps} isOpen={true} project={{ ...mockProject, role: '• <b>Memory.</b> Fixed a leak' }} />);
+      expect(screen.getByText('Memory.').tagName).toBe('STRONG');
+      expect(screen.queryByText(/<b>/)).not.toBeInTheDocument();
+    });
+
     it('renders all screenshots', () => {
       render(<ProjectModal {...defaultProps} isOpen={true} />);
       const screenshotImages = screen.getAllByAltText(/Test Project screenshot/);

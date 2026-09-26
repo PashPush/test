@@ -16,7 +16,7 @@
     "myName": "my name is Pavel",
     "loveToBuild": "I cut through",
     "readyToJoin": "Ready to strengthen your team",
-    "stats": "<b>4.5+</b> years in dev \u00a0|\u00a0 <b>15+</b> projects",
+    "stats": "<b>5+</b> years in dev \u00a0|\u00a0 <b>15+</b> projects",
     "cta": "projects",
     "inter": "comp",
     "faces": "lexity"
@@ -38,14 +38,14 @@
   "expCards": {
     "0": {
       "review": "Working with Pavel is always pleasant. He quickly adapted to our team and made a significant contribution to our projects.",
-      "info": "Australian product. Dictionaries.",
+      "info": "International product. Online thesaurus, ~3.1M monthly users.",
       "title": "Frontend Developer",
       "subtitle": "Achievements",
       "date": "October 2024 - Present",
       "responsibilities": [
-        "Developed a loyal user tracking system for requesting ratings (+310% 5-star reviews)",
-        "Optimized website loading: Lighthouse score 96–100",
-        "Developed an AI rewriting module: text detection, styles, change highlighting"
+        "Core Web Vitals & INP: 100% Good URLs on desktop, −80% poor URLs on mobile",
+        "Rating prompt and push notifications in React Native: +310% 5★ ratings, +17% resubscriptions",
+        "Trimmed the bundle so JS starts ~200 ms earlier; fixed a memory leak that bloated the tab to 1+ GB"
       ]
     },
     "1": {
@@ -53,11 +53,11 @@
       "info": "Digital agency. Website creation and promotion.",
       "title": "Frontend Developer",
       "subtitle": "Achievements",
-      "date": "May 2023 - October 2024",
+      "date": "May 2022 - October 2024",
       "responsibilities": [
-        "Led frontend migration from jQuery to React: redesigned architecture and routing",
-        "Implemented engineering practices, CI/CD pipeline: unit/UI/screenshot tests (−42% production bugs)",
-        "Built a complex admin interface: applications, collateral, chat, dashboards, reporting"
+        "Migrated the frontend from jQuery to React: redesigned the modular architecture and routing",
+        "Set up the engineering infrastructure: linters, Husky, unit/UI tests, Storybook, CI/CD",
+        "Built an admin system: applications, collateral assessment, chat, reporting, payments"
       ]
     },
     "2": {
@@ -65,11 +65,11 @@
       "info": "Floor coverings manufacturing.",
       "title": "Web Developer",
       "subtitle": "Achievements",
-      "date": "September 2021 - May 2023",
+      "date": "September 2021 - May 2022",
       "responsibilities": [
-        "Developed a flooring selection builder in vanilla JS with protection and order integration",
-        "Enhanced 5 corporate websites: new features, responsiveness, refactoring",
-        "Built and launched 6 landing pages, created numerous banners"
+        "Built an interactive flooring configurator in vanilla JS, integrated with online ordering",
+        "Developed 5 corporate websites: new features, responsive layout, refactoring and redesign",
+        "Launched 6 landing pages, working directly with marketing and business"
       ]
     },
     "3": {
@@ -81,23 +81,23 @@
   "projects": {
     "pt": {
       "name": "Power Thesaurus",
-      "stack": "React, React Native, Plasmo, custom UI library",
-      "description": "Power Thesaurus is the largest crowdsourced English thesaurus with an audience of over 5 million users per month. The product has been in production for 10 years and continues to actively evolve.\n\nThe platform includes a web version, native mobile applications for Android and iOS, as well as browser extensions for all popular browsers (Chrome, Firefox, Safari, Edge). The modern technology stack allows maintaining a unified codebase across different platforms while ensuring high performance.",
-      "role": "1.5+ years in an international product team. Worked across the full frontend stack: React, React Native, Plasmo extensions, UI library. Key results: +310% five-star ratings, Lighthouse 96-100, AI rewriting module, push system with +17% conversion, E2E coverage of critical flows.",
+      "stack": "React, TypeScript, SSR (Webpack, loadable-components), GraphQL (Apollo Client), React Native (Expo), Zustand, WebExtensions, Jest, Playwright, Sentry, Grafana",
+      "description": "Power Thesaurus is a crowdsourced online English thesaurus — an international product with ~3.1 million unique monthly users. Monetized through a PRO subscription and ads.\n\nThe platform spans a server-rendered web app, iOS and Android apps built with React Native, and a browser extension for all major browsers: Chrome, Firefox, Safari, Edge and Opera.",
+      "role": "2 years of product development in React and TypeScript across web, mobile and the extension. Focus: frontend performance and quality. I own tasks end to end — from metric analysis and breakdown to staged rollout and measuring the impact.\n\n• <b>Core Web Vitals / INP.</b> Set up field metrics with attribution of slow interactions; optimized ad refresh, autocomplete, navigation (startTransition) and Sentry init. Search Console result: 100% Good URLs on desktop, −80% poor URLs on mobile.\n• <b>Loading and bundle.</b> Code splitting and lazy loading, main-bundle preload (execution starts ~200 ms earlier), font subsetting, SVG 97 → 54 KB gzip, content-visibility.\n• <b>Memory.</b> Heap profiling revealed a leak in the ad-slot and iframe lifecycle — the tab no longer grows to 1+ GB. Wrote a technical report for the ad partner.\n• <b>Testing.</b> Covered critical flows (auth, pagination, filters, Paddle payments), replaced Cucumber/WebdriverIO with Playwright — a major dependency upgrade shipped with zero production regressions.\n• <b>Stability and accessibility.</b> Cut thousands of irrelevant events from Sentry, built resilient handling of network errors and offline mode. Keyboard navigation, ARIA, a high-contrast palette — Lighthouse Accessibility 100.\n• <b>React Native.</b> Rating prompt that picks a “safe” moment to ask — +310% 5★ ratings in 6 months. Push notifications (FCM) — +17% resubscription conversion.\n• <b>Browser extension.</b> Works across all tabs and iframes without a reload, text insertion into Gmail, Google Docs and Office Online, e2e tests on 20+ sites, passed Mozilla review.\n• <b>AI, SEO, design system.</b> Integrated AI Suggest / PRO AI, technical SEO (Schema.org, llms.txt, Private Prefetch Proxy), grew the in-house UI library.",
       "screenshots": ["Promo page", "Extension settings"]
     },
     "index": {
       "name": "Index Marketing",
-      "stack": "React, Next.js, Tailwind CSS, CSS-in-JS, Redux",
+      "stack": "React, Next.js, Redux, Tailwind CSS, CSS-in-JS, Storybook, ESLint, Prettier, Stylelint, Husky, CI/CD, YooKassa, Robokassa",
       "description": "A digital B2B/B2C platform for a pawnshop network: an administrative interface for franchise partners, collateral assessment modules, application management, internal chat, and a financial reporting system.\n\nA comprehensive B2C/B2E platform for a legal service: online consultations, notifications, document management, and integration with judicial system APIs.",
-      "role": "Frontend developer in the agency's product team. Collaborated with colleagues to build admin panels, client interfaces, and landing pages. Implemented integrations with external APIs and services. Refactored legacy code and migrated projects from jQuery to React. Worked closely with designers, backend developers, and project managers.",
+      "role": "Frontend developer in the agency's product team, working closely with designers, backend developers and project managers.\n\n• Migrated the frontend from jQuery to React: redesigned the modular architecture and routing.\n• Built an admin system with modules for applications, collateral assessment, chat and reporting.\n• Integrated payment systems (YooKassa, Robokassa) and external APIs — court services, notifications.\n• Set up the project's engineering infrastructure: ESLint, Prettier, Stylelint, Husky, unit/UI tests, Storybook, CI/CD.\n• Wrote documentation and onboarded new developers.",
       "screenshots": ["Catalog", "Personal account", "Landing pages"]
     },
     "sagama": {
       "name": "Sagama Group",
-      "stack": "JavaScript, HTML, SCSS, Bitrix24, WordPress",
+      "stack": "Vanilla JavaScript, HTML, SCSS, PHP, WordPress, Bitrix24",
       "description": "A group of companies — the largest manufacturer of rubber coverings and artificial turf for sports facilities in Russia. Over 43,500 equipped venues across the country.\n\nThe project portfolio includes corporate websites for manufacturers (SagamaGroup, EcoStep), the B2B/B2C marketplace Crumbex, as well as a series of promo landing pages for individual product lines and marketing campaigns.",
-      "role": "The sole IT specialist in the staff. Independently maintained and developed 5+ websites on Php and Bitrix24, as well as WordPress. Created promo landing pages for marketing campaigns. Integrated websites with CRM, analytics services, and external APIs. Handled a wide range of tasks: from layout and minor improvements to implementing new features.",
+      "role": "The company's only IT specialist: ran all of its web presence single-handedly, working directly with marketing and business.\n\n• Built an interactive visual flooring configurator in vanilla JavaScript and integrated it with the online ordering system.\n• Developed 5 corporate websites on PHP, Bitrix24 and WordPress: new features, responsive layout, refactoring and redesign.\n• Launched 6 landing pages for product lines and marketing campaigns.\n• Integrated the websites with CRM, analytics services and external APIs.",
       "screenshots": ["Landing page", "Main page", "Carousel"]
     }
   },

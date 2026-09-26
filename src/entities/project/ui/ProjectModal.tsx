@@ -12,6 +12,9 @@ interface ProjectModalProps {
 
 const SWIPE_THRESHOLD = 100;
 
+const withBold = (text: string) =>
+  text.split(/<b>(.*?)<\/b>/g).map((part, i) => (i % 2 ? <strong key={i}>{part}</strong> : part));
+
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const { t } = useTranslation();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -134,7 +137,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
             <section className="project-modal-section">
               <h3>{t('modal.role')}</h3>
-              <p>{project.role}</p>
+              <p>{withBold(project.role)}</p>
             </section>
 
             <section className="project-modal-section">
