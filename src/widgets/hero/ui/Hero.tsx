@@ -41,7 +41,7 @@ const Hero = () => {
 
   return (
     <>
-      <section className="h-[92vh]">
+      <section className="flex flex-col min-h-[calc(var(--vh,1vh)*100)]">
         <ErrorBoundary>
           <Suspense fallback={null}>{loadShader ? <ShaderPhoto /> : null}</Suspense>
         </ErrorBoundary>
@@ -55,22 +55,31 @@ const Hero = () => {
           <div className="subtitle">
             <span className="hero-line">{t('hero.greeting')}</span>
             <br />
-            <span className="hero-line">{t('hero.myName')}</span>
-            <br />
             <span className="hero-line">
               {t('hero.loveToBuild')}
               {isMobile ? <br /> : ' '}
               <Interface />
             </span>
-            <br />
-            <span className="hero-line strong-team">{t('hero.readyToJoin')}</span>
-            <br />
-            <span className="h-2 w-2 block"></span>
-            <span className="hero-line hero-stats">
-              <Trans i18nKey="hero.stats" components={{ b: <strong /> }} />
-            </span>
           </div>
-          <Button text={t('cv.download')} className="hero-line hero-button" {...cvLink} />
+          {/* Interface pushes this block down to make room for the sawn-off half. */}
+          <div className="hero-below">
+            <p className="hero-line hero-role">{t('hero.role')}</p>
+            <p className="hero-line hero-pitch">{t('hero.pitch')}</p>
+            <ul className="hero-line hero-chips">
+              {[0, 1, 2].map(i => (
+                <li key={i}>
+                  <Trans i18nKey={`hero.chips.${i}`} components={{ b: <strong /> }} />
+                </li>
+              ))}
+            </ul>
+            <div className="hero-line hero-actions">
+              <Button text={t('cv.download')} className="hero-button" {...cvLink} />
+              <a href="#contacts" className="hero-contact">
+                {t('hero.contactCta')}
+              </a>
+            </div>
+            <p className="hero-line hero-status">{t('hero.status')}</p>
+          </div>
         </div>
       </section>
     </>

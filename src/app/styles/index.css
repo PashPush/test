@@ -153,19 +153,60 @@ canvas {
   }
 
   .subtitle {
-    @apply relative text-white md:text-4xl md:leading-11 text-2xl z-20 mb-10;
+    @apply relative text-white md:text-4xl md:leading-11 text-2xl z-20 mb-4 md:mb-6;
   }
 
   .hero-line {
     @apply inline-block opacity-0;
   }
 
+  /* In flow, not absolute: on short screens the hero grows instead of the text running into the title. */
   .hero-text {
-    @apply flex flex-col absolute z-10 md:p-20 py-12 px-4 bottom-0 w-full;
+    @apply flex flex-col relative z-10 md:p-20 py-12 px-4 mt-auto w-full;
+  }
+
+  .hero-below {
+    @apply flex flex-col items-start gap-3 md:gap-4;
+  }
+
+  .hero-role {
+    @apply text-white font-semibold text-lg md:text-2xl;
+  }
+
+  .hero-pitch {
+    @apply text-white-50 text-base md:text-xl;
+  }
+
+  .hero-chips {
+    @apply flex flex-wrap gap-2;
+
+    li {
+      @apply px-3 py-1 rounded-lg bg-black-200 text-sm md:text-lg text-gray-200;
+    }
+
+    strong {
+      @apply text-white font-bold;
+    }
+  }
+
+  .hero-actions {
+    @apply flex gap-3 w-full mt-2;
   }
 
   .hero-button {
-    @apply md:w-80 md:mb-4 mt-4 h-12;
+    @apply flex-1 md:flex-none md:w-80 h-11;
+
+    .text {
+      @apply text-sm;
+    }
+  }
+
+  .hero-contact {
+    @apply flex-center h-11 md:px-6 px-4 rounded-lg border border-white/40 text-white uppercase md:text-lg text-sm transition-colors duration-300 hover:bg-white/10;
+  }
+
+  .hero-status {
+    @apply text-sm md:text-base text-gray-400;
   }
 
   @media (height <= 600px) {
@@ -186,7 +227,12 @@ canvas {
     }
 
     .hero-button {
-      @apply w-70 mb-0;
+      @apply w-70;
+    }
+
+    .hero-pitch,
+    .hero-chips {
+      @apply hidden;
     }
   }
 
@@ -233,18 +279,6 @@ canvas {
 
   .click-it {
     @apply text-gray-200 absolute mt-[13px] w-[50px] text-base ml-3 sm:ml-4 transition-all duration-300 cursor-pointer;
-  }
-
-  .strong-team {
-    @apply absolute font-semibold text-[22px] md:text-4xl;
-  }
-
-  .hero-stats {
-    @apply absolute px-3 py-1 rounded-lg bg-black-200 text-[18px] md:text-3xl tracking-wide text-gray-200 inline-block;
-
-    strong {
-      @apply text-white font-bold;
-    }
   }
 
   .chainsaw {
@@ -360,12 +394,6 @@ canvas {
       .logo {
         @apply text-xl;
       }
-    }
-    .hero-stats {
-      @apply hidden;
-    }
-    .strong-team {
-      @apply text-2xl;
     }
   }
 

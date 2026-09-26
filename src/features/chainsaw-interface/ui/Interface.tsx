@@ -45,8 +45,7 @@ const Interface = () => {
     const chainsaw = container.querySelector('.chainsaw');
     const faces = container.querySelector('.faces');
     const chips = container.querySelector('.wood-chips');
-    const team = document.querySelector('.strong-team');
-    const stats = document.querySelector('.hero-stats');
+    const below = document.querySelector('.hero-below');
 
     const tlToPromise = (tl: gsap.core.Timeline) =>
       new Promise<void>(resolve => {
@@ -73,18 +72,9 @@ const Interface = () => {
         ease: 'power2.inOut',
       })
         .to(
-          team,
+          below,
           {
             translateY: 54,
-            duration: 1,
-            ease: 'power2.inOut',
-          },
-          '<'
-        )
-        .to(
-          stats,
-          {
-            translateY: 112,
             duration: 1,
             ease: 'power2.inOut',
           },
