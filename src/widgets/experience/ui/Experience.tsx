@@ -68,28 +68,24 @@ const Experience = () => {
           <div className="relative z-50 xl:space-y-32 space-y-10">
             {expCards.map((card, index) => {
               const responsibilities = getResponsibilities(card.index);
+              const info = t(`expCards.${card.index}.info`, { defaultValue: '' });
               return (
                 <div key={card.logoPath} className="exp-card-wrapper">
                   <div className="xl:w-2/6">
-                    <BlinkCard
-                      index={index}
-                      card={{
-                        ...card,
-                        review: t(`expCards.${card.index}.review`),
-                        info: index <= 2 ? t(`expCards.${card.index}.info`) : undefined,
-                      }}
-                      className="timeline-card"
-                    >
-                      <a href={card.url} target="_blank" className="relative z-10">
-                        <img
-                          src={card.imgPath}
-                          alt={card.logoAlt}
-                          width={card.imgWidth}
-                          height={card.imgHeight}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </a>
+                    <BlinkCard index={index} className="timeline-card">
+                      <div className="exp-company">
+                        <a href={card.url} target="_blank" rel="noopener">
+                          <img
+                            src={card.imgPath}
+                            alt={t(`expCards.${card.index}.company`)}
+                            width={card.imgWidth}
+                            height={card.imgHeight}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </a>
+                        {info && <p>{info}</p>}
+                      </div>
                     </BlinkCard>
                   </div>
                   <div className="xl:w-4/6">
@@ -100,7 +96,14 @@ const Experience = () => {
                       </div>
                       <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-20">
                         <div className="timeline-logo">
-                          <img src={card.logoPath} alt={card.logoAlt} width={50} height={50} loading="lazy" decoding="async" />
+                          <img
+                            src={card.logoPath}
+                            alt={card.logoAlt}
+                            width={50}
+                            height={50}
+                            loading="lazy"
+                            decoding="async"
+                          />
                         </div>
                         <div>
                           <h2 className="font-semibold sm:text-3xl text-2xl">{t(`expCards.${card.index}.title`)}</h2>

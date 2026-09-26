@@ -636,6 +636,23 @@ canvas {
     @apply flex flex-col-reverse xl:flex-row xl:gap-20 gap-10 justify-between;
   }
 
+  /* relative z-10: .card::before covers the card and would swallow the link's clicks. */
+  .exp-company {
+    @apply relative z-10 flex flex-col items-start gap-3;
+
+    img {
+      @apply mb-2;
+    }
+
+    a {
+      @apply transition-opacity duration-300 hover:opacity-70;
+    }
+
+    p {
+      @apply text-[#899aae] sm:text-lg text-base;
+    }
+  }
+
   .exp-ul {
     @apply list-disc ms-5 mt-5 flex flex-col sm:gap-5 gap-2 text-white-50;
 

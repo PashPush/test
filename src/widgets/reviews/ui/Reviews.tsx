@@ -37,13 +37,13 @@ const Reviews = () => {
     <div ref={sectionRef} id="reviews" className="reviews">
       <div className="reviews-wrapper">
         {feedbacks.map((feedback, index) => (
-          <BlinkCard
-            card={{ ...feedback, review: t(`feedbacks.${feedback.index}.review`) }}
-            key={index}
-            icon={feedback.icon}
-            index={index}
-            className="feedback-card"
-          >
+          <BlinkCard key={index} index={index} className="feedback-card">
+            <div className="flex items-center gap-1">
+              <span className="icon">{feedback.icon}</span>
+            </div>
+            <div className="mb-3">
+              <p className="text-white-50 sm:text-lg text-base">{t(`feedbacks.${feedback.index}.review`)}</p>
+            </div>
             <div className="flex items-center gap-3">
               <div className="shrink-0">
                 <img

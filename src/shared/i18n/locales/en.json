@@ -51,45 +51,45 @@
   },
   "expCards": {
     "0": {
-      "review": "Working with Pavel is always pleasant. He quickly adapted to our team and made a significant contribution to our projects.",
-      "info": "International product. Online thesaurus, ~3.1M monthly users.",
+      "company": "Power Thesaurus",
+      "info": "International online thesaurus · ~3.1M monthly users · web, iOS/Android, browser extension",
       "title": "Frontend Developer",
-      "subtitle": "Achievements",
-      "date": "October 2024 - Present",
+      "date": "October 2024 – present",
       "responsibilities": [
-        "Core Web Vitals & INP: 100% Good URLs on desktop, −80% poor URLs on mobile",
-        "Rating prompt and push notifications in React Native: +310% 5★ ratings, +17% resubscriptions",
-        "Trimmed the bundle so JS starts ~200 ms earlier; fixed a memory leak that bloated the tab to 1+ GB"
+        "Core Web Vitals: 100% Good URLs on desktop, −80% poor URLs on mobile",
+        "React Native: +210% 5★ ratings in 6 months; push notifications lifted resubscription conversion by 17%",
+        "Found and fixed a memory leak that grew the tab to 1+ GB; main JS now starts ~200 ms earlier"
       ]
     },
     "1": {
-      "review": "Integrated well into the team, a competent developer. A positive person.",
-      "info": "Digital agency. Website creation and promotion.",
+      "company": "Index Marketing",
+      "info": "Digital agency · platforms for a pawnshop chain and a legal services company",
       "title": "Frontend Developer",
-      "subtitle": "Achievements",
-      "date": "May 2022 - October 2024",
+      "date": "May 2022 – October 2024",
       "responsibilities": [
         "Migrated the frontend from jQuery to React: redesigned the modular architecture and routing",
         "Set up the engineering infrastructure: linters, Husky, unit/UI tests, Storybook, CI/CD",
-        "Built an admin system: applications, collateral assessment, chat, reporting, payments"
+        "Built an admin system: applications, collateral assessment, chat, reporting, payments",
+        "Wrote documentation and onboarded new developers"
       ]
     },
     "2": {
-      "review": "Winner of the \"Valuable Employee\" nomination for quality performance, professionalism, and dedication to the Company.",
-      "info": "Floor coverings manufacturing.",
+      "company": "Sagama Group",
+      "info": "Flooring manufacturer",
       "title": "Web Developer",
-      "subtitle": "Achievements",
-      "date": "September 2021 - May 2022",
+      "date": "September 2021 – May 2022",
       "responsibilities": [
         "Built an interactive flooring configurator in vanilla JS, integrated with online ordering",
         "Developed 5 corporate websites: new features, responsive layout, refactoring and redesign",
-        "Launched 6 landing pages, working directly with marketing and business"
+        "Launched 6 landing pages, working directly with marketing and business",
+        "Won the company's “Valuable Employee” award"
       ]
     },
     "3": {
-      "review": "Studied well, proved himself from the best side.",
+      "company": "Togliatti State University",
+      "info": "Higher education",
       "title": "Bachelor of Applied Informatics",
-      "date": "Togliatti State University"
+      "date": "2009–2013"
     }
   },
   "projects": {
@@ -97,7 +97,7 @@
       "name": "Power Thesaurus",
       "stack": "React, TypeScript, SSR (Webpack, loadable-components), GraphQL (Apollo Client), React Native (Expo), Zustand, WebExtensions, Jest, Playwright, Sentry, Grafana",
       "description": "Power Thesaurus is a crowdsourced online English thesaurus — an international product with ~3.1 million unique monthly users. Monetized through a PRO subscription and ads.\n\nThe platform spans a server-rendered web app, iOS and Android apps built with React Native, and a browser extension for all major browsers: Chrome, Firefox, Safari, Edge and Opera.",
-      "role": "2 years of product development in React and TypeScript across web, mobile and the extension. Focus: frontend performance and quality. I own tasks end to end — from metric analysis and breakdown to staged rollout and measuring the impact.\n\n• <b>Core Web Vitals / INP.</b> Set up field metrics with attribution of slow interactions; optimized ad refresh, autocomplete, navigation (startTransition) and Sentry init. Search Console result: 100% Good URLs on desktop, −80% poor URLs on mobile.\n• <b>Loading and bundle.</b> Code splitting and lazy loading, main-bundle preload (execution starts ~200 ms earlier), font subsetting, SVG 97 → 54 KB gzip, content-visibility.\n• <b>Memory.</b> Heap profiling revealed a leak in the ad-slot and iframe lifecycle — the tab no longer grows to 1+ GB. Wrote a technical report for the ad partner.\n• <b>Testing.</b> Covered critical flows (auth, pagination, filters, Paddle payments), replaced Cucumber/WebdriverIO with Playwright — a major dependency upgrade shipped with zero production regressions.\n• <b>Stability and accessibility.</b> Cut thousands of irrelevant events from Sentry, built resilient handling of network errors and offline mode. Keyboard navigation, ARIA, a high-contrast palette — Lighthouse Accessibility 100.\n• <b>React Native.</b> Rating prompt that picks a “safe” moment to ask — +310% 5★ ratings in 6 months. Push notifications (FCM) — +17% resubscription conversion.\n• <b>Browser extension.</b> Works across all tabs and iframes without a reload, text insertion into Gmail, Google Docs and Office Online, e2e tests on 20+ sites, passed Mozilla review.\n• <b>AI, SEO, design system.</b> Integrated AI Suggest / PRO AI, technical SEO (Schema.org, llms.txt, Private Prefetch Proxy), grew the in-house UI library.",
+      "role": "2 years of product development in React and TypeScript across web, mobile and the extension. Focus: frontend performance and quality. I own tasks end to end — from metric analysis and breakdown to staged rollout and measuring the impact.\n\n• <b>Core Web Vitals / INP.</b> Set up field metrics with attribution of slow interactions; optimized ad refresh, autocomplete, navigation (startTransition) and Sentry init. Search Console result: 100% Good URLs on desktop, −80% poor URLs on mobile.\n• <b>Loading and bundle.</b> Code splitting and lazy loading, main-bundle preload (execution starts ~200 ms earlier), font subsetting, SVG 97 → 54 KB gzip, content-visibility.\n• <b>Memory.</b> Heap profiling revealed a leak in the ad-slot and iframe lifecycle — the tab no longer grows to 1+ GB. Wrote a technical report for the ad partner.\n• <b>Testing.</b> Covered critical flows (auth, pagination, filters, Paddle payments), replaced Cucumber/WebdriverIO with Playwright — a major dependency upgrade shipped with zero production regressions.\n• <b>Stability and accessibility.</b> Cut thousands of irrelevant events from Sentry, built resilient handling of network errors and offline mode. Keyboard navigation, ARIA, a high-contrast palette — Lighthouse Accessibility 100.\n• <b>React Native.</b> Rating prompt that picks a “safe” moment to ask — +210% 5★ ratings in 6 months. Push notifications (FCM) — +17% resubscription conversion.\n• <b>Browser extension.</b> Works across all tabs and iframes without a reload, text insertion into Gmail, Google Docs and Office Online, e2e tests on 20+ sites, passed Mozilla review.\n• <b>AI, SEO, design system.</b> Integrated AI Suggest / PRO AI, technical SEO (Schema.org, llms.txt, Private Prefetch Proxy), grew the in-house UI library.",
       "screenshots": ["Promo page", "Extension settings"]
     },
     "index": {
