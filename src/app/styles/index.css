@@ -708,7 +708,7 @@ canvas {
       @apply h-fix md:w-[20vw] w-[25vw] flex items-center justify-center pt-16 bg-black z-10 ml-0.5;
     }
 
-    h1 {
+    .skills-word h2 {
       @apply md:text-9xl text-8xl  font-bold flex flex-col;
     }
 
@@ -989,7 +989,7 @@ canvas {
     }
 
     @media (height <= 600px) {
-      h1 {
+      .skills-word h2 {
         @apply text-[13vh];
       }
 

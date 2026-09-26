@@ -67,5 +67,5 @@ for (const experiment of allExperiments) {
 const sectionOrderVariantId = variants[sectionOrderExperiment.id];
 const sectionOrderConfig = getVariantConfig(sectionOrderExperiment, sectionOrderVariantId);
 export const sectionOrder: SectionKey[] = sectionOrderConfig?.value ?? [
-  'projects', 'experience', 'approach', 'reviews', 'skills',
+  'experience', 'projects', 'approach', 'reviews', 'skills',
 ];

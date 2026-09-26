@@ -132,14 +132,14 @@ const Skills = () => {
   return (
     <main id="skills" ref={skillsRef}>
       <div className="skills-word">
-        <h1>
+        <h2>
           <span>S</span>
           <span>K</span>
           <span>I</span>
           <span>L</span>
           <span>L</span>
           <span>S</span>
-        </h1>
+        </h2>
       </div>
       <section className="horizontal-section">
         <TechStack />

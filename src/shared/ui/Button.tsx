@@ -7,7 +7,7 @@ type ButtonProps = {
 const handleClick = (event: React.MouseEvent, id?: string) => {
   event.preventDefault();
 
-  const target = document.getElementById('projects');
+  const target = document.getElementById('experience');
 
   if (target && id) {
     const top = target.getBoundingClientRect().top + window.pageYOffset;

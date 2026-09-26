@@ -17,7 +17,7 @@
     "loveToBuild": "I cut through",
     "readyToJoin": "Ready to strengthen your team",
     "stats": "<b>5+</b> years in dev \u00a0|\u00a0 <b>15+</b> projects",
-    "cta": "projects",
+    "cta": "experience",
     "inter": "comp",
     "faces": "lexity"
   },
@@ -32,8 +32,7 @@
     "wishes": "Wishes"
   },
   "experience": {
-    "title": "Work Experience",
-    "subtitle": "My Career"
+    "title": "Work Experience"
   },
   "expCards": {
     "0": {

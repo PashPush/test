@@ -4,7 +4,7 @@ import type { ExperimentConfig } from './engine';
 
 export type SectionKey = 'projects' | 'experience' | 'approach' | 'reviews' | 'skills';
 
-const DEFAULT_ORDER: SectionKey[] = ['projects', 'experience', 'approach', 'reviews', 'skills'];
+const DEFAULT_ORDER: SectionKey[] = ['experience', 'projects', 'approach', 'reviews', 'skills'];
 
 export const sectionOrderExperiment: ExperimentConfig<SectionKey[]> = {
   id: 'sectionOrder',
@@ -12,8 +12,8 @@ export const sectionOrderExperiment: ExperimentConfig<SectionKey[]> = {
   variants: [
     { id: 'control', value: DEFAULT_ORDER },
     {
-      id: 'experienceFirst',
-      value: ['experience', 'projects', 'approach', 'reviews', 'skills'],
+      id: 'projectsFirst',
+      value: ['projects', 'experience', 'approach', 'reviews', 'skills'],
     },
   ],
 };

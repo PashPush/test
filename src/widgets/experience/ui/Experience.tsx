@@ -2,7 +2,6 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
 import { expCards } from '../model/expCards';
-import TitleHeader from '@/shared/ui/TitleHeader';
 import BlinkCard from '@/shared/ui/BlinkCard';
 import { useMediaQuery } from 'react-responsive';
 
@@ -64,7 +63,7 @@ const Experience = () => {
   return (
     <section id="experience" className="app-experience">
       <div className="w-full h-full md:px-20 px-5">
-        <TitleHeader title={t('experience.title')} sub={`💼 ${t('experience.subtitle')}`} />
+        <h2 className="font-semibold md:text-5xl text-3xl text-center">{t('experience.title')}</h2>
         <div className="md:mt-32 mt-20 relative">
           <div className="relative z-50 xl:space-y-32 space-y-10">
             {expCards.map((card, index) => {
