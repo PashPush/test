@@ -60,9 +60,10 @@ const Hero = () => {
               <Interface />
             </span>
           </div>
-          {/* Interface pushes this block down to make room for the sawn-off half. */}
           <div className="hero-below">
-            <p className="hero-line hero-role">{t('hero.role')}</p>
+            <p className="hero-line hero-role">
+              <Trans i18nKey="hero.role" components={{ br: <br className="lg:hidden" /> }} />
+            </p>
             <p className="hero-line hero-pitch">{t('hero.pitch')}</p>
             <ul className="hero-line hero-chips">
               {[0, 1, 2].map(i => (

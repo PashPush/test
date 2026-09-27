@@ -4,13 +4,11 @@
     "description": "Делаю быстрые и надёжные интерфейсы для продукта с 3,1 млн пользователей в месяц. Core Web Vitals, React Native, браузерные расширения."
   },
   "nav": {
-    "intro": "Интро",
     "projects": "Проекты",
     "experience": "Опыт",
     "approach": "Подход",
     "reviews": "Отзывы",
     "skills": "Навыки",
-    "contact": "Связь",
     "contactBtn": "Контакты",
     "cv": "Резюме",
     "openMenu": "Открыть меню",
@@ -25,7 +23,7 @@
     "title2": "Developer",
     "greeting": "Привет, меня зовут Павел",
     "loveToBuild": "Я люблю пилить",
-    "role": "Middle+ frontend-разработчик: React, TypeScript, React Native.",
+    "role": "Middle+ frontend-разработчик:<br/> React, TypeScript, React Native.",
     "pitch": "Делаю быстрые интерфейсы для продукта с 3,1 млн пользователей в месяц.",
     "chips": ["<b>5+ лет</b> в коммерческой разработке", "INP: <b>100% Good</b> на десктопе", "English <b>C1</b>"],
     "contactCta": "Связаться",
@@ -35,16 +33,6 @@
     "chainsawLabel": "Интерфейсы — запустить бензопилу",
     "clickIt": "жми",
     "tapIt": "тапни"
-  },
-  "words": {
-    "ideas": "Идеи",
-    "concepts": "Концепты",
-    "designs": "Дизайны",
-    "code": "Код",
-    "fantasies": "Фантазии",
-    "creative": "Креатив",
-    "sketches": "Наброски",
-    "wishes": "Желания"
   },
   "experience": {
     "title": "Опыт работы"
