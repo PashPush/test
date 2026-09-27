@@ -6,7 +6,7 @@ interface Events {
   contact_click: { channel: 'telegram' | 'whatsapp' | 'email' | 'github' };
   form_submit_success: undefined;
   chainsaw_click: undefined;
-  case_open: { project: string };
+  case_open: { project: string; via: 'card' | 'link' };
 }
 
 // GA4 only. In dev events are logged instead of sent, so local runs don't pollute reports.

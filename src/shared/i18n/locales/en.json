@@ -95,29 +95,80 @@
   "projects": {
     "pt": {
       "name": "Power Thesaurus",
-      "stack": "React, TypeScript, SSR (Webpack, loadable-components), GraphQL (Apollo Client), React Native (Expo), Zustand, WebExtensions, Jest, Playwright, Sentry, Grafana",
+      "summary": "INP: 100% Good on desktop · +210% 5★ ratings · 1+ GB memory leak fixed",
+      "stackShort": "React · TypeScript · SSR · React Native · GraphQL",
+      "aboutTitle": "About the project",
       "description": "Power Thesaurus is a crowdsourced online English thesaurus — an international product with ~3.1 million unique monthly users. Monetized through a PRO subscription and ads.\n\nThe platform spans a server-rendered web app, iOS and Android apps built with React Native, and a browser extension for all major browsers: Chrome, Firefox, Safari, Edge and Opera.",
-      "role": "2 years of product development in React and TypeScript across web, mobile and the extension. Focus: frontend performance and quality. I own tasks end to end — from metric analysis and breakdown to staged rollout and measuring the impact.\n\n• <b>Core Web Vitals / INP.</b> Set up field metrics with attribution of slow interactions; optimized ad refresh, autocomplete, navigation (startTransition) and Sentry init. Search Console result: 100% Good URLs on desktop, −80% poor URLs on mobile.\n• <b>Loading and bundle.</b> Code splitting and lazy loading, main-bundle preload (execution starts ~200 ms earlier), font subsetting, SVG 97 → 54 KB gzip, content-visibility.\n• <b>Memory.</b> Heap profiling revealed a leak in the ad-slot and iframe lifecycle — the tab no longer grows to 1+ GB. Wrote a technical report for the ad partner.\n• <b>Testing.</b> Covered critical flows (auth, pagination, filters, Paddle payments), replaced Cucumber/WebdriverIO with Playwright — a major dependency upgrade shipped with zero production regressions.\n• <b>Stability and accessibility.</b> Cut thousands of irrelevant events from Sentry, built resilient handling of network errors and offline mode. Keyboard navigation, ARIA, a high-contrast palette — Lighthouse Accessibility 100.\n• <b>React Native.</b> Rating prompt that picks a “safe” moment to ask — +210% 5★ ratings in 6 months. Push notifications (FCM) — +17% resubscription conversion.\n• <b>Browser extension.</b> Works across all tabs and iframes without a reload, text insertion into Gmail, Google Docs and Office Online, e2e tests on 20+ sites, passed Mozilla review.\n• <b>AI, SEO, design system.</b> Integrated AI Suggest / PRO AI, technical SEO (Schema.org, llms.txt, Private Prefetch Proxy), grew the in-house UI library.",
+      "results": [
+        { "value": "100%", "label": "Good URLs in Core Web Vitals on desktop" },
+        { "value": "−80%", "label": "poor URLs on mobile" },
+        { "value": "~200 ms", "label": "earlier start for the main JS" },
+        { "value": "+210%", "label": "5★ app ratings in 6 months" }
+      ],
+      "role": "2 years of product development in React and TypeScript across web, mobile and the extension. Focus: frontend performance and quality. I own tasks end to end — from metric analysis and breakdown to staged rollout and measuring the impact.",
+      "done": [
+        "<b>Core Web Vitals / INP.</b> Set up field metrics with attribution of slow interactions; optimized ad refresh, autocomplete, navigation (startTransition) and Sentry init. Search Console result: 100% Good URLs on desktop, −80% poor URLs on mobile.",
+        "<b>Loading and bundle.</b> Code splitting and lazy loading, main-bundle preload (execution starts ~200 ms earlier), font subsetting, SVG 97 → 54 KB gzip, content-visibility.",
+        "<b>Memory.</b> Heap profiling revealed a leak in the ad-slot and iframe lifecycle — the tab no longer grows to 1+ GB. Wrote a technical report for the ad partner.",
+        "<b>Testing.</b> Covered critical flows (auth, pagination, filters, Paddle payments), replaced Cucumber/WebdriverIO with Playwright — a major dependency upgrade shipped with zero production regressions.",
+        "<b>Stability and accessibility.</b> Cut thousands of irrelevant events from Sentry, built resilient handling of network errors and offline mode. Keyboard navigation, ARIA, a high-contrast palette — Lighthouse Accessibility 100.",
+        "<b>React Native.</b> Rating prompt that picks a “safe” moment to ask — +210% 5★ ratings in 6 months. Push notifications (FCM) — +17% resubscription conversion.",
+        "<b>Browser extension.</b> Works across all tabs and iframes without a reload, text insertion into Gmail, Google Docs and Office Online, e2e tests on 20+ sites, passed Mozilla review.",
+        "<b>AI, SEO, design system.</b> Integrated AI Suggest / PRO AI, technical SEO (Schema.org, llms.txt, Private Prefetch Proxy), grew the in-house UI library."
+      ],
+      "stack": "React, TypeScript, SSR (Webpack, loadable-components), GraphQL (Apollo Client), React Native (Expo), Zustand, WebExtensions, Jest, Playwright, Sentry, Grafana",
       "screenshots": ["Promo page", "Extension settings"]
     },
     "index": {
       "name": "Index Marketing",
-      "stack": "React, Next.js, Redux, Tailwind CSS, CSS-in-JS, Storybook, ESLint, Prettier, Stylelint, Husky, CI/CD, YooKassa, Robokassa",
+      "summary": "jQuery → React · YooKassa/Robokassa payments · tests, Storybook, CI/CD",
+      "stackShort": "React · Next.js · Redux · Tailwind CSS · Storybook",
+      "aboutTitle": "About the projects",
       "description": "A digital B2B/B2C platform for a pawnshop network: an administrative interface for franchise partners, collateral assessment modules, application management, internal chat, and a financial reporting system.\n\nA comprehensive B2C/B2E platform for a legal service: online consultations, notifications, document management, and integration with judicial system APIs.",
-      "role": "Frontend developer in the agency's product team, working closely with designers, backend developers and project managers.\n\n• Migrated the frontend from jQuery to React: redesigned the modular architecture and routing.\n• Built an admin system with modules for applications, collateral assessment, chat and reporting.\n• Integrated payment systems (YooKassa, Robokassa) and external APIs — court services, notifications.\n• Set up the project's engineering infrastructure: ESLint, Prettier, Stylelint, Husky, unit/UI tests, Storybook, CI/CD.\n• Wrote documentation and onboarded new developers.",
+      "results": [
+        { "value": "jQuery → React", "label": "frontend migration and a new modular architecture" },
+        { "value": "2 platforms", "label": "for a pawnshop chain and a legal services company" },
+        { "value": "CI/CD", "label": "linters, Husky, unit/UI tests, Storybook" }
+      ],
+      "role": "Frontend developer in the agency's product team, working closely with designers, backend developers and project managers.",
+      "done": [
+        "Migrated the frontend from jQuery to React: redesigned the modular architecture and routing.",
+        "Built an admin system with modules for applications, collateral assessment, chat and reporting.",
+        "Integrated payment systems (YooKassa, Robokassa) and external APIs — court services, notifications.",
+        "Set up the project's engineering infrastructure: ESLint, Prettier, Stylelint, Husky, unit/UI tests, Storybook, CI/CD.",
+        "Wrote documentation and onboarded new developers."
+      ],
+      "stack": "React, Next.js, Redux, Tailwind CSS, CSS-in-JS, Storybook, ESLint, Prettier, Stylelint, Husky, CI/CD, YooKassa, Robokassa",
       "screenshots": ["Catalog", "Personal account", "Landing pages"]
     },
     "sagama": {
       "name": "Sagama Group",
-      "stack": "Vanilla JavaScript, HTML, SCSS, PHP, WordPress, Bitrix24",
+      "summary": "Flooring configurator in vanilla JS · 5 corporate websites · 6 landing pages",
+      "stackShort": "JavaScript · SCSS · PHP · WordPress · Bitrix24",
+      "aboutTitle": "About the projects",
       "description": "A group of companies — the largest manufacturer of rubber coverings and artificial turf for sports facilities in Russia. Over 43,500 equipped venues across the country.\n\nThe project portfolio includes corporate websites for manufacturers (SagamaGroup, EcoStep), the B2B/B2C marketplace Crumbex, as well as a series of promo landing pages for individual product lines and marketing campaigns.",
-      "role": "The company's only IT specialist: ran all of its web presence single-handedly, working directly with marketing and business.\n\n• Built an interactive visual flooring configurator in vanilla JavaScript and integrated it with the online ordering system.\n• Developed 5 corporate websites on PHP, Bitrix24 and WordPress: new features, responsive layout, refactoring and redesign.\n• Launched 6 landing pages for product lines and marketing campaigns.\n• Integrated the websites with CRM, analytics services and external APIs.",
+      "results": [
+        { "value": "5", "label": "corporate websites on PHP, Bitrix24 and WordPress" },
+        { "value": "6", "label": "landing pages for product lines and campaigns" },
+        { "value": "Valuable Employee", "label": "company award winner" }
+      ],
+      "role": "The company's only IT specialist: ran all of its web presence single-handedly, working directly with marketing and business.",
+      "done": [
+        "Built an interactive visual flooring configurator in vanilla JavaScript and integrated it with the online ordering system.",
+        "Developed 5 corporate websites on PHP, Bitrix24 and WordPress: new features, responsive layout, refactoring and redesign.",
+        "Launched 6 landing pages for product lines and marketing campaigns.",
+        "Integrated the websites with CRM, analytics services and external APIs."
+      ],
+      "stack": "Vanilla JavaScript, HTML, SCSS, PHP, WordPress, Bitrix24",
       "screenshots": ["Landing page", "Main page", "Carousel"]
-    }
+    },
+    "readCase": "Read case study"
   },
   "modal": {
-    "description": "About the projects",
+    "results": "Results",
     "role": "My role",
+    "done": "What I did",
+    "stack": "Tech stack",
     "screenshots": "Screenshots",
     "close": "Close"
   },

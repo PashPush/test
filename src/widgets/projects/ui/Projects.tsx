@@ -1,23 +1,29 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { flushSync } from 'react-dom';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
-import { ProjectModal, projectsData, type ProjectData } from '@/entities/project';
+import { ProjectModal, projectsData, type ProjectData, type ProjectResult } from '@/entities/project';
 import { trackEvent } from '@/shared/lib/analytics';
+
+const caseHash = (slug: string) => `#case/${slug}`;
+const idFromHash = () => projectsData.find(p => location.hash === caseHash(p.slug))?.id ?? null;
+
+type CaseLink = { id: string; slug: string };
+const [ptCase, indexCase, sagamaCase] = projectsData;
 
 const Projects = () => {
   const { t } = useTranslation();
   const project1Ref = useRef(null);
   const project2Ref = useRef(null);
   const project3Ref = useRef(null);
+  const leavingRef = useRef(false);
 
-  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openId, setOpenId] = useState<string | null>(idFromHash);
   const [transitioningId, setTransitioningId] = useState<string | null>(null);
 
   const getTransitionStyles = (projectId: string, type: 'image' | 'title') => {
-    if (isModalOpen) {
+    if (openId !== null) {
       return { viewTransitionName: undefined } as const;
     }
 
@@ -28,75 +34,111 @@ const Projects = () => {
     return { viewTransitionName: `project-${type}-${projectId}` } as const;
   };
 
-  const openModal = useCallback(
-    (projectId: string) => {
-      const project = projectsData.find(p => p.id === projectId);
-      if (!project) return;
-      trackEvent('case_open', { project: projectId });
+  const list = <T,>(key: string): T[] => {
+    const value = t(key, { returnObjects: true }) as unknown;
+    return Array.isArray(value) ? (value as T[]) : [];
+  };
 
-      const projectData: ProjectData = {
-        ...project,
-        name: t(`projects.${project.id}.name`),
-        stack: t(`projects.${project.id}.stack`),
-        description: t(`projects.${project.id}.description`),
-        role: t(`projects.${project.id}.role`),
-      };
+  const buildProject = (projectId: string): ProjectData | null => {
+    const project = projectsData.find(p => p.id === projectId);
+    if (!project) return null;
+    const key = `projects.${project.id}`;
 
-      if (document.startViewTransition) {
-        flushSync(() => {
-          setTransitioningId(projectId);
-        });
+    return {
+      ...project,
+      name: t(`${key}.name`),
+      aboutTitle: t(`${key}.aboutTitle`),
+      description: t(`${key}.description`),
+      role: t(`${key}.role`),
+      done: list<string>(`${key}.done`),
+      results: list<ProjectResult>(`${key}.results`),
+      stack: t(`${key}.stack`),
+    };
+  };
 
-        const transition = document.startViewTransition(() => {
-          flushSync(() => {
-            setSelectedProject(projectData);
-            setIsModalOpen(true);
-          });
-        });
+  const switchTo = useCallback(
+    (nextId: string | null) => {
+      const morphId = nextId ?? openId;
 
-        transition.finished.finally(() => {
-          setTransitioningId(null);
-        });
-      } else {
-        setSelectedProject(projectData);
-        setIsModalOpen(true);
+      if (!document.startViewTransition || !morphId) {
+        setOpenId(nextId);
+        return;
       }
-    },
-    [t]
-  );
 
-  const closeModal = useCallback(() => {
-    const currentProjectId = selectedProject?.id;
-
-    if (document.startViewTransition && currentProjectId) {
       flushSync(() => {
-        setTransitioningId(currentProjectId);
+        setTransitioningId(morphId);
       });
 
       const transition = document.startViewTransition(() => {
         flushSync(() => {
-          setIsModalOpen(false);
-          setSelectedProject(null);
+          setOpenId(nextId);
         });
       });
 
       transition.finished.finally(() => {
         setTransitioningId(null);
       });
-    } else {
-      setIsModalOpen(false);
-      setSelectedProject(null);
-    }
-  }, [selectedProject?.id]);
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent, projectId: string) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal(projectId);
-      }
     },
-    [openModal]
+    [openId]
+  );
+
+  useEffect(() => {
+    const id = idFromHash();
+    if (id) trackEvent('case_open', { project: id, via: 'link' });
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      leavingRef.current = false;
+      const id = idFromHash();
+      if (!id) history.scrollRestoration = 'auto';
+      if (id !== openId) switchTo(id);
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [openId, switchTo]);
+
+  const openCase = (e: React.MouseEvent | React.KeyboardEvent, { id, slug }: CaseLink) => {
+    if ('button' in e && (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) return;
+    e.preventDefault();
+    history.scrollRestoration = 'manual';
+    history.pushState({ case: id }, '', caseHash(slug));
+    trackEvent('case_open', { project: id, via: 'card' });
+    switchTo(id);
+  };
+
+  const closeCase = useCallback(() => {
+    if (!idFromHash()) return;
+
+    if (history.state?.case) {
+      if (leavingRef.current) return;
+      leavingRef.current = true;
+      history.back();
+      return;
+    }
+
+    history.replaceState(null, '', location.pathname + location.search);
+    switchTo(null);
+  }, [switchTo]);
+
+  const cardProps = (project: CaseLink) => ({
+    href: caseHash(project.slug),
+    onClick: (e: React.MouseEvent) => openCase(e, project),
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === ' ') openCase(e, project);
+    },
+  });
+
+  const cardText = (projectId: string) => (
+    <div className="project-text">
+      <h2 style={getTransitionStyles(projectId, 'title')}>{t(`projects.${projectId}.name`)}</h2>
+      <p className="project-summary">{t(`projects.${projectId}.summary`)}</p>
+      <p className="project-stack">{t(`projects.${projectId}.stackShort`)}</p>
+      <span className="project-cta">
+        {t('projects.readCase')} <span aria-hidden="true">→</span>
+      </span>
+    </div>
   );
 
   useGSAP(() => {
@@ -128,60 +170,47 @@ const Projects = () => {
       <div id="projects" className="app-projects">
         <div className="w-full">
           <div className="projects-layout">
-            <div
-              ref={project1Ref}
-              className="first-project-wrapper project-card-clickable"
-              onClick={() => openModal('pt')}
-              onKeyDown={e => handleKeyDown(e, 'pt')}
-              role="button"
-              tabIndex={0}
-              aria-label={t('projects.pt.name')}
-            >
+            <a ref={project1Ref} className="first-project-wrapper project-card-clickable" {...cardProps(ptCase)}>
               <div className="image-wrapper bg-[#168be8]" style={getTransitionStyles('pt', 'image')}>
-                <img src="/images/project-pt.webp" alt="Power Thesaurus" loading="lazy" decoding="async" width={1400} height={992} />
+                <img src="/images/project-pt.webp" alt="" loading="lazy" decoding="async" width={1400} height={992} />
               </div>
-              <div className="text-content">
-                <h2 style={getTransitionStyles('pt', 'title')}>{t('projects.pt.name')}</h2>
-                <p className="text-white-50 md:text-xl">{t('projects.pt.stack')}</p>
-              </div>
-            </div>
+              {cardText('pt')}
+            </a>
 
             <div className="project-list-wrapper overflow-hidden">
-              <div
-                className="project project-card-clickable"
-                ref={project2Ref}
-                onClick={() => openModal('index')}
-                onKeyDown={e => handleKeyDown(e, 'index')}
-                role="button"
-                tabIndex={0}
-                aria-label={t('projects.index.name')}
-              >
+              <a className="project project-card-clickable" ref={project2Ref} {...cardProps(indexCase)}>
                 <div className="image-wrapper project-index" style={getTransitionStyles('index', 'image')}>
-                  <img src="/images/project-index1.webp" alt="Index Marketing" loading="lazy" decoding="async" width={799} height={500} />
+                  <img
+                    src="/images/project-index1.webp"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={799}
+                    height={500}
+                  />
                 </div>
-                <h2 style={getTransitionStyles('index', 'title')}>{t('projects.index.name')}</h2>
-              </div>
+                {cardText('index')}
+              </a>
 
-              <div
-                className="project project-card-clickable"
-                ref={project3Ref}
-                onClick={() => openModal('sagama')}
-                onKeyDown={e => handleKeyDown(e, 'sagama')}
-                role="button"
-                tabIndex={0}
-                aria-label={t('projects.sagama.name')}
-              >
+              <a className="project project-card-clickable" ref={project3Ref} {...cardProps(sagamaCase)}>
                 <div className="image-wrapper project-sagama" style={getTransitionStyles('sagama', 'image')}>
-                  <img src="/images/project-sagama1.webp" alt="Sagama" loading="lazy" decoding="async" width={799} height={500} />
+                  <img
+                    src="/images/project-sagama1.webp"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={799}
+                    height={500}
+                  />
                 </div>
-                <h2 style={getTransitionStyles('sagama', 'title')}>{t('projects.sagama.name')}</h2>
-              </div>
+                {cardText('sagama')}
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeModal} />
+      <ProjectModal project={openId ? buildProject(openId) : null} isOpen={openId !== null} onClose={closeCase} />
     </>
   );
 };

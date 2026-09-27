@@ -49,6 +49,14 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   );
 
   useEffect(() => {
+    if (!isOpen) return;
+    const opener = document.activeElement;
+    return () => {
+      if (opener instanceof HTMLElement) opener.focus({ preventScroll: true });
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isOpen) {
       document.documentElement.classList.add('no-scroll');
       document.addEventListener('keydown', handleEscape);
@@ -128,16 +136,40 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
               {project.name}
             </h2>
 
-            <p className="project-modal-stack">{project.stack}</p>
+            <section className="project-modal-section">
+              <h3>{t('modal.results')}</h3>
+              <ul className="project-modal-results">
+                {project.results.map(({ value, label }, index) => (
+                  <li key={index}>
+                    <strong>{value}</strong>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
 
             <section className="project-modal-section">
-              <h3>{t('modal.description')}</h3>
+              <h3>{project.aboutTitle}</h3>
               <p>{project.description}</p>
             </section>
 
             <section className="project-modal-section">
               <h3>{t('modal.role')}</h3>
-              <p>{withBold(project.role)}</p>
+              <p>{project.role}</p>
+            </section>
+
+            <section className="project-modal-section">
+              <h3>{t('modal.done')}</h3>
+              <ul className="project-modal-list">
+                {project.done.map((item, index) => (
+                  <li key={index}>{withBold(item)}</li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="project-modal-section">
+              <h3>{t('modal.stack')}</h3>
+              <p>{project.stack}</p>
             </section>
 
             <section className="project-modal-section">

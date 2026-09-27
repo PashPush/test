@@ -1,6 +1,7 @@
 const projectsData = [
   {
     id: 'pt',
+    slug: 'power-thesaurus',
     name: 'Power Thesaurus',
     screenshots: ['/images/project-screenshots-1-1.webp', '/images/project-screenshots-1-2.webp'],
     color: 'linear-gradient(126.6deg, rgba(22, 139, 232, 1) 30.4% 3.4%, rgba(148, 208, 255, 1) 127.9%)',
@@ -8,6 +9,7 @@ const projectsData = [
   },
   {
     id: 'index',
+    slug: 'index-marketing',
     name: 'Index Marketing',
     screenshots: [
       '/images/project-screenshots-2-1.webp',
@@ -19,6 +21,7 @@ const projectsData = [
   },
   {
     id: 'sagama',
+    slug: 'sagama-group',
     name: 'Sagama',
     screenshots: [
       '/images/project-screenshots-3-1.webp',

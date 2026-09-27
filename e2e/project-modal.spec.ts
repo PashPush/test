@@ -90,4 +90,32 @@ test.describe('Project Modal', () => {
     const count = await screenshots.count();
     expect(count).toBeGreaterThan(0);
   });
+
+  test('card sets the case hash and browser back closes the modal', async ({ page }) => {
+    await page.locator('.project-card-clickable').first().click();
+    const modal = page.locator('[role="dialog"]');
+    await expect(modal).toBeVisible();
+    await expect(page).toHaveURL(/#case\/power-thesaurus$/);
+
+    await page.goBack();
+    await expect(modal).not.toBeVisible();
+    await expect(page).not.toHaveURL(/#case/);
+  });
+});
+
+test.describe('Case links', () => {
+  test('a #case link opens that case', async ({ page }) => {
+    await page.goto('/#case/index-marketing');
+    await expect(page.locator('#modal-title')).toHaveText('Index Marketing');
+  });
+
+  test('closing a linked case clears the hash', async ({ page }) => {
+    await page.goto('/#case/sagama-group');
+    const modal = page.locator('[role="dialog"]');
+    await expect(modal).toBeVisible();
+
+    await page.locator('.project-modal-close').click();
+    await expect(modal).not.toBeVisible();
+    await expect(page).not.toHaveURL(/#/);
+  });
 });
