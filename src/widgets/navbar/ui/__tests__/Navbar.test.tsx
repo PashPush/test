@@ -106,7 +106,7 @@ describe('NavBar', () => {
 
     it('renders hamburger button', () => {
       render(<NavBar />);
-      expect(screen.getByLabelText('Open menu')).toBeInTheDocument();
+      expect(screen.getByLabelText('nav.openMenu')).toBeInTheDocument();
     });
 
     it('renders mobile menu component', () => {
@@ -234,7 +234,7 @@ describe('NavBar', () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       const mobileMenu = screen.getByTestId('mobile-menu');
 
       expect(mobileMenu).toHaveAttribute('data-open', 'false');
@@ -248,7 +248,7 @@ describe('NavBar', () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       const mobileMenu = screen.getByTestId('mobile-menu');
 
       await user.click(hamburger);
@@ -262,17 +262,17 @@ describe('NavBar', () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       await user.click(hamburger);
 
-      expect(screen.getByLabelText('Close menu')).toBeInTheDocument();
+      expect(screen.getByLabelText('nav.closeMenu')).toBeInTheDocument();
     });
 
     it('has correct aria-expanded attribute', async () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       expect(hamburger).toHaveAttribute('aria-expanded', 'false');
 
       await user.click(hamburger);
@@ -283,7 +283,7 @@ describe('NavBar', () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       expect(hamburger).not.toHaveClass('active');
 
       await user.click(hamburger);
@@ -296,7 +296,7 @@ describe('NavBar', () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       await user.click(hamburger);
 
       const mobileMenu = screen.getByTestId('mobile-menu');
@@ -307,7 +307,7 @@ describe('NavBar', () => {
       const user = userEvent.setup();
       render(<NavBar />);
 
-      const hamburger = screen.getByLabelText('Open menu');
+      const hamburger = screen.getByLabelText('nav.openMenu');
       await user.click(hamburger);
 
       const mobileMenu = screen.getByTestId('mobile-menu');

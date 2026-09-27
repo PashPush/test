@@ -153,19 +153,60 @@ canvas {
   }
 
   .subtitle {
-    @apply relative text-white md:text-4xl md:leading-11 text-2xl z-20 mb-10;
+    @apply relative text-white md:text-4xl md:leading-11 text-2xl z-20 mb-4 md:mb-6;
   }
 
   .hero-line {
     @apply inline-block opacity-0;
   }
 
+  /* In flow, not absolute: on short screens the hero grows instead of the text running into the title. */
   .hero-text {
-    @apply flex flex-col absolute z-10 md:p-20 py-12 px-4 bottom-0 w-full;
+    @apply flex flex-col relative z-10 md:p-20 py-12 px-4 mt-auto w-full;
+  }
+
+  .hero-below {
+    @apply flex flex-col items-start gap-3 md:gap-4;
+  }
+
+  .hero-role {
+    @apply text-white font-semibold text-lg md:text-2xl;
+  }
+
+  .hero-pitch {
+    @apply text-white-50 text-base md:text-xl;
+  }
+
+  .hero-chips {
+    @apply flex flex-wrap gap-2;
+
+    li {
+      @apply px-3 py-1 rounded-lg bg-black-200 text-sm md:text-lg text-gray-200;
+    }
+
+    strong {
+      @apply text-white font-bold;
+    }
+  }
+
+  .hero-actions {
+    @apply flex gap-3 w-full mt-2;
   }
 
   .hero-button {
-    @apply md:w-80 md:mb-4 mt-4 h-12;
+    @apply flex-1 md:flex-none md:w-80 h-11;
+
+    .text {
+      @apply text-sm;
+    }
+  }
+
+  .hero-contact {
+    @apply flex-center h-11 md:px-6 px-4 rounded-lg border border-white/40 text-white uppercase md:text-lg text-sm transition-colors duration-300 hover:bg-white/10;
+  }
+
+  .hero-status {
+    @apply text-sm md:text-base text-gray-400;
   }
 
   @media (height <= 600px) {
@@ -186,12 +227,17 @@ canvas {
     }
 
     .hero-button {
-      @apply w-70 mb-0;
+      @apply w-70;
+    }
+
+    .hero-pitch,
+    .hero-chips {
+      @apply hidden;
     }
   }
 
   .interface {
-    @apply inline-block relative text-black w-48 select-none text-3xl leading-11 cursor-pointer;
+    @apply inline-block relative text-black w-48 select-none text-3xl leading-11 text-left cursor-pointer;
 
     clip-path: polygon(-200% -500%, 160% -300%, 150% 92%, 0px 92%);
 
@@ -233,18 +279,6 @@ canvas {
 
   .click-it {
     @apply text-gray-200 absolute mt-[13px] w-[50px] text-base ml-3 sm:ml-4 transition-all duration-300 cursor-pointer;
-  }
-
-  .strong-team {
-    @apply absolute font-semibold text-[22px] md:text-4xl;
-  }
-
-  .hero-stats {
-    @apply absolute px-3 py-1 rounded-lg bg-black-200 text-[18px] md:text-3xl tracking-wide text-gray-200 inline-block;
-
-    strong {
-      @apply text-white font-bold;
-    }
   }
 
   .chainsaw {
@@ -332,6 +366,10 @@ canvas {
       }
     }
 
+    .cv-btn {
+      @apply items-center gap-1 mr-3 px-4 py-2 rounded-lg border border-white/40 text-white transition-colors duration-300 hover:bg-white/10;
+    }
+
     .lang-switcher {
       @apply flex gap-1 mr-2 md:mr-4;
 
@@ -356,12 +394,6 @@ canvas {
       .logo {
         @apply text-xl;
       }
-    }
-    .hero-stats {
-      @apply hidden;
-    }
-    .strong-team {
-      @apply text-2xl;
     }
   }
 
@@ -462,6 +494,10 @@ canvas {
     }
   }
 
+  .mobile-menu-cv {
+    @apply w-full px-5 py-2 mt-3 text-lg text-center text-white rounded-lg border border-white/40 transition-colors duration-300 hover:bg-white/10;
+  }
+
   @media (height <= 600px) {
     .mobile-menu {
       @apply py-14;
@@ -538,17 +574,29 @@ canvas {
         }
       }
 
-      .text-content {
-        @apply space-y-5 mt-5;
-
-        .badges {
-          @apply flex gap-2 mb-4;
-        }
-
-        h2 {
-          @apply text-2xl md:text-3xl lg:text-4xl font-bold;
-        }
+      h2 {
+        @apply text-2xl md:text-3xl lg:text-4xl font-bold;
       }
+
+      .project-summary {
+        @apply md:text-xl;
+      }
+    }
+
+    .project-text {
+      @apply flex flex-col items-start gap-2 mt-5;
+    }
+
+    .project-summary {
+      @apply text-white-50;
+    }
+
+    .project-stack {
+      @apply text-sm md:text-base text-[#839cb5];
+    }
+
+    .project-cta {
+      @apply mt-1 font-semibold md:text-lg;
     }
 
     .project-list-wrapper {
@@ -571,7 +619,7 @@ canvas {
       }
 
       h2 {
-        @apply text-lg md:text-xl lg:text-2xl font-semibold mt-5;
+        @apply text-lg md:text-xl lg:text-2xl font-semibold;
       }
     }
   }
@@ -598,6 +646,23 @@ canvas {
 
   .exp-card-wrapper {
     @apply flex flex-col-reverse xl:flex-row xl:gap-20 gap-10 justify-between;
+  }
+
+  /* relative z-10: .card::before covers the card and would swallow the link's clicks. */
+  .exp-company {
+    @apply relative z-10 flex flex-col items-start gap-3;
+
+    img {
+      @apply mb-2;
+    }
+
+    a {
+      @apply transition-opacity duration-300 hover:opacity-70;
+    }
+
+    p {
+      @apply text-[#899aae] sm:text-lg text-base;
+    }
   }
 
   .exp-ul {
@@ -634,6 +699,19 @@ canvas {
 
       .content {
         @apply flex w-full sm:flex-row sm:pt-0 flex-col justify-around gap-10 pt-[20vh];
+
+        ul {
+          @apply sm:max-w-[16rem];
+        }
+
+        li img {
+          @apply mt-1 shrink-0;
+        }
+      }
+
+      /* Proofs only where the pinned screen has room for them. */
+      .approach-proof {
+        @apply hidden xl:block mt-1 text-sm text-white-50;
       }
 
       .approach-img {
@@ -656,13 +734,32 @@ canvas {
             @apply sm:text-5xl xl:text-7xl text-3xl text-center w-full font-yeseva-one text-white flex flex-wrap justify-center;
 
             .masked-span {
-              @apply opacity-0 mr-2;
+              @apply opacity-0 mr-[0.25em];
             }
           }
 
           p {
-            @apply sm:text-3xl text-lg text-center opacity-0;
+            @apply md:text-2xl sm:text-xl text-base text-center opacity-0 max-w-4xl mx-auto;
           }
+
+          figure {
+            @apply opacity-0 max-w-3xl mx-auto text-center;
+          }
+
+          blockquote {
+            @apply sm:text-lg text-sm italic text-white-50;
+          }
+
+          figcaption {
+            @apply mt-1 sm:text-base text-sm text-[#839cb5];
+          }
+        }
+      }
+
+      /* The quote would cover the face on short screens; it is in Reviews anyway. */
+      @media (height <= 700px) {
+        .masked-container div figure {
+          @apply hidden;
         }
       }
     }
@@ -670,6 +767,14 @@ canvas {
     @media (height <= 600px) {
       div {
         @apply pt-8;
+
+        .content li {
+          @apply text-sm;
+        }
+
+        .approach-proof {
+          @apply hidden;
+        }
 
         h2 {
           @apply text-[10vw];
@@ -687,7 +792,7 @@ canvas {
             }
 
             p {
-              @apply text-xl;
+              @apply text-base;
             }
           }
         }
@@ -921,6 +1026,12 @@ canvas {
       @apply h-[100vh] md:w-3/4 w-full px-6 flex will-change-transform;
     }
 
+    .processes-caption {
+      @apply absolute inset-x-0 bottom-[4vh] px-6 text-center sm:text-lg text-sm text-white z-20;
+      font-family: 'Segoe Print', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
     .processes {
       @apply grid items-center lg:grid-cols-2 lg:grid-rows-2 grid-cols-1 grid-rows-4 sm:w-[80vw] w-[100vw] max-h-[1000px] h-full md:px-10 xl:px-30 px-5 lg:py-40 py-28 sm:mt-10 mt-5 gap-10 z-20;
 
@@ -997,6 +1108,10 @@ canvas {
         @apply space-y-4 flex-row gap-2;
       }
 
+      .processes-caption {
+        @apply hidden;
+      }
+
       .processes {
         @apply gap-20 mt-0 px-4 py-24;
 
@@ -1045,7 +1160,7 @@ canvas {
   }
 
   .lang-card {
-    @apply relative w-full xl:mb-[2vh] sm:mb-[1vh] mb-0 rounded-[20px] sm:py-3 sm:px-6 py-2 px-2 border transition-all duration-300;
+    @apply relative flex-1 w-full xl:mb-[2vh] sm:mb-[1vh] mb-0 rounded-[20px] sm:py-3 sm:px-6 py-2 px-2 border transition-all duration-300;
 
     background: var(--glass);
     border-color: var(--edge);
@@ -1061,6 +1176,22 @@ canvas {
 
     .lang-card-head {
       @apply flex sm:justify-between justify-center lg:mb-4 mb-2;
+    }
+
+    &.lang-card-main {
+      @apply basis-full;
+
+      border-color: var(--acc);
+
+      .lang-card-head {
+        @apply mb-1 justify-start;
+      }
+    }
+
+    .lang-card-note {
+      @apply mb-3 xl:text-base text-sm;
+
+      color: var(--sub);
     }
 
     .lang-badge {
@@ -1087,20 +1218,6 @@ canvas {
     @apply absolute inset-y-0 left-0 rounded-full transition-all duration-1000;
 
     background: linear-gradient(90deg, #5fb3a6, #a8ede0);
-  }
-
-  .lang-effective {
-    @apply mt-4 p-4 rounded-[20px] border border-l-2 hidden sm:block;
-
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--edge);
-    border-left-color: var(--acc);
-
-    p {
-      @apply md:text-sm xl:text-base text-xs text-center;
-
-      color: var(--sub);
-    }
   }
 
   .card-title {
@@ -1232,10 +1349,6 @@ canvas {
       @apply py-2 px-2 mb-1;
     }
 
-    .lang-effective {
-      @apply mt-1;
-    }
-
     .card-title {
       @apply mb-2;
     }
@@ -1291,6 +1404,19 @@ canvas {
       .lang-card-head {
         @apply mb-0 justify-center;
       }
+
+      .lang-card-note {
+        @apply hidden;
+      }
+
+      /* Back to one row of three on short phones, otherwise the panel overflows. */
+      &.lang-card-main {
+        @apply basis-0 sm:basis-full;
+
+        h4 {
+          @apply hidden sm:block;
+        }
+      }
     }
   }
 
@@ -1303,11 +1429,35 @@ canvas {
     }
   }
 
+  .contacts-head {
+    @apply col-center gap-4 px-4 text-center;
+  }
+
+  .contacts-status {
+    @apply px-3 py-1 rounded-xl bg-black/60 sm:text-base text-sm text-white-50 z-20 relative;
+  }
+
   .socials {
     @apply flex-center  gap-6 sm:text-5xl text-3xl z-20 relative;
 
     a {
       @apply flex-center size-11 rounded-full shadow-[2px_2px_10px_rgba(0,0,0,0.8)] hover:shadow-[2px_2px_20px_rgba(0,0,0,0.8)] transition-all duration-300 hover:scale-110;
+    }
+  }
+
+  .contacts-cv {
+    @apply flex flex-col items-center gap-1 px-6 py-3 rounded-xl border border-white/30 bg-black/60 text-lg text-white z-20 relative transition-colors duration-300 hover:bg-white/10;
+  }
+
+  .contacts-cv-meta {
+    @apply text-sm text-white-50;
+  }
+
+  .contacts-footer {
+    @apply flex-center flex-wrap gap-x-3 gap-y-1 mx-4 md:mb-4 mb-2 px-3 py-1 text-white z-20 relative;
+
+    a {
+      @apply text-white-50 underline underline-offset-2 transition-colors duration-300 hover:text-white;
     }
   }
 }
@@ -1695,10 +1845,56 @@ canvas#neuro[data-visible='true'] {
   color: white;
 }
 
-.project-modal-stack {
-  font-size: 1.125rem;
+.project-modal-body h2 + .project-modal-section {
+  margin-top: 1.5rem;
+}
+
+.project-modal-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.project-modal-results li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.project-modal-results strong {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  color: white;
+}
+
+.project-modal-results span {
+  font-size: 0.875rem;
+  line-height: 1.4;
   color: #839cb5;
-  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  /* One equal column per tile, whether a case has 3 or 4. */
+  .project-modal-results {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+}
+
+.project-modal-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #d9ecff;
 }
 
 .project-modal-section {
@@ -1856,15 +2052,32 @@ canvas#neuro[data-visible='true'] {
 }
 
 /* Project card clickable styles */
-.project-card-clickable {
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+/* Hover moves the image, not the card: GSAP's entrance leaves an inline transform on the card. */
+.project-card-clickable .image-wrapper {
+  transition: transform 0.3s ease;
 }
 
-.project-card-clickable:hover {
+.project-cta span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.project-card-clickable:focus-visible .image-wrapper {
   transform: translateY(-4px);
+}
+
+.project-card-clickable:focus-visible .project-cta span {
+  transform: translateX(4px);
+}
+
+@media (hover: hover) {
+  .project-card-clickable:hover .image-wrapper {
+    transform: translateY(-4px);
+  }
+
+  .project-card-clickable:hover .project-cta span {
+    transform: translateX(4px);
+  }
 }
 
 .project-card-clickable:focus-visible {

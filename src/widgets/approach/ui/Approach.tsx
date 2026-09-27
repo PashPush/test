@@ -4,13 +4,26 @@ import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
 import { classNames } from '@/shared/lib/classNames';
 
+type Principle = { title: string; proof: string };
+
 const Approach = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const isSmallMobile = useMediaQuery({ maxWidth: 460 });
 
-  const features = t('features', { returnObjects: true }) as string[];
-  const goods = t('goods', { returnObjects: true }) as string[];
+  const value = t('approach.principles', { returnObjects: true }) as unknown;
+  const principles = Array.isArray(value) ? (value as Principle[]) : [];
+
+  const principleList = (items: Principle[]) =>
+    items.map(({ title, proof }, index) => (
+      <li key={index} className="flex items-start gap-2">
+        <img src="/images/check.png" alt="" />
+        <p>
+          {title}
+          <small className="approach-proof">{proof}</small>
+        </p>
+      </li>
+    ));
 
   useGSAP(() => {
     gsap.set('.masked-img', { clearProps: 'transform,translate,x,y,xPercent,yPercent,scale' });
@@ -53,7 +66,7 @@ const Approach = () => {
       })
       .fromTo('#masked-content', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power1.inOut' })
       .to('.masked-span', { opacity: 1, duration: 1, stagger: 0.3, ease: 'power1.inOut' })
-      .to('.masked-p', { opacity: 1, duration: 1, ease: 'power1.inOut' });
+      .to('.masked-p', { opacity: 1, duration: 1, stagger: 0.5, ease: 'power1.inOut' });
   }, []);
 
   return (
@@ -65,19 +78,12 @@ const Approach = () => {
         </h2>
 
         <div className="content">
-          <ul className="space-y-4 will-fade will-grow sm:mr-50 z-10">
-            {goods.map((feature, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <img src="/images/check.png" alt="check" />
-                <p>{feature}</p>
-              </li>
-            ))}
-          </ul>
+          <ul className="space-y-4 will-fade will-grow sm:mr-50 z-10">{principleList(principles.slice(0, 3))}</ul>
 
           <div className={classNames('approach-img', { 'approach-mobile': isMobile })}>
             <img
               src="/images/pavel2.webp"
-              alt="Pavel in the office"
+              alt={t('approach.photoAlt')}
               className={classNames('abs-center masked-img size-full object-contain', {
                 'masked-img-mobile': isMobile,
               })}
@@ -87,33 +93,30 @@ const Approach = () => {
             />
           </div>
 
-          <ul className="space-y-4 will-fade will-grow sm:ml-50 z-10">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-center justify-start gap-2">
-                <img src="/images/check.png" alt="check" />
-                <p className="sm:w-fit w-70">{feature}</p>
-              </li>
-            ))}
-          </ul>
+          <ul className="space-y-4 will-fade will-grow sm:ml-50 z-10">{principleList(principles.slice(3))}</ul>
         </div>
 
         <div className="masked-container">
           <h2 className="will-fade">
-            {t('approach.doWell')}
+            {t('approach.slogan1')}
             <br />
-            {t('approach.beWell')}
+            {t('approach.slogan2')}
           </h2>
           <div id="masked-content">
             <h3>
-              <span className="masked-span">{t('approach.iAm')}</span>
-              <span className="masked-span">{t('approach.dash')}</span>
-              <span className="masked-span">{t('approach.teamPlayer')}</span>
+              {t('approach.teamTitle')
+                .split(' ')
+                .map((word, index) => (
+                  <span key={index} className="masked-span">
+                    {word}
+                  </span>
+                ))}
             </h3>
-            <p className="masked-p">
-              {t('approach.kanban')}
-              <br />
-              {t('approach.focus')}
-            </p>
+            <p className="masked-p">{t('approach.teamText')}</p>
+            <figure className="masked-p">
+              <blockquote>{t('approach.quote')}</blockquote>
+              <figcaption>{t('approach.quoteAuthor')}</figcaption>
+            </figure>
           </div>
         </div>
       </div>

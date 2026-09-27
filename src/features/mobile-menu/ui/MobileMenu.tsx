@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { classNames } from '@/shared/lib/classNames';
+import { useCvLink } from '@/shared/lib/useCvLink';
 import { useMediaQuery } from 'react-responsive';
 
 interface NavLink {
@@ -19,6 +20,7 @@ interface MobileMenuProps {
 const MobileMenu = ({ isOpen, onClose, currentLink, navLinks }: MobileMenuProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const cvLink = useCvLink('mobile_menu');
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
@@ -97,6 +99,10 @@ const MobileMenu = ({ isOpen, onClose, currentLink, navLinks }: MobileMenuProps)
           onClick={handleLinkClick}
         >
           {t('nav.contactBtn')}
+        </a>
+
+        <a {...cvLink} className="mobile-menu-cv">
+          {t('nav.cv')} <span aria-hidden="true">↓</span>
         </a>
       </div>
     </>

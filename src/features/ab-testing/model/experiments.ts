@@ -56,42 +56,9 @@ export const reviewTextExperiment: ExperimentConfig<TextOverrides> = {
   ],
 };
 
-// --- Experience card review text experiment ---
-
-export const expReviewTextExperiment: ExperimentConfig<TextOverrides> = {
-  id: 'expReviewText',
-  enabled: false,
-  variants: [
-    {
-      id: 'control',
-      value: { overrides: { ru: {}, en: {} } },
-    },
-    {
-      id: 'detailedReviews',
-      value: {
-        overrides: {
-          ru: {
-            'expCards.0.review':
-              'Павел быстро адаптировался и стал ключевым участником команды. Его вклад в оптимизацию и новые фичи заметно продвинул продукт.',
-            'expCards.1.review':
-              'Толковый и позитивный разработчик. Быстро влился в коллектив и показал отличные результаты.',
-          },
-          en: {
-            'expCards.0.review':
-              'Pavel quickly adapted and became a key team member. His contributions to optimization and new features significantly advanced the product.',
-            'expCards.1.review':
-              'A competent and positive developer. Quickly integrated into the team and showed excellent results.',
-          },
-        },
-      },
-    },
-  ],
-};
-
 // --- All experiments ---
 
 export const allExperiments = [
   sectionOrderExperiment,
   reviewTextExperiment,
-  expReviewTextExperiment,
 ];

@@ -5,13 +5,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTranslation } from 'react-i18next';
 import {
   IoSparklesOutline,
-  IoRocketOutline,
   IoLanguageSharp,
   IoColorPaletteOutline,
-  IoCompassSharp,
-  IoReaderOutline,
+  IoTrendingUpOutline,
+  IoSearchOutline,
+  IoMusicalNotesOutline,
 } from 'react-icons/io5';
 import { useMediaQuery } from 'react-responsive';
+import { classNames } from '@/shared/lib/classNames';
 
 type Language = {
   flag: string;
@@ -19,6 +20,7 @@ type Language = {
   level: string;
   levelText: string;
   percentage: number;
+  note?: string;
 };
 
 type Drive = {
@@ -32,11 +34,11 @@ const LanguageCard = memo(({ lang }: { lang: Language }) => {
   const horizontal = useMediaQuery({ maxHeight: 600 });
 
   return (
-    <div className="lang-card">
+    <div className={classNames('lang-card', { 'lang-card-main': !!lang.note })}>
       <div className="lang-card-head">
         <div className="flex items-center lg:gap-x-4 gap-x-2 flex-wrap">
           <span className="text-4xl">{lang.flag}</span>
-          <h4 className="text-xl text-white hidden sm:block">{lang.name}</h4>
+          <h4 className={classNames('text-xl text-white', { 'hidden sm:block': !lang.note })}>{lang.name}</h4>
 
           <div className="flex items-center lg:gap-4 gap-2">
             <span className="lang-badge">{lang.level}</span>
@@ -44,6 +46,8 @@ const LanguageCard = memo(({ lang }: { lang: Language }) => {
           </div>
         </div>
       </div>
+
+      {lang.note && <p className="lang-card-note">{lang.note}</p>}
 
       <div className="lang-bar">
         <div className="lang-bar-fill" style={{ width: `${lang.percentage}%` }}></div>
@@ -83,37 +87,31 @@ const Beyond = () => {
   const horizontal = useMediaQuery({ maxHeight: 600 });
 
   const languages = [
-    { name: 'English', level: 'C1', levelText: t('skills.beyond.langLevels.advanced'), flag: '🇬🇧', percentage: 89 },
+    {
+      name: 'English',
+      level: 'C1',
+      levelText: t('skills.beyond.langLevels.advanced'),
+      flag: '🇬🇧',
+      percentage: 89,
+      note: t('skills.beyond.englishNote'),
+    },
     { name: 'Español', level: 'B1', levelText: t('skills.beyond.langLevels.intermediate'), flag: '🇪🇸', percentage: 61 },
     { name: 'Русский', level: 'NS', levelText: t('skills.beyond.langLevels.native'), flag: '🇷🇺', percentage: 100 },
   ];
 
-  const drives: Drive[] = [
-    {
-      id: 'balance',
-      icon: IoCompassSharp,
-      title: t('skills.beyond.driveItems.balance.title'),
-      description: t('skills.beyond.driveItems.balance.description'),
-    },
-    {
-      id: 'result',
-      icon: IoReaderOutline,
-      title: t('skills.beyond.driveItems.result.title'),
-      description: t('skills.beyond.driveItems.result.description'),
-    },
-    {
-      id: 'learning',
-      icon: IoRocketOutline,
-      title: t('skills.beyond.driveItems.learning.title'),
-      description: t('skills.beyond.driveItems.learning.description'),
-    },
-    {
-      id: 'ux',
-      icon: IoColorPaletteOutline,
-      title: t('skills.beyond.driveItems.ux.title'),
-      description: t('skills.beyond.driveItems.ux.description'),
-    },
-  ];
+  const drives: Drive[] = (
+    [
+      ['metrics', IoTrendingUpOutline],
+      ['noManual', IoColorPaletteOutline],
+      ['whySlow', IoSearchOutline],
+      ['life', IoMusicalNotesOutline],
+    ] as const
+  ).map(([id, icon]) => ({
+    id,
+    icon,
+    title: t(`skills.beyond.driveItems.${id}.title`),
+    description: t(`skills.beyond.driveItems.${id}.description`),
+  }));
 
   useGSAP(() => {
     gsap.delayedCall(0.2, () => {
@@ -124,7 +122,6 @@ const Beyond = () => {
 
       const additionals = sectionRef.current.querySelectorAll('.additional > div');
       const beyondCode = sectionRef.current.querySelector('.beyond-code');
-      const langEffective = sectionRef.current.querySelector('.lang-effective');
       const callGrow = sectionRef.current.querySelector('.call-grow');
       const langCards = sectionRef.current.querySelectorAll('.lang-card');
       const driveCards = sectionRef.current.querySelectorAll('.drive-card');
@@ -183,20 +180,6 @@ const Beyond = () => {
         );
       }
 
-      if (langEffective) {
-        tl.fromTo(
-          langEffective,
-          { x: 50, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.5,
-            force3D: true,
-          },
-          1
-        );
-      }
-
       if (driveCards.length > 0) {
         tl.fromTo(
           driveCards,
@@ -241,17 +224,11 @@ const Beyond = () => {
               <h3>{t('skills.beyond.languages')}</h3>
             </div>
 
-            <div className="flex sm:block flex-row gap-2 justify-between">
+            <div className="flex flex-wrap sm:block gap-2 justify-between">
               {languages.map(lang => (
                 <LanguageCard key={lang.name} lang={lang} />
               ))}
             </div>
-
-            {!horizontal && (
-              <div className="lang-effective">
-                <p>{t('skills.beyond.langEffective')}</p>
-              </div>
-            )}
           </div>
 
           <div className="drive">
@@ -269,8 +246,8 @@ const Beyond = () => {
         <div className="call-grow">
           <div>
             <p>
-              {t('skills.beyond.callGrow')}
-              <span> {t('skills.beyond.meaningful')}</span>
+              {t('skills.beyond.seeking')}
+              <span> {t('skills.beyond.seekingAccent')}</span>
             </p>
           </div>
         </div>

@@ -50,7 +50,7 @@ const frontend: Skill[] = [
   { id: 'react-native', name: 'React Native', Icon: SiReact, color: '#23b1c3', colorBack: '#1b7480' },
   { id: 'tailwind', name: 'Tailwind', Icon: SiTailwindcss, color: '#51b7e2', colorBack: '#35768c' },
   { id: 'scss', name: 'SCSS', Icon: SiSass, color: '#bd7196', colorBack: '#814563' },
-  { id: 'gsap', name: 'Gsap', Icon: Gsap as IconType, color: '#2dd45c', colorBack: '#34804b' },
+  { id: 'gsap', name: 'GSAP', Icon: Gsap as IconType, color: '#2dd45c', colorBack: '#34804b' },
   { id: 'redux', name: 'Redux', Icon: SiRedux, color: '#7757a9', colorBack: '#4d366f' },
   { id: 'mobx', name: 'MobX', Icon: SiMobx, color: '#c86835', colorBack: '#7a4628' },
   { id: 'zustand', name: 'Zustand', Icon: '/images/zustand.webp', color: '#7e60ad', colorBack: '#513f6d' },

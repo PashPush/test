@@ -1,28 +1,15 @@
-type ButtonProps = {
-  text: string;
-  className?: string;
-  id?: string;
-};
+import type { AnchorHTMLAttributes } from 'react';
 
-const handleClick = (event: React.MouseEvent, id?: string) => {
-  event.preventDefault();
+type ButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & { text: string };
 
-  const target = document.getElementById('experience');
-
-  if (target && id) {
-    const top = target.getBoundingClientRect().top + window.pageYOffset;
-    window.scrollTo({ top, behavior: 'smooth' });
-  }
-};
-
-const Button = ({ text, className, id }: ButtonProps) => {
+const Button = ({ text, className, ...rest }: ButtonProps) => {
   return (
-    <a href="#" onClick={event => handleClick(event, id)} className={`${className ?? ''} cta-wrapper`}>
+    <a {...rest} className={`${className ?? ''} cta-wrapper`}>
       <div className="cta-button group">
         <div className="bg-circle" />
         <p className="text">{text}</p>
         <div className="arrow-wrapper">
-          <img src="/images/arrow-down.svg" alt="arrow" />
+          <img src="/images/arrow-down.svg" alt="" />
         </div>
       </div>
     </a>

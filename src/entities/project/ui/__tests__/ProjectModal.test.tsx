@@ -7,9 +7,15 @@ import type { ProjectData } from '../../model/types';
 const mockProject: ProjectData = {
   id: 'test-project',
   name: 'Test Project',
-  stack: 'React, TypeScript',
+  aboutTitle: 'About the project',
   description: 'A test project description',
   role: 'Lead Developer',
+  done: ['<b>Memory.</b> Fixed a leak', 'Wrote tests'],
+  results: [
+    { value: '+210%', label: '5★ ratings' },
+    { value: '~200 ms', label: 'earlier JS start' },
+  ],
+  stack: 'React, TypeScript',
   screenshots: ['/screenshot1.png', '/screenshot2.png'],
   color: 'linear-gradient(90deg, #000, #fff)',
   mainImage: '/main.png',
@@ -68,8 +74,22 @@ describe('ProjectModal', () => {
       expect(screen.getByText('Lead Developer')).toBeInTheDocument();
     });
 
-    it('renders <b> markup in role as strong', () => {
-      render(<ProjectModal {...defaultProps} isOpen={true} project={{ ...mockProject, role: '• <b>Memory.</b> Fixed a leak' }} />);
+    it('renders result tiles', () => {
+      render(<ProjectModal {...defaultProps} isOpen={true} />);
+      const tiles = document.querySelectorAll('.project-modal-results li');
+      expect(tiles).toHaveLength(2);
+      expect(screen.getByText('+210%')).toBeInTheDocument();
+      expect(screen.getByText('5★ ratings')).toBeInTheDocument();
+    });
+
+    it('renders what-I-did items as a list', () => {
+      render(<ProjectModal {...defaultProps} isOpen={true} />);
+      expect(document.querySelectorAll('.project-modal-list li')).toHaveLength(2);
+      expect(screen.getByText('Wrote tests')).toBeInTheDocument();
+    });
+
+    it('renders <b> markup in what-I-did items as strong', () => {
+      render(<ProjectModal {...defaultProps} isOpen={true} />);
       expect(screen.getByText('Memory.').tagName).toBe('STRONG');
       expect(screen.queryByText(/<b>/)).not.toBeInTheDocument();
     });
@@ -87,9 +107,15 @@ describe('ProjectModal', () => {
 
     it('renders section headers', () => {
       render(<ProjectModal {...defaultProps} isOpen={true} />);
-      expect(screen.getByText('modal.description')).toBeInTheDocument();
-      expect(screen.getByText('modal.role')).toBeInTheDocument();
-      expect(screen.getByText('modal.screenshots')).toBeInTheDocument();
+      const headings = screen.getAllByRole('heading', { level: 3 }).map(h => h.textContent);
+      expect(headings).toEqual([
+        'modal.results',
+        'About the project',
+        'modal.role',
+        'modal.done',
+        'modal.stack',
+        'modal.screenshots',
+      ]);
     });
   });
 
