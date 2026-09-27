@@ -261,7 +261,9 @@ canvas {
     @apply relative mt-20 z-10 md:pt-20 p-4;
 
     .title {
-      @apply flex md:flex-row flex-col justify-evenly xl:text-8xl md:text-[7vw] text-5xl font-yeseva-one text-gray-50 uppercase mb-auto gap-2 opacity-0;
+      @apply flex md:flex-row flex-col justify-evenly xl:text-8xl md:text-[7vw] text-5xl font-yeseva-one text-gray-50 uppercase mb-auto gap-2;
+
+      animation: hero-rise 0.6s ease-out backwards;
     }
   }
 
@@ -270,7 +272,9 @@ canvas {
   }
 
   .hero-line {
-    @apply inline-block opacity-0;
+    @apply inline-block;
+
+    animation: hero-rise 0.6s 0.1s ease-out backwards;
   }
 
   /* In flow, not absolute: on short screens the hero grows instead of the text running into the title. */
@@ -1756,7 +1760,18 @@ canvas#neuro[data-visible='true'] {
 .chainsaw[data-paused] #fins {
   animation-play-state: paused;
 }
+/* Transform only: the hero is visible from the first frame, which is also the LCP. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(20px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-layout .title,
+  .hero-line {
+    animation: none;
+  }
   #blade,
   #engine_front,
   #fins {

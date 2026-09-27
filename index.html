@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/images/chainsaw.svg" />
-    <!-- The hero h1 is Latin in both languages, so its LCP font is the latin subset. -->
+    <!-- First-screen fonts, so the swap doesn't shift the visible hero: the h1 is Latin in
+         both languages, and Roboto latin 400 carries the spaces and punctuation of every line
+         (it sets the line metrics even in Russian text). -->
     <link rel="preload" href="/src/app/styles/fonts/yeseva-one-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/src/app/styles/fonts/roboto-latin-400.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Static on purpose: link-preview bots (Telegram, Slack, LinkedIn) don't run JS.

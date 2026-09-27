@@ -1,6 +1,4 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Button from '@/shared/ui/Button';
@@ -55,15 +53,6 @@ const Hero = () => {
       query.removeEventListener('change', update);
     };
   }, []);
-
-  useGSAP(() => {
-    gsap.fromTo('.title', { y: 50, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.4, duration: 1, ease: 'power2.inOut' });
-    gsap.fromTo(
-      '.hero-line',
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'power2.out', delay: 0.3 }
-    );
-  });
 
   return (
     <>
