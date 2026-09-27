@@ -216,21 +216,22 @@
     }
   },
   "stickers": {
+    "caption": "My usual Kanban board. Scrum? Same thing, with sprints.",
     "0": {
       "title": "To Do",
-      "description": "Analyzing requirements and goals"
+      "description": "Clarify the goal and the success metric"
     },
     "1": {
       "title": "In Progress",
-      "description": "Writing reliable, clean code"
+      "description": "Write code and tests for critical flows"
     },
     "2": {
       "title": "Code Review",
-      "description": "Open to discussion and improvements"
+      "description": "Give and take reviews, no hard feelings"
     },
     "3": {
       "title": "Ready for Release",
-      "description": "Ready for deployment without rework"
+      "description": "Roll out gradually, measure the impact"
     }
   },
   "skills": {
@@ -242,31 +243,31 @@
     "beyond": {
       "title": "Beyond Code",
       "languages": "Language Proficiency",
-      "drives": "What Drives Me",
-      "langEffective": "I can effectively work with international teams and clients",
-      "callGrow": "Looking for opportunities to grow and create",
-      "meaningful": "meaningful products",
+      "englishNote": "I use English daily at Power Thesaurus, an international product",
+      "drives": "What Gets Me Going",
+      "seeking": "Looking for a product team where frontend quality",
+      "seekingAccent": "moves business metrics",
       "langLevels": {
         "advanced": "Advanced",
         "intermediate": "Intermediate",
         "native": "Native Speaker"
       },
       "driveItems": {
-        "balance": {
-          "title": "Balance between life and code",
-          "description": "Languages, sports, piano, singing — sources of inspiration and creativity"
+        "metrics": {
+          "title": "Watching a metric turn green",
+          "description": "My favorite moment is a Search Console report turning green after a fix"
         },
-        "result": {
-          "title": "Seeing the result of my work",
-          "description": "When users intuitively understand the interface — that's the best reward"
+        "noManual": {
+          "title": "Interfaces that need no manual",
+          "description": "If users don't need a hint, the job is done"
         },
-        "learning": {
-          "title": "Learning new technologies and patterns",
-          "description": "Constantly growing, following trends and best practices"
+        "whySlow": {
+          "title": "Finding out why it's slow",
+          "description": "Profilers, heap snapshots and traces are my detective shows"
         },
-        "ux": {
-          "title": "UX/UI design and attention to detail",
-          "description": "Creating not just code, but a thoughtful user experience"
+        "life": {
+          "title": "Life outside code",
+          "description": "Piano, singing, sports and languages"
         }
       }
     }

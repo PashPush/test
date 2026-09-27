@@ -144,6 +144,7 @@ const Process = () => {
             />
           ))}
         </div>
+        <p className="processes-caption">{t('stickers.caption')}</p>
       </div>
       <div className="noise sm:!w-3/4"></div>
       {!isMobile && <Hands />}

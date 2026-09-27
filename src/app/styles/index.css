@@ -1026,6 +1026,12 @@ canvas {
       @apply h-[100vh] md:w-3/4 w-full px-6 flex will-change-transform;
     }
 
+    .processes-caption {
+      @apply absolute inset-x-0 bottom-[4vh] px-6 text-center sm:text-lg text-sm text-white z-20;
+      font-family: 'Segoe Print', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
     .processes {
       @apply grid items-center lg:grid-cols-2 lg:grid-rows-2 grid-cols-1 grid-rows-4 sm:w-[80vw] w-[100vw] max-h-[1000px] h-full md:px-10 xl:px-30 px-5 lg:py-40 py-28 sm:mt-10 mt-5 gap-10 z-20;
 
@@ -1102,6 +1108,10 @@ canvas {
         @apply space-y-4 flex-row gap-2;
       }
 
+      .processes-caption {
+        @apply hidden;
+      }
+
       .processes {
         @apply gap-20 mt-0 px-4 py-24;
 
@@ -1150,7 +1160,7 @@ canvas {
   }
 
   .lang-card {
-    @apply relative w-full xl:mb-[2vh] sm:mb-[1vh] mb-0 rounded-[20px] sm:py-3 sm:px-6 py-2 px-2 border transition-all duration-300;
+    @apply relative flex-1 w-full xl:mb-[2vh] sm:mb-[1vh] mb-0 rounded-[20px] sm:py-3 sm:px-6 py-2 px-2 border transition-all duration-300;
 
     background: var(--glass);
     border-color: var(--edge);
@@ -1166,6 +1176,22 @@ canvas {
 
     .lang-card-head {
       @apply flex sm:justify-between justify-center lg:mb-4 mb-2;
+    }
+
+    &.lang-card-main {
+      @apply basis-full;
+
+      border-color: var(--acc);
+
+      .lang-card-head {
+        @apply mb-1 justify-start;
+      }
+    }
+
+    .lang-card-note {
+      @apply mb-3 xl:text-base text-sm;
+
+      color: var(--sub);
     }
 
     .lang-badge {
@@ -1192,20 +1218,6 @@ canvas {
     @apply absolute inset-y-0 left-0 rounded-full transition-all duration-1000;
 
     background: linear-gradient(90deg, #5fb3a6, #a8ede0);
-  }
-
-  .lang-effective {
-    @apply mt-4 p-4 rounded-[20px] border border-l-2 hidden sm:block;
-
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--edge);
-    border-left-color: var(--acc);
-
-    p {
-      @apply md:text-sm xl:text-base text-xs text-center;
-
-      color: var(--sub);
-    }
   }
 
   .card-title {
@@ -1337,10 +1349,6 @@ canvas {
       @apply py-2 px-2 mb-1;
     }
 
-    .lang-effective {
-      @apply mt-1;
-    }
-
     .card-title {
       @apply mb-2;
     }
@@ -1395,6 +1403,19 @@ canvas {
 
       .lang-card-head {
         @apply mb-0 justify-center;
+      }
+
+      .lang-card-note {
+        @apply hidden;
+      }
+
+      /* Back to one row of three on short phones, otherwise the panel overflows. */
+      &.lang-card-main {
+        @apply basis-0 sm:basis-full;
+
+        h4 {
+          @apply hidden sm:block;
+        }
       }
     }
   }
