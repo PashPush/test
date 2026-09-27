@@ -90,11 +90,12 @@ const SkillBadge = memo(({ skill, iconSize }: { skill: Skill; iconSize: number }
         } as CSSProperties
       }
     >
-      <span className="skill-icon">
+      {/* Decorative: the name sits right next to it. */}
+      <span className="skill-icon" aria-hidden="true">
         {typeof Icon !== 'string' ? (
-          <Icon size={iconSize} color="#fff" />
+          <Icon size={iconSize} color="#fff" role={undefined} focusable="false" />
         ) : (
-          <img src={Icon} alt="Zustand" width={iconSize} height={iconSize} loading="lazy" />
+          <img src={Icon} alt="" width={iconSize} height={iconSize} loading="lazy" />
         )}
       </span>
       <span className="skill-text" style={{ lineHeight: 1 }}>

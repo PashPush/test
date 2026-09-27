@@ -6,6 +6,13 @@ import { classNames } from '@/shared/lib/classNames';
 
 type Principle = { title: string; proof: string };
 
+const pavelSrcSet = (ext: 'avif' | 'webp') =>
+  [640, 960, 1280, 1920]
+    .map(w => `/images/pavel2${w === 1920 && ext === 'webp' ? '' : `-${w}`}.${ext} ${w}w`)
+    .join(', ');
+// object-contain in a 100vw×100vh box, scaled 150% on mobile (.approach-mobile).
+const pavelSizes = '(max-width: 640px) 150vw, (min-aspect-ratio: 1920/1683) 114vh, 100vw';
+
 const Approach = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 640 });
@@ -17,7 +24,7 @@ const Approach = () => {
   const principleList = (items: Principle[]) =>
     items.map(({ title, proof }, index) => (
       <li key={index} className="flex items-start gap-2">
-        <img src="/images/check.png" alt="" />
+        <img src="/images/check.png" alt="" width={16} height={16} loading="lazy" />
         <p>
           {title}
           <small className="approach-proof">{proof}</small>
@@ -81,16 +88,22 @@ const Approach = () => {
           <ul className="space-y-4 will-fade will-grow sm:mr-50 z-10">{principleList(principles.slice(0, 3))}</ul>
 
           <div className={classNames('approach-img', { 'approach-mobile': isMobile })}>
-            <img
-              src="/images/pavel2.webp"
-              alt={t('approach.photoAlt')}
-              className={classNames('abs-center masked-img size-full object-contain', {
-                'masked-img-mobile': isMobile,
-              })}
-              decoding="async"
-              width={1920}
-              height={1683}
-            />
+            <picture>
+              <source type="image/avif" srcSet={pavelSrcSet('avif')} sizes={pavelSizes} />
+              <img
+                src="/images/pavel2.webp"
+                srcSet={pavelSrcSet('webp')}
+                sizes={pavelSizes}
+                alt={t('approach.photoAlt')}
+                className={classNames('abs-center masked-img size-full object-contain', {
+                  'masked-img-mobile': isMobile,
+                })}
+                loading="lazy"
+                decoding="async"
+                width={1920}
+                height={1683}
+              />
+            </picture>
           </div>
 
           <ul className="space-y-4 will-fade will-grow sm:ml-50 z-10">{principleList(principles.slice(3))}</ul>

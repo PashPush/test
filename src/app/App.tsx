@@ -1,8 +1,8 @@
-import { useViewportHeight } from '@/shared/lib/useViewportHeight';
+import { useRefreshOnResize } from '@/shared/lib/useRefreshOnResize';
 import HomePage from '@/pages/home/ui/HomePage';
 
 const App = () => {
-  useViewportHeight();
+  useRefreshOnResize();
 
   return <HomePage />;
 };

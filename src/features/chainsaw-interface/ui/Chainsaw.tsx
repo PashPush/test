@@ -1,6 +1,20 @@
+import { useEffect, useRef } from 'react';
+
 const Chainsaw = () => {
+  const ref = useRef<SVGSVGElement>(null);
+
+  // The blade animates stroke-dashoffset, which can't be composited: pause it off-screen.
+  useEffect(() => {
+    const svg = ref.current;
+    if (!svg) return;
+    const observer = new IntersectionObserver(([entry]) => svg.toggleAttribute('data-paused', !entry.isIntersecting));
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <svg
+      ref={ref}
       xmlns="http://www.w3.org/2000/svg"
       width="305"
       viewBox="0 0 305 98"

@@ -41,7 +41,7 @@ const Hero = () => {
 
   return (
     <>
-      <section id="hero" className="flex flex-col min-h-[calc(var(--vh,1vh)*100)]">
+      <section id="hero" className="flex flex-col">
         <ErrorBoundary>
           <Suspense fallback={null}>{loadShader ? <ShaderPhoto /> : null}</Suspense>
         </ErrorBoundary>

@@ -10,6 +10,13 @@ const caseHash = (slug: string) => `#case/${slug}`;
 const idFromHash = () => projectsData.find(p => location.hash === caseHash(p.slug))?.id ?? null;
 
 type CaseLink = { id: string; slug: string };
+
+const ptSrcSet = (ext: 'avif' | 'webp') =>
+  [600, 1000, 1400]
+    .map(w => `/images/project-pt${w === 1400 && ext === 'webp' ? '' : `-${w}`}.${ext} ${w}w`)
+    .join(', ');
+// object-cover: on phones the fixed 384px height (h-96) sets the width, not the viewport.
+const ptSizes = '(min-width: 1280px) 60vw, (min-width: 768px) 100vw, 542px';
 const [ptCase, indexCase, sagamaCase] = projectsData;
 
 const Projects = () => {
@@ -172,7 +179,19 @@ const Projects = () => {
           <div className="projects-layout">
             <a ref={project1Ref} className="first-project-wrapper project-card-clickable" {...cardProps(ptCase)}>
               <div className="image-wrapper bg-[#168be8]" style={getTransitionStyles('pt', 'image')}>
-                <img src="/images/project-pt.webp" alt="" loading="lazy" decoding="async" width={1400} height={992} />
+                <picture>
+                  <source type="image/avif" srcSet={ptSrcSet('avif')} sizes={ptSizes} />
+                  <img
+                    src="/images/project-pt.webp"
+                    srcSet={ptSrcSet('webp')}
+                    sizes={ptSizes}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={1400}
+                    height={992}
+                  />
+                </picture>
               </div>
               {cardText('pt')}
             </a>

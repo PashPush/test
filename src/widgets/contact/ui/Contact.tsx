@@ -10,13 +10,13 @@ import { SITE_REPO_URL } from '@/shared/config/siteRepo';
 type Channel = 'telegram' | 'whatsapp' | 'email';
 
 const channels: Record<Channel, { href: string; bg: string; icon: ReactNode }> = {
-  telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: <SiTelegram size={44} color="#fff" /> },
+  telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: <SiTelegram size={44} color="#fff" aria-hidden /> },
   whatsapp: {
     href: atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw=='),
     bg: 'bg-[#4ac959]',
-    icon: <SiWhatsapp size={44} color="#fff" />,
+    icon: <SiWhatsapp size={44} color="#fff" aria-hidden />,
   },
-  email: { href: 'mailto:pahovdev@gmail.com', bg: 'bg-[#2e2d38]', icon: <MdMail size={24} color="#fff" /> },
+  email: { href: 'mailto:pahovdev@gmail.com', bg: 'bg-[#2e2d38]', icon: <MdMail size={24} color="#fff" aria-hidden /> },
 };
 
 // Recruiters abroad reach for email before WhatsApp, so in English it sits next to Telegram.
@@ -58,7 +58,7 @@ const Contact = () => {
 
       <div className="socials">
         <span className="absolute text-base left-3.5 -top-5 md:-top-7 ">
-          <img src="/images/arrow-white.svg" alt="arrow" className="animate-bounce" />
+          <img src="/images/arrow-white.svg" alt="arrow" width={18} height={18} loading="lazy" className="animate-bounce" />
         </span>
 
         {channelOrder[lang].map(channel => (

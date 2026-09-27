@@ -64,9 +64,14 @@ const HomePage = () => {
     };
   }, []);
 
+  // Web fonts change text metrics: measure trigger positions once, after they are in.
   useEffect(() => {
-    ScrollTrigger.refresh();
-  }, [sectionOrder]);
+    let active = true;
+    void document.fonts?.ready.then(() => active && ScrollTrigger.refresh());
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <>
