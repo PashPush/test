@@ -18,10 +18,7 @@ const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const cvLink = useCvLink('header');
 
-  const orderedNavLinks = useMemo(
-    () => sectionOrder.map(key => navLinkMap[key]).filter(Boolean),
-    [sectionOrder],
-  );
+  const orderedNavLinks = useMemo(() => sectionOrder.map(key => navLinkMap[key]).filter(Boolean), [sectionOrder]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -44,7 +41,8 @@ const NavBar = () => {
   }, []);
 
   useEffect(() => {
-    const sections = orderedNavLinks.map(({ link }) => document.querySelector(link));
+    const links = ['#hero', ...orderedNavLinks.map(({ link }) => link), '#contacts'];
+    const sections = links.map(link => document.querySelector(link));
     if (!sections.length) return;
 
     const observer = new IntersectionObserver(

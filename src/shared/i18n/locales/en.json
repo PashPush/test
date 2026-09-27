@@ -29,7 +29,7 @@
     "pitch": "I build fast interfaces for a product with 3.1M monthly users.",
     "chips": ["<b>5+ years</b> in commercial development", "INP: <b>100% Good</b> on desktop", "English <b>C1</b>"],
     "contactCta": "Get in touch",
-    "status": "Open to new roles · Remote or hybrid in Moscow · UTC+3",
+    "status": "Open to remote roles · UTC+3",
     "inter": "comp",
     "faces": "lexity",
     "chainsawLabel": "Complexity — start the chainsaw",
@@ -287,7 +287,8 @@
     "dismiss": "Close notification",
     "success": "Message sent!",
     "error": "Couldn't send. Please try again or message me on",
-    "prefer": "Most convenient Telegram",
+    "prefer": "Telegram gets the fastest reply; email works too",
+    "source": "This site's source code on GitHub",
     "errors": {
       "required": "Please fill in this field",
       "contactShort": "Leave a contact I can reply to",

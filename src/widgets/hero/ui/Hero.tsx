@@ -41,11 +41,10 @@ const Hero = () => {
 
   return (
     <>
-      <section className="flex flex-col min-h-[calc(var(--vh,1vh)*100)]">
+      <section id="hero" className="flex flex-col min-h-[calc(var(--vh,1vh)*100)]">
         <ErrorBoundary>
           <Suspense fallback={null}>{loadShader ? <ShaderPhoto /> : null}</Suspense>
         </ErrorBoundary>
-        <div id="hero"></div>
         <div className="hero-layout">
           <h1 className="title">
             <span>{t('hero.title1')}</span> <span>{t('hero.title2')}</span>

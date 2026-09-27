@@ -1429,6 +1429,14 @@ canvas {
     }
   }
 
+  .contacts-head {
+    @apply col-center gap-4 px-4 text-center;
+  }
+
+  .contacts-status {
+    @apply px-3 py-1 rounded-xl bg-black/60 sm:text-base text-sm text-white-50 z-20 relative;
+  }
+
   .socials {
     @apply flex-center  gap-6 sm:text-5xl text-3xl z-20 relative;
 
@@ -1443,6 +1451,14 @@ canvas {
 
   .contacts-cv-meta {
     @apply text-sm text-white-50;
+  }
+
+  .contacts-footer {
+    @apply flex-center flex-wrap gap-x-3 gap-y-1 mx-4 md:mb-4 mb-2 px-3 py-1 text-white z-20 relative;
+
+    a {
+      @apply text-white-50 underline underline-offset-2 transition-colors duration-300 hover:text-white;
+    }
   }
 }
 

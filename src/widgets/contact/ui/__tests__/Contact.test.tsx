@@ -11,6 +11,13 @@ vi.mock('@emailjs/browser', () => ({
 
 import emailjs from '@emailjs/browser';
 
+const siteRepo = vi.hoisted(() => ({ url: null as string | null }));
+vi.mock('@/shared/config/siteRepo', () => ({
+  get SITE_REPO_URL() {
+    return siteRepo.url;
+  },
+}));
+
 const VALID = {
   name: 'John',
   email: 'john@test.com',
@@ -69,6 +76,24 @@ describe('Contact', () => {
       expect(telegramLink).toHaveAttribute('href', 'https://t.me/pah0v');
       expect(whatsappLink).toHaveAttribute('href', 'https://wa.me/79934690793');
       expect(emailLink).toHaveAttribute('href', 'mailto:pahovdev@gmail.com');
+    });
+
+    it('puts email next to Telegram in English', () => {
+      const { container } = render(<Contact />);
+      const order = [...container.querySelectorAll('.socials a')].map(a => a.getAttribute('aria-label'));
+
+      expect(order).toEqual(['telegram', 'email', 'whatsapp']);
+    });
+
+    it('shows the site repo link only once it is configured', () => {
+      const { unmount } = render(<Contact />);
+      expect(screen.queryByText('contact.source')).not.toBeInTheDocument();
+      unmount();
+
+      siteRepo.url = 'https://github.com/example/site';
+      render(<Contact />);
+      expect(screen.getByRole('link', { name: 'contact.source' })).toHaveAttribute('href', siteRepo.url);
+      siteRepo.url = null;
     });
 
     it('renders copyright with current year', () => {
