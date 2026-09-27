@@ -699,6 +699,19 @@ canvas {
 
       .content {
         @apply flex w-full sm:flex-row sm:pt-0 flex-col justify-around gap-10 pt-[20vh];
+
+        ul {
+          @apply sm:max-w-[16rem];
+        }
+
+        li img {
+          @apply mt-1 shrink-0;
+        }
+      }
+
+      /* Proofs only where the pinned screen has room for them. */
+      .approach-proof {
+        @apply hidden xl:block mt-1 text-sm text-white-50;
       }
 
       .approach-img {
@@ -721,13 +734,32 @@ canvas {
             @apply sm:text-5xl xl:text-7xl text-3xl text-center w-full font-yeseva-one text-white flex flex-wrap justify-center;
 
             .masked-span {
-              @apply opacity-0 mr-2;
+              @apply opacity-0 mr-[0.25em];
             }
           }
 
           p {
-            @apply sm:text-3xl text-lg text-center opacity-0;
+            @apply md:text-2xl sm:text-xl text-base text-center opacity-0 max-w-4xl mx-auto;
           }
+
+          figure {
+            @apply opacity-0 max-w-3xl mx-auto text-center;
+          }
+
+          blockquote {
+            @apply sm:text-lg text-sm italic text-white-50;
+          }
+
+          figcaption {
+            @apply mt-1 sm:text-base text-sm text-[#839cb5];
+          }
+        }
+      }
+
+      /* The quote would cover the face on short screens; it is in Reviews anyway. */
+      @media (height <= 700px) {
+        .masked-container div figure {
+          @apply hidden;
         }
       }
     }
@@ -735,6 +767,14 @@ canvas {
     @media (height <= 600px) {
       div {
         @apply pt-8;
+
+        .content li {
+          @apply text-sm;
+        }
+
+        .approach-proof {
+          @apply hidden;
+        }
 
         h2 {
           @apply text-[10vw];
@@ -752,7 +792,7 @@ canvas {
             }
 
             p {
-              @apply text-xl;
+              @apply text-base;
             }
           }
         }

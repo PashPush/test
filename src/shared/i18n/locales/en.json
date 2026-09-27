@@ -175,16 +175,28 @@
   "approach": {
     "my": "",
     "approach": "APPROACH",
-    "doWell": "Do it well",
-    "beWell": "It will be well",
-    "iAm": "I",
-    "dash": "am",
-    "teamPlayer": "a team player",
-    "kanban": "I can work in Kanban and Scrum rhythm.",
-    "focus": "Focus on quality, deadlines, and overall success."
+    "principles": [
+      { "title": "Measure first, then optimize", "proof": "Field INP data → 100% Good URLs on desktop" },
+      {
+        "title": "Tests for critical flows",
+        "proof": "A major dependency upgrade with zero regressions in production"
+      },
+      { "title": "End-to-end ownership", "proof": "Memory leak: from heap snapshot to a report for the ad partner" },
+      { "title": "UX and accessibility by default", "proof": "Lighthouse Accessibility 100 at Power Thesaurus" },
+      {
+        "title": "Reviews and onboarding are part of the job",
+        "proof": "Wrote docs and onboarded new developers at Index Marketing"
+      },
+      { "title": "Results you can measure", "proof": "Rating prompt → +210% 5★ ratings in 6 months" }
+    ],
+    "photoAlt": "Pavel in the office",
+    "slogan1": "Measure twice,",
+    "slogan2": "cut once",
+    "teamTitle": "How I work with a team",
+    "teamText": "I plan and estimate work in Scrum and Kanban teams, review code, write docs and onboard new developers. I'm direct, I back my points with data, and I'm quick to reach agreement.",
+    "quote": "“He's easy to talk to, no formalities — you can always agree on things quickly.”",
+    "quoteAuthor": "— Andrey Ryabov, Team Lead, Index Marketing"
   },
-  "features": ["User convenience", "Team strength", "Continuous growth"],
-  "goods": ["Business value", "Code quality", "Meeting deadlines"],
   "feedbacks": {
     "0": {
       "name": "Alexander Radyushin",
