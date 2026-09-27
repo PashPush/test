@@ -8,26 +8,52 @@ import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 import { useCvLink } from '@/shared/lib/useCvLink';
 import Interface from '@/features/chainsaw-interface/ui/Interface';
 import { useMediaQuery } from 'react-responsive';
+import { classNames } from '@/shared/lib/classNames';
 
 // @ts-expect-error ShaderPhoto remains JSX until its Three.js migration is complete.
 const ShaderPhoto = lazy(() => import('@/shared/webgl/ShaderPhoto'));
+
+// Same breakpoint as ShaderPhoto's old mobile config; below it, and for touch or reduced
+// motion, three.js is never loaded and the static render of the portrait stays.
+const WEBGL_QUERY = '(min-width: 641px) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
+
+// Without a GPU (software GL) every frame would run on the CPU: keep the static render.
+const hasGpuWebGL = () => {
+  const gl = document.createElement('canvas').getContext('webgl', { failIfMajorPerformanceCaveat: true });
+  gl?.getExtension('WEBGL_lose_context')?.loseContext();
+  return gl !== null;
+};
 
 const Hero = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 460 });
   const cvLink = useCvLink('hero');
-  const [loadShader, setLoadShader] = useState(false);
+  const [webgl, setWebgl] = useState(false);
+  const [webglReady, setWebglReady] = useState(false);
 
   useEffect(() => {
-    const requestIdle = (window as Partial<Window>).requestIdleCallback;
-    const cancelIdle = (window as Partial<Window>).cancelIdleCallback;
-    if (requestIdle && cancelIdle) {
-      const idleId = requestIdle(() => setLoadShader(true), { timeout: 1200 });
-      return () => cancelIdle(idleId);
-    }
+    const query = window.matchMedia(WEBGL_QUERY);
+    const requestIdle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 400));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    let idleId = 0;
+    let gpu: boolean | undefined;
 
-    const timeoutId = window.setTimeout(() => setLoadShader(true), 400);
-    return () => window.clearTimeout(timeoutId);
+    const update = () => {
+      cancelIdle(idleId);
+      if (!query.matches) {
+        setWebgl(false);
+        setWebglReady(false);
+        return;
+      }
+      idleId = requestIdle(() => setWebgl((gpu ??= hasGpuWebGL())), { timeout: 1200 });
+    };
+
+    update();
+    query.addEventListener('change', update);
+    return () => {
+      cancelIdle(idleId);
+      query.removeEventListener('change', update);
+    };
   }, []);
 
   useGSAP(() => {
@@ -42,8 +68,16 @@ const Hero = () => {
   return (
     <>
       <section id="hero" className="flex flex-col">
+        <div className={classNames('hero-portrait', { ready: webglReady })}>
+          <picture>
+            <source media="(max-width: 640px)" type="image/avif" srcSet="/images/hero-portrait-mobile.avif" />
+            <source media="(max-width: 640px)" srcSet="/images/hero-portrait-mobile.webp" />
+            <source type="image/avif" srcSet="/images/hero-portrait-desktop.avif" />
+            <img src="/images/hero-portrait-desktop.webp" alt="" width={1426} height={1426} fetchPriority="high" />
+          </picture>
+        </div>
         <ErrorBoundary>
-          <Suspense fallback={null}>{loadShader ? <ShaderPhoto /> : null}</Suspense>
+          <Suspense fallback={null}>{webgl ? <ShaderPhoto onReady={() => setWebglReady(true)} /> : null}</Suspense>
         </ErrorBoundary>
         <div className="hero-layout">
           <h1 className="title">

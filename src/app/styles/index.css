@@ -100,6 +100,57 @@ body {
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+/* Static render of the WebGL portrait, laid out like #webgl: the portrait plane fills
+   79.3% of the canvas height (camera z=20, fov 35), 58.7% with the mobile camera (z=27). */
+.hero-portrait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  pointer-events: none;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    max-width: none;
+    height: 79.3%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* The canvas fades in over it, then it is dropped from compositing. */
+  &.ready {
+    visibility: hidden;
+    transition: visibility 0s 0.6s;
+
+    & ~ #webgl {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-portrait {
+    height: calc(100vh - 150px);
+    height: calc(100svh - 150px);
+
+    img {
+      height: 58.7%;
+    }
+  }
+}
+
+@media (max-height: 600px) {
+  .hero-portrait {
+    height: 100vh;
+  }
 }
 
 canvas {
