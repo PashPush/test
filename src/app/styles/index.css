@@ -58,13 +58,16 @@
 /* Arial (or the metric-identical Liberation Sans) scaled to Roboto's widths and line metrics,
    so text barely moves when Roboto swaps in. Where neither exists (Android) the generic
    sans-serif is Roboto anyway. size-adjust = Roboto/Arial width over the first screen's text,
-   per weight and script (the cyrillic faces come last, so they win for cyrillic);
+   per weight and script (the cyrillic faces come last, so they win for cyrillic). The latin
+   range leaves out the arrows (the CV button's ↓): Roboto lacks them, and they must keep
+   coming from the system font as before;
    the overrides are Roboto's hhea 1900/500 per 2048, divided by size-adjust. */
 @font-face {
   font-family: 'Roboto Fallback';
   font-weight: 400;
   font-display: swap;
   src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('LiberationSans');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD;
   size-adjust: 97.95%;
   ascent-override: 94.71%;
   descent-override: 24.92%;
@@ -86,6 +89,7 @@
   font-weight: 700;
   font-display: swap;
   src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('LiberationSans-Bold');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD;
   size-adjust: 94.25%;
   ascent-override: 98.43%;
   descent-override: 25.90%;

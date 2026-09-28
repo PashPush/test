@@ -1,7 +1,5 @@
-import { useRef, useSyncExternalStore, type ReactNode } from 'react';
+import { useRef, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SiTelegram, SiWhatsapp } from 'react-icons/si';
-import { MdMail } from 'react-icons/md';
 import ContactForm from '@/features/contact-form/ui/ContactForm';
 import { trackEvent } from '@/shared/lib/analytics';
 import { useCvLink } from '@/shared/lib/useCvLink';
@@ -11,14 +9,11 @@ type Channel = 'telegram' | 'whatsapp' | 'email';
 
 const noSubscribe = () => () => {};
 
-const channels: Record<Channel, { href: string; bg: string; icon: ReactNode }> = {
-  telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: <SiTelegram size={44} color="#fff" aria-hidden /> },
-  whatsapp: {
-    href: atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw=='),
-    bg: 'bg-[#4ac959]',
-    icon: <SiWhatsapp size={44} color="#fff" aria-hidden />,
-  },
-  email: { href: 'mailto:pahovdev@gmail.com', bg: 'bg-[#2e2d38]', icon: <MdMail size={24} color="#fff" aria-hidden /> },
+// Icons are static white SVGs in public/icons/contact.
+const channels: Record<Channel, { href: string; bg: string; icon: string; size: number }> = {
+  telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: 'telegram', size: 44 },
+  whatsapp: { href: atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw=='), bg: 'bg-[#4ac959]', icon: 'whatsapp', size: 44 },
+  email: { href: 'mailto:pahovdev@gmail.com', bg: 'bg-[#2e2d38]', icon: 'mail', size: 24 },
 };
 
 // Recruiters abroad reach for email before WhatsApp, so in English it sits next to Telegram.
@@ -75,7 +70,14 @@ const Contact = () => {
             rel="noopener noreferrer"
             className={channels[channel].bg}
           >
-            {channels[channel].icon}
+            <img
+              src={`/icons/contact/${channels[channel].icon}.svg`}
+              alt=""
+              width={channels[channel].size}
+              height={channels[channel].size}
+              loading="lazy"
+              decoding="async"
+            />
           </a>
         ))}
       </div>
