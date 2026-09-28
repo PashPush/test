@@ -143,7 +143,6 @@ const Projects = () => {
   const cardText = (projectId: string) => (
     <div className="project-text">
       <h2 style={getTransitionStyles(projectId, 'title')}>{t(`projects.${projectId}.name`)}</h2>
-      <p className="project-summary">{t(`projects.${projectId}.summary`)}</p>
       <p className="project-stack">{t(`projects.${projectId}.stackShort`)}</p>
       <span className="project-cta">
         {t('projects.readCase')} <span aria-hidden="true">→</span>

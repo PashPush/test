@@ -18,7 +18,6 @@ type Language = {
   flag: string;
   name: string;
   level: string;
-  levelText: string;
   percentage: number;
   note?: string;
 };
@@ -31,19 +30,13 @@ type Drive = {
 };
 
 const LanguageCard = memo(({ lang }: { lang: Language }) => {
-  const horizontal = useMediaQuery('(max-height: 600px)');
-
   return (
     <div className={classNames('lang-card', { 'lang-card-main': !!lang.note })}>
       <div className="lang-card-head">
         <div className="flex items-center lg:gap-x-4 gap-x-2 flex-wrap">
           <span className="text-4xl">{lang.flag}</span>
-          <h4 className={classNames('text-xl text-white', { 'hidden sm:block': !lang.note })}>{lang.name}</h4>
-
-          <div className="flex items-center lg:gap-4 gap-2">
-            <span className="lang-badge">{lang.level}</span>
-            {!horizontal && <span className="lang-level-text hidden sm:block">{lang.levelText}</span>}
-          </div>
+          <h4 className="text-xl text-white hidden sm:block">{lang.name}</h4>
+          <span className="lang-badge">{lang.level}</span>
         </div>
       </div>
 
@@ -90,13 +83,12 @@ const Beyond = () => {
     {
       name: 'English',
       level: 'C1',
-      levelText: t('skills.beyond.langLevels.advanced'),
       flag: '🇬🇧',
       percentage: 89,
       note: t('skills.beyond.englishNote'),
     },
-    { name: 'Español', level: 'B1', levelText: t('skills.beyond.langLevels.intermediate'), flag: '🇪🇸', percentage: 61 },
-    { name: 'Русский', level: 'NS', levelText: t('skills.beyond.langLevels.native'), flag: '🇷🇺', percentage: 100 },
+    { name: 'Español', level: 'B1', flag: '🇪🇸', percentage: 61 },
+    { name: 'Русский', level: 'NS', flag: '🇷🇺', percentage: 100 },
   ];
 
   const drives: Drive[] = (

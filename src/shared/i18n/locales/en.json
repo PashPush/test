@@ -23,9 +23,7 @@
     "title2": "Developer",
     "greeting": "Hi, I'm Pavel",
     "loveToBuild": "I cut through",
-    "role": "Mid-level+ Frontend Developer:<br/> React, TypeScript, React Native.",
-    "pitch": "I build fast interfaces for a product with 3.1M monthly users.",
-    "chips": ["<b>5+ years</b> of professional experience", "INP: <b>100% Good</b> on desktop", "English <b>C1</b>"],
+    "chips": ["<b>5+ years</b> of professional experience", "English <b>C1</b>"],
     "contactCta": "Get in touch",
     "status": "Open to remote roles · UTC+3",
     "inter": "comp",
@@ -57,8 +55,7 @@
       "responsibilities": [
         "Migrated the frontend from jQuery to React: redesigned the modular architecture and routing",
         "Set up the engineering infrastructure: linters, Husky, unit/UI tests, Storybook, CI/CD",
-        "Built an admin system: application management, collateral appraisal, chat, reporting, payments",
-        "Wrote documentation and onboarded new developers"
+        "Built an admin system: application management, collateral appraisal, chat, reporting, payments"
       ]
     },
     "2": {
@@ -69,8 +66,7 @@
       "responsibilities": [
         "Built an interactive flooring configurator in vanilla JS, integrated with online ordering",
         "Maintained and extended 5 corporate websites: new features, responsive layouts, refactoring and redesigns",
-        "Launched 6 landing pages, working directly with marketing and business stakeholders",
-        "Won the company's “Valuable Employee” award"
+        "Launched 6 landing pages, working directly with marketing and business stakeholders"
       ]
     },
     "3": {
@@ -83,7 +79,6 @@
   "projects": {
     "pt": {
       "name": "Power Thesaurus",
-      "summary": "INP: 100% Good on desktop · +210% 5★ ratings · 1+ GB memory leak fixed",
       "stackShort": "React · TypeScript · SSR · React Native · GraphQL",
       "aboutTitle": "About the project",
       "description": "Power Thesaurus is a crowdsourced online English thesaurus — an international product with ~3.1 million unique monthly users. Revenue comes from a PRO subscription and ads.\n\nThe platform spans a server-rendered web app, iOS and Android apps built with React Native, and a browser extension for all major browsers: Chrome, Firefox, Safari, Edge and Opera.",
@@ -109,7 +104,6 @@
     },
     "index": {
       "name": "Index Marketing",
-      "summary": "jQuery → React · YooKassa/Robokassa payments · tests, Storybook, CI/CD",
       "stackShort": "React · Next.js · Redux · Tailwind CSS · Storybook",
       "aboutTitle": "About the projects",
       "description": "A B2B/B2C platform for a pawnshop chain: an admin interface for franchisees, collateral appraisal modules, application management, internal chat and financial reporting.\n\nA B2C/B2E platform for a legal services company: online consultations, notifications, document management and integration with court system APIs.",
@@ -131,23 +125,22 @@
     },
     "sagama": {
       "name": "Sagama Group",
-      "summary": "Flooring configurator in vanilla JS · 5 corporate websites · 6 landing pages",
-      "stackShort": "JavaScript · SCSS · PHP · WordPress · Bitrix24",
+      "stackShort": "JavaScript · SCSS · PHP · WordPress · Yii",
       "aboutTitle": "About the projects",
       "description": "Russia's largest manufacturer of rubber flooring and artificial turf for sports facilities, with over 43,500 venues equipped across the country.\n\nThe portfolio includes corporate websites for the group's manufacturers (SagamaGroup, EcoStep), the B2B/B2C marketplace Crumbex and a series of promo landing pages for product lines and marketing campaigns.",
       "results": [
-        { "value": "5", "label": "corporate websites on PHP, Bitrix24 and WordPress" },
+        { "value": "5", "label": "corporate websites on PHP, Yii and WordPress" },
         { "value": "6", "label": "landing pages for product lines and campaigns" },
         { "value": "Valuable Employee", "label": "company award winner" }
       ],
       "role": "The company's only IT specialist: I ran its entire web presence single-handedly, working directly with marketing and business stakeholders.",
       "done": [
         "Built an interactive visual flooring configurator in vanilla JavaScript and integrated it with the online ordering system.",
-        "Maintained and extended 5 corporate websites on PHP, Bitrix24 and WordPress: new features, responsive layouts, refactoring and redesigns.",
+        "Maintained and extended 5 corporate websites on PHP, Yii and WordPress: new features, responsive layouts, refactoring and redesigns.",
         "Launched 6 landing pages for product lines and marketing campaigns.",
         "Integrated the websites with a CRM, analytics tools and external APIs."
       ],
-      "stack": "Vanilla JavaScript, HTML, SCSS, PHP, WordPress, Bitrix24",
+      "stack": "Vanilla JavaScript, HTML, SCSS, PHP, WordPress, Yii",
       "screenshots": ["Landing page", "Main page", "Carousel"]
     },
     "readCase": "Read case study"
@@ -181,7 +174,7 @@
     "slogan1": "Measure twice,",
     "slogan2": "cut once",
     "teamTitle": "How I work with a team",
-    "teamText": "I plan and estimate work in Scrum and Kanban teams, review code, write docs and onboard new developers. I'm direct, back my arguments with data and reach agreement quickly.",
+    "teamText": "I plan and estimate work in Scrum and Kanban teams, review code and write tests. I'm direct, back my arguments with data and reach agreement quickly.",
     "quote": "“He's easy to work with, no formalities — you can always agree on things quickly.”",
     "quoteAuthor": "— Andrey Ryabov, Team Lead, Index Marketing"
   },
@@ -235,11 +228,6 @@
       "drives": "What Gets Me Going",
       "seeking": "Looking for a product team where frontend quality",
       "seekingAccent": "moves business metrics",
-      "langLevels": {
-        "advanced": "Advanced",
-        "intermediate": "Intermediate",
-        "native": "Native"
-      },
       "driveItems": {
         "metrics": {
           "title": "Watching a metric turn green",

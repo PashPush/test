@@ -86,19 +86,13 @@ const Hero = () => {
             <span className="hero-line">{t('hero.greeting')}</span>
             <br />
             <span className="hero-line">
-              {t('hero.loveToBuild')}
-              {' '}
-              <br className="min-[461px]:hidden" />
+              {t('hero.loveToBuild')} <br className="min-[461px]:hidden" />
               <Interface />
             </span>
           </div>
           <div className="hero-below">
-            <p className="hero-line hero-role">
-              <Trans i18nKey="hero.role" components={{ br: <br className="lg:hidden" /> }} />
-            </p>
-            <p className="hero-line hero-pitch">{t('hero.pitch')}</p>
             <ul className="hero-line hero-chips">
-              {[0, 1, 2].map(i => (
+              {[0, 1].map(i => (
                 <li key={i}>
                   <Trans i18nKey={`hero.chips.${i}`} components={{ b: <strong /> }} />
                 </li>
