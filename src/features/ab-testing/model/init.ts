@@ -63,6 +63,9 @@ for (const experiment of allExperiments) {
   if (variantId) trackExposure(experiment.id, variantId);
 }
 
+/** Every experiment on its first (control) variant — the one the build prerenders. */
+export const isDefaultVariant = allExperiments.every(e => variants[e.id] === e.variants[0].id);
+
 // Resolve section order
 const sectionOrderVariantId = variants[sectionOrderExperiment.id];
 const sectionOrderConfig = getVariantConfig(sectionOrderExperiment, sectionOrderVariantId);

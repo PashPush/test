@@ -1,7 +1,7 @@
 import { useRef, memo } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import { useTranslation } from 'react-i18next';
 import CurvedLine from './icons/CurvedLine';
 import { stickers } from '../model/stickers';
@@ -20,8 +20,8 @@ Sticker.displayName = 'Sticker';
 const Process = () => {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery({ maxWidth: 640 });
-  const smallScreen = useMediaQuery({ maxWidth: 1024 });
+  const isMobile = useMediaQuery('(max-width: 640px)');
+  const smallScreen = useMediaQuery('(max-width: 1024px)');
 
   const isSafari = useRef(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
   const stickersAnimated = useRef(false);
@@ -33,6 +33,7 @@ const Process = () => {
   };
 
   useGSAP(() => {
+    if (isMobile === undefined || smallScreen === undefined) return; // hydrating: wait for the real viewport
     const triggerEl = sectionRef.current || document.body;
     const skillsEl = document.querySelector('#skills');
 
@@ -147,7 +148,7 @@ const Process = () => {
         <p className="processes-caption">{t('stickers.caption')}</p>
       </div>
       <div className="noise sm:!w-3/4"></div>
-      {!isMobile && <Hands />}
+      {isMobile === false && <Hands />}
     </section>
   );
 };

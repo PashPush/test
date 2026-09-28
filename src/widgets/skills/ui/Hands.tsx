@@ -1,10 +1,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 
 const Hands = () => {
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const horizontal = useMediaQuery('(max-height: 600px)');
 
   useGSAP(() => {
     const createAnim = (mainTrigger: ScrollTrigger) => {

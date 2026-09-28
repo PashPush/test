@@ -13,7 +13,3 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn(),
   })),
 });
-
-vi.mock('react-responsive', () => ({
-  useMediaQuery: vi.fn(() => false),
-}));

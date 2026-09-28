@@ -3,10 +3,6 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NavBar from '../Navbar';
 
-vi.mock('react-responsive', () => ({
-  useMediaQuery: vi.fn(() => false),
-}));
-
 vi.mock('@/features/language-switch/ui/LanguageSwitcher', () => ({
   default: () => <div data-testid="lang-switcher">LanguageSwitcher</div>,
 }));

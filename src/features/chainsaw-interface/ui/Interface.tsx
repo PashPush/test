@@ -2,15 +2,12 @@ import { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Chainsaw from './Chainsaw';
 import gsap from 'gsap';
-import { useMediaQuery } from 'react-responsive';
 import { classNames } from '@/shared/lib/classNames';
 import Chips from './Chips';
 import { trackEvent } from '@/shared/lib/analytics';
 
 const Interface = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 460 });
-  const canHover = useMediaQuery({ query: '(hover: hover)' });
   const [count, setCount] = useState(0);
   const [isActivated, setIsActivated] = useState(true);
   const containerRef = useRef<HTMLButtonElement>(null);
@@ -229,7 +226,7 @@ const Interface = () => {
         aria-label={t('hero.chainsawLabel')}
         className={classNames('interface', { done: count > 2, 'animate-wiggle': !isActivated })}
       >
-        <span className={classNames('inter', { 'no-margin': isMobile })}>{t('hero.inter')}</span>
+        <span className="inter">{t('hero.inter')}</span>
         <Chips />
         <Chainsaw />
         <span className="faces">{t('hero.faces')}</span>
@@ -241,7 +238,8 @@ const Interface = () => {
           'opacity-0': isActivated || count > 1,
         })}
       >
-        {t(canHover ? 'hero.clickIt' : 'hero.tapIt')}
+        <span className="hover-only">{t('hero.clickIt')}</span>
+        <span className="touch-only">{t('hero.tapIt')}</span>
       </span>
     </>
   );

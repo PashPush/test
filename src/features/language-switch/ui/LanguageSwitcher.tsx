@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { classNames } from '@/shared/lib/classNames';
 
 const languages = [
   { code: 'ru', label: 'RU' },
@@ -11,7 +11,6 @@ const languages = [
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const handleChange = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -31,17 +30,19 @@ const LanguageSwitcher = () => {
 
   return (
     <div className="lang-switcher">
-      {isMobile ? (
-        <button onClick={() => handleChange(alternateLang.code)} className="!text-white !text-base">
-          {alternateLang.label}
+      {/* Both variants are rendered and CSS picks one: the prerendered HTML can't know the width. */}
+      <button onClick={() => handleChange(alternateLang.code)} className="md:hidden !text-white !text-base">
+        {alternateLang.label}
+      </button>
+      {languages.map(({ code, label }) => (
+        <button
+          key={code}
+          onClick={() => handleChange(code)}
+          className={classNames('hidden md:inline-block', { active: currentLang === code })}
+        >
+          {label}
         </button>
-      ) : (
-        languages.map(({ code, label }) => (
-          <button key={code} onClick={() => handleChange(code)} className={currentLang === code ? 'active' : ''}>
-            {label}
-          </button>
-        ))
-      )}
+      ))}
     </div>
   );
 };

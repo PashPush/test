@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from 'react';
+import { useRef, useSyncExternalStore, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SiTelegram, SiWhatsapp } from 'react-icons/si';
 import { MdMail } from 'react-icons/md';
@@ -8,6 +8,8 @@ import { useCvLink } from '@/shared/lib/useCvLink';
 import { SITE_REPO_URL } from '@/shared/config/siteRepo';
 
 type Channel = 'telegram' | 'whatsapp' | 'email';
+
+const noSubscribe = () => () => {};
 
 const channels: Record<Channel, { href: string; bg: string; icon: ReactNode }> = {
   telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: <SiTelegram size={44} color="#fff" aria-hidden /> },
@@ -30,6 +32,8 @@ const Contact = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cvLink = useCvLink('contacts');
   const lang = i18n.resolvedLanguage === 'en' ? 'en' : 'ru';
+  // The prerendered HTML is built once; the year is filled in by the visitor's clock.
+  const year = useSyncExternalStore(noSubscribe, () => new Date().getFullYear(), () => null);
 
   return (
     <div ref={sectionRef} className="contacts" id="contacts">
@@ -83,7 +87,7 @@ const Contact = () => {
         <span className="contacts-cv-meta">{t('cv.updated')}</span>
       </a>
       <footer className="contacts-footer">
-        <span>Pavel Khovalkin © {new Date().getFullYear()}</span>
+        <span>Pavel Khovalkin © {year}</span>
         {SITE_REPO_URL && (
           <a
             href={SITE_REPO_URL}

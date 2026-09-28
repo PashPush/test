@@ -67,7 +67,16 @@ const HomePage = () => {
   // Web fonts change text metrics: measure trigger positions once, after they are in.
   useEffect(() => {
     let active = true;
-    void document.fonts?.ready.then(() => active && ScrollTrigger.refresh());
+    void document.fonts?.ready.then(() => {
+      if (!active) return;
+      ScrollTrigger.refresh();
+      // The prerendered page takes anchor clicks (and #section links) before pinning exists:
+      // the refresh cancels that scroll, and the pins have moved the section down since. Go
+      // there again. Not on reload/back, where the browser restores the position itself.
+      const target = location.hash.length > 1 && document.getElementById(location.hash.slice(1));
+      const nav = performance.getEntriesByType?.('navigation')[0] as PerformanceNavigationTiming | undefined;
+      if (target && (!nav || nav.type === 'navigate')) target.scrollIntoView();
+    });
     return () => {
       active = false;
     };

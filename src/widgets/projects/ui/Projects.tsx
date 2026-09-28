@@ -26,7 +26,8 @@ const Projects = () => {
   const project3Ref = useRef(null);
   const leavingRef = useRef(false);
 
-  const [openId, setOpenId] = useState<string | null>(idFromHash);
+  // Opened from the hash after mount: the prerendered HTML is always the closed page.
+  const [openId, setOpenId] = useState<string | null>(null);
   const [transitioningId, setTransitioningId] = useState<string | null>(null);
 
   const getTransitionStyles = (projectId: string, type: 'image' | 'title') => {
@@ -91,7 +92,9 @@ const Projects = () => {
 
   useEffect(() => {
     const id = idFromHash();
-    if (id) trackEvent('case_open', { project: id, via: 'link' });
+    if (!id) return;
+    setOpenId(id);
+    trackEvent('case_open', { project: id, via: 'link' });
   }, []);
 
   useEffect(() => {

@@ -22,7 +22,7 @@ import {
   SiDocker,
   SiSass,
 } from 'react-icons/si';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import { useRef, memo, type CSSProperties } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -109,8 +109,8 @@ SkillBadge.displayName = 'SkillBadge';
 
 const TechStack = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const horizontal = useMediaQuery('(max-height: 600px)');
   const iconSize = isMobile || horizontal ? 24 : 40;
   const frontendRef = useRef<HTMLDivElement>(null);
   const backendRef = useRef<HTMLDivElement>(null);

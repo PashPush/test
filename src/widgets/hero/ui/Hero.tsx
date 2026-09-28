@@ -5,7 +5,6 @@ import Button from '@/shared/ui/Button';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 import { useCvLink } from '@/shared/lib/useCvLink';
 import Interface from '@/features/chainsaw-interface/ui/Interface';
-import { useMediaQuery } from 'react-responsive';
 import { classNames } from '@/shared/lib/classNames';
 
 // @ts-expect-error ShaderPhoto remains JSX until its Three.js migration is complete.
@@ -24,7 +23,6 @@ const hasGpuWebGL = () => {
 
 const Hero = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 460 });
   const cvLink = useCvLink('hero');
   const [webgl, setWebgl] = useState(false);
   const [webglReady, setWebglReady] = useState(false);
@@ -79,7 +77,8 @@ const Hero = () => {
             <br />
             <span className="hero-line">
               {t('hero.loveToBuild')}
-              {isMobile ? <br /> : ' '}
+              {' '}
+              <br className="min-[461px]:hidden" />
               <Interface />
             </span>
           </div>

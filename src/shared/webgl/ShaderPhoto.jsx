@@ -20,7 +20,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import vertexShader from './shaders/particles/vertex.glsl';
 import fragmentShader from './shaders/particles/fragment.glsl';
 import { useEffect, useRef } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 
 // Desktop only (Hero decides). The scene is static between inputs, so frames are drawn on
 // demand: after the last pointer move the cursor trail needs ~130 frames to fade out.
@@ -34,7 +34,7 @@ const layoutSize = gap => ({
 });
 
 const ShaderPhoto = ({ onReady }) => {
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const horizontal = useMediaQuery('(max-height: 600px)');
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
 

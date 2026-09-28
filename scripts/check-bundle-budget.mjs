@@ -18,6 +18,8 @@ const collect = item => {
   (item.imports || []).forEach(key => collect(manifest[key]));
 };
 collect(entry);
+// The entry only waits for the first paint and imports the app (src/app/main.tsx): count that too.
+(entry.dynamicImports || []).forEach(key => collect(manifest[key]));
 
 const bytes = [...files]
   .filter(file => file.endsWith('.js'))
@@ -25,7 +27,7 @@ const bytes = [...files]
 const limit = Number(process.env.BUNDLE_BUDGET_GZIP_KB || 200) * 1024;
 
 console.log(
-  `Initial JavaScript: ${(bytes / 1024).toFixed(2)} KB gzip across ${files.size} entry files (budget ${(limit / 1024).toFixed(0)} KB).`
+  `Startup JavaScript: ${(bytes / 1024).toFixed(2)} KB gzip across ${files.size} files (budget ${(limit / 1024).toFixed(0)} KB).`
 );
 if (bytes > limit) {
   console.error('✖ Initial JavaScript bundle budget exceeded. Set BUNDLE_BUDGET_GZIP_KB only with a reviewed reason.');

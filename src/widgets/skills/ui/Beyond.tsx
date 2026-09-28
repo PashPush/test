@@ -11,7 +11,7 @@ import {
   IoSearchOutline,
   IoMusicalNotesOutline,
 } from 'react-icons/io5';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import { classNames } from '@/shared/lib/classNames';
 
 type Language = {
@@ -31,7 +31,7 @@ type Drive = {
 };
 
 const LanguageCard = memo(({ lang }: { lang: Language }) => {
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const horizontal = useMediaQuery('(max-height: 600px)');
 
   return (
     <div className={classNames('lang-card', { 'lang-card-main': !!lang.note })}>
@@ -59,7 +59,7 @@ const LanguageCard = memo(({ lang }: { lang: Language }) => {
 LanguageCard.displayName = 'LanguageCard';
 
 const DriveCard = memo(({ drive }: { drive: Drive }) => {
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const horizontal = useMediaQuery('(max-height: 600px)');
   const Icon = drive.icon;
 
   return (
@@ -84,7 +84,7 @@ DriveCard.displayName = 'DriveCard';
 const Beyond = () => {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const horizontal = useMediaQuery('(max-height: 600px)');
 
   const languages = [
     {
@@ -114,6 +114,7 @@ const Beyond = () => {
   }));
 
   useGSAP(() => {
+    if (horizontal === undefined) return; // hydrating: wait for the real viewport
     gsap.delayedCall(0.2, () => {
       if (!sectionRef.current) return;
       const mainTrigger = ScrollTrigger.getAll().find(st => st.pin && (st.trigger as HTMLElement)?.id === 'skills');
