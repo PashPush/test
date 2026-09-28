@@ -36,6 +36,9 @@ export default defineConfig(({ isSsrBuild }) => ({
         manualChunks: isSsrBuild
           ? undefined
           : (id: string) => {
+              // Shared by the entry and the lazy chunks. Left in the entry, the chunks import the
+              // entry back, and WebKit then downloads and runs it a second time.
+              if (id.includes('vite/preload-helper')) return 'preload-helper';
               if (id.includes('node_modules')) {
                 if (id.includes('three')) return 'vendor_three';
                 if (id.includes('gsap')) return 'vendor_gsap';
