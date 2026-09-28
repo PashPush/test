@@ -74,9 +74,19 @@
         events.forEach(function (e) {
           addEventListener(e, load, { capture: true, passive: true });
         });
-        addEventListener('load', function () {
+        function idle() {
           if (window.requestIdleCallback) requestIdleCallback(load, { timeout: 3000 });
           else setTimeout(load, 3000);
+        }
+        // After the first paint as well: where rendering is slow (software GL) `load` comes first.
+        addEventListener('load', function () {
+          var P = window.PerformanceObserver;
+          if (!P || !P.supportedEntryTypes || P.supportedEntryTypes.indexOf('paint') < 0) return idle();
+          new P(function (list, observer) {
+            if (!list.getEntriesByName('first-contentful-paint').length) return;
+            observer.disconnect();
+            idle();
+          }).observe({ type: 'paint', buffered: true });
         });
       })();
     </script>

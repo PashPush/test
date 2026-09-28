@@ -15,10 +15,20 @@ const ShaderPhoto = lazy(() => import('@/shared/webgl/ShaderPhoto'));
 const WEBGL_QUERY = '(min-width: 641px) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
 
 // Without a GPU (software GL) every frame would run on the CPU: keep the static render.
+// failIfMajorPerformanceCaveat catches Chrome's own fallback; the renderer name catches software
+// GL that is not flagged (SwiftShader chosen explicitly, llvmpipe, Windows' WARP).
+const SOFTWARE_GL = /swiftshader|llvmpipe|softpipe|software|basic render/i;
 const hasGpuWebGL = () => {
   const gl = document.createElement('canvas').getContext('webgl', { failIfMajorPerformanceCaveat: true });
-  gl?.getExtension('WEBGL_lose_context')?.loseContext();
-  return gl !== null;
+  if (!gl) return false;
+  let renderer = String(gl.getParameter(gl.RENDERER));
+  // Chrome and Safari mask it; Firefox reports it here and warns on the debug extension.
+  if (renderer === 'WebKit WebGL') {
+    const info = gl.getExtension('WEBGL_debug_renderer_info');
+    if (info) renderer = String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL));
+  }
+  gl.getExtension('WEBGL_lose_context')?.loseContext();
+  return !SOFTWARE_GL.test(renderer);
 };
 
 const Hero = () => {
