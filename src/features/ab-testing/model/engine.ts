@@ -74,6 +74,7 @@ function pickVariant<T>(experiment: ExperimentConfig<T>, userId: string): Experi
 }
 
 export function getUrlOverride(experimentId: string): string | null {
+  if (typeof window === 'undefined') return null; // build-time prerender
   const params = new URLSearchParams(window.location.search);
   return params.get(`ab_${experimentId}`);
 }

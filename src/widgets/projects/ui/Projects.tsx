@@ -10,6 +10,13 @@ const caseHash = (slug: string) => `#case/${slug}`;
 const idFromHash = () => projectsData.find(p => location.hash === caseHash(p.slug))?.id ?? null;
 
 type CaseLink = { id: string; slug: string };
+
+const ptSrcSet = (ext: 'avif' | 'webp') =>
+  [600, 1000, 1400]
+    .map(w => `/images/project-pt${w === 1400 && ext === 'webp' ? '' : `-${w}`}.${ext} ${w}w`)
+    .join(', ');
+// object-cover: on phones the fixed 384px height (h-96) sets the width, not the viewport.
+const ptSizes = '(min-width: 1280px) 60vw, (min-width: 768px) 100vw, 542px';
 const [ptCase, indexCase, sagamaCase] = projectsData;
 
 const Projects = () => {
@@ -19,7 +26,8 @@ const Projects = () => {
   const project3Ref = useRef(null);
   const leavingRef = useRef(false);
 
-  const [openId, setOpenId] = useState<string | null>(idFromHash);
+  // Opened from the hash after mount: the prerendered HTML is always the closed page.
+  const [openId, setOpenId] = useState<string | null>(null);
   const [transitioningId, setTransitioningId] = useState<string | null>(null);
 
   const getTransitionStyles = (projectId: string, type: 'image' | 'title') => {
@@ -84,7 +92,9 @@ const Projects = () => {
 
   useEffect(() => {
     const id = idFromHash();
-    if (id) trackEvent('case_open', { project: id, via: 'link' });
+    if (!id) return;
+    setOpenId(id);
+    trackEvent('case_open', { project: id, via: 'link' });
   }, []);
 
   useEffect(() => {
@@ -133,7 +143,6 @@ const Projects = () => {
   const cardText = (projectId: string) => (
     <div className="project-text">
       <h2 style={getTransitionStyles(projectId, 'title')}>{t(`projects.${projectId}.name`)}</h2>
-      <p className="project-summary">{t(`projects.${projectId}.summary`)}</p>
       <p className="project-stack">{t(`projects.${projectId}.stackShort`)}</p>
       <span className="project-cta">
         {t('projects.readCase')} <span aria-hidden="true">→</span>
@@ -172,7 +181,19 @@ const Projects = () => {
           <div className="projects-layout">
             <a ref={project1Ref} className="first-project-wrapper project-card-clickable" {...cardProps(ptCase)}>
               <div className="image-wrapper bg-[#168be8]" style={getTransitionStyles('pt', 'image')}>
-                <img src="/images/project-pt.webp" alt="" loading="lazy" decoding="async" width={1400} height={992} />
+                <picture>
+                  <source type="image/avif" srcSet={ptSrcSet('avif')} sizes={ptSizes} />
+                  <img
+                    src="/images/project-pt.webp"
+                    srcSet={ptSrcSet('webp')}
+                    sizes={ptSizes}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={1400}
+                    height={992}
+                  />
+                </picture>
               </div>
               {cardText('pt')}
             </a>

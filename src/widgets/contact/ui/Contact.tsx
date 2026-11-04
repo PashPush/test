@@ -1,7 +1,5 @@
-import { useRef, type ReactNode } from 'react';
+import { useRef, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SiTelegram, SiWhatsapp } from 'react-icons/si';
-import { MdMail } from 'react-icons/md';
 import ContactForm from '@/features/contact-form/ui/ContactForm';
 import { trackEvent } from '@/shared/lib/analytics';
 import { useCvLink } from '@/shared/lib/useCvLink';
@@ -9,14 +7,13 @@ import { SITE_REPO_URL } from '@/shared/config/siteRepo';
 
 type Channel = 'telegram' | 'whatsapp' | 'email';
 
-const channels: Record<Channel, { href: string; bg: string; icon: ReactNode }> = {
-  telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: <SiTelegram size={44} color="#fff" /> },
-  whatsapp: {
-    href: atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw=='),
-    bg: 'bg-[#4ac959]',
-    icon: <SiWhatsapp size={44} color="#fff" />,
-  },
-  email: { href: 'mailto:pahovdev@gmail.com', bg: 'bg-[#2e2d38]', icon: <MdMail size={24} color="#fff" /> },
+const noSubscribe = () => () => {};
+
+// Icons are static white SVGs in public/icons/contact.
+const channels: Record<Channel, { href: string; bg: string; icon: string; size: number }> = {
+  telegram: { href: 'https://t.me/pah0v', bg: 'bg-[#00aaff]', icon: 'telegram', size: 44 },
+  whatsapp: { href: atob('aHR0cHM6Ly93YS5tZS83OTkzNDY5MDc5Mw=='), bg: 'bg-[#4ac959]', icon: 'whatsapp', size: 44 },
+  email: { href: 'mailto:pahovdev@gmail.com', bg: 'bg-[#2e2d38]', icon: 'mail', size: 24 },
 };
 
 // Recruiters abroad reach for email before WhatsApp, so in English it sits next to Telegram.
@@ -30,6 +27,8 @@ const Contact = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cvLink = useCvLink('contacts');
   const lang = i18n.resolvedLanguage === 'en' ? 'en' : 'ru';
+  // The prerendered HTML is built once; the year is filled in by the visitor's clock.
+  const year = useSyncExternalStore(noSubscribe, () => new Date().getFullYear(), () => null);
 
   return (
     <div ref={sectionRef} className="contacts" id="contacts">
@@ -58,7 +57,7 @@ const Contact = () => {
 
       <div className="socials">
         <span className="absolute text-base left-3.5 -top-5 md:-top-7 ">
-          <img src="/images/arrow-white.svg" alt="arrow" className="animate-bounce" />
+          <img src="/images/arrow-white.svg" alt="arrow" width={18} height={18} loading="lazy" className="animate-bounce" />
         </span>
 
         {channelOrder[lang].map(channel => (
@@ -71,7 +70,14 @@ const Contact = () => {
             rel="noopener noreferrer"
             className={channels[channel].bg}
           >
-            {channels[channel].icon}
+            <img
+              src={`/icons/contact/${channels[channel].icon}.svg`}
+              alt=""
+              width={channels[channel].size}
+              height={channels[channel].size}
+              loading="lazy"
+              decoding="async"
+            />
           </a>
         ))}
       </div>
@@ -83,7 +89,7 @@ const Contact = () => {
         <span className="contacts-cv-meta">{t('cv.updated')}</span>
       </a>
       <footer className="contacts-footer">
-        <span>Pavel Khovalkin © {new Date().getFullYear()}</span>
+        <span>Pavel Khovalkin © {year}</span>
         {SITE_REPO_URL && (
           <a
             href={SITE_REPO_URL}

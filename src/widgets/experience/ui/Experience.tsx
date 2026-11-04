@@ -3,11 +3,11 @@ import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
 import { expCards } from '../model/expCards';
 import BlinkCard from '@/shared/ui/BlinkCard';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 
 const Experience = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const timelineHeight = isMobile ? '90%' : '70%';
 
   useGSAP(() => {

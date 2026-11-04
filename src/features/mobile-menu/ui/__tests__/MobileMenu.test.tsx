@@ -2,9 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MobileMenu from '../MobileMenu';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 
-vi.mock('react-responsive', () => ({
+vi.mock('@/shared/lib/useMediaQuery', () => ({
   useMediaQuery: vi.fn(),
 }));
 

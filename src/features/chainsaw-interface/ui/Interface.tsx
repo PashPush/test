@@ -2,18 +2,16 @@ import { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Chainsaw from './Chainsaw';
 import gsap from 'gsap';
-import { useMediaQuery } from 'react-responsive';
 import { classNames } from '@/shared/lib/classNames';
 import Chips from './Chips';
 import { trackEvent } from '@/shared/lib/analytics';
 
 const Interface = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 460 });
-  const canHover = useMediaQuery({ query: '(hover: hover)' });
   const [count, setCount] = useState(0);
   const [isActivated, setIsActivated] = useState(true);
   const containerRef = useRef<HTMLButtonElement>(null);
+  const hintRef = useRef<HTMLSpanElement>(null);
   const isPlayingRef = useRef(false);
   const activeTimelinesRef = useRef<gsap.core.Timeline[]>([]);
   const reactivateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -35,6 +33,28 @@ const Interface = () => {
       if (reactivateTimerRef.current) {
         clearTimeout(reactivateTimerRef.current);
       }
+    };
+  }, []);
+
+  // The button is a fixed w-48, the plaque's width depends on the language: keep the hint 16px past the plaque.
+  useEffect(() => {
+    const button = containerRef.current;
+    const hint = hintRef.current;
+    const faces = button?.querySelector<HTMLElement>('.faces');
+    if (!button || !hint || !faces) return;
+
+    // -1: .faces' own translate(-1px, 4px).
+    const place = () => {
+      hint.style.marginLeft = `${faces.offsetLeft + faces.offsetWidth - 1 - button.offsetWidth + 16}px`;
+    };
+    const observer = new ResizeObserver(place);
+    button.querySelectorAll('.inter, .faces').forEach(el => observer.observe(el));
+    // .inter drops its margin at this width, which moves the plaque without resizing it.
+    const narrow = window.matchMedia('(max-width: 460px)');
+    narrow.addEventListener('change', place);
+    return () => {
+      observer.disconnect();
+      narrow.removeEventListener('change', place);
     };
   }, []);
 
@@ -229,19 +249,21 @@ const Interface = () => {
         aria-label={t('hero.chainsawLabel')}
         className={classNames('interface', { done: count > 2, 'animate-wiggle': !isActivated })}
       >
-        <span className={classNames('inter', { 'no-margin': isMobile })}>{t('hero.inter')}</span>
+        <span className="inter">{t('hero.inter')}</span>
         <Chips />
         <Chainsaw />
         <span className="faces">{t('hero.faces')}</span>
       </button>
       <span
+        ref={hintRef}
         aria-hidden="true"
         onClick={handleClick}
         className={classNames('click-it', {
           'opacity-0': isActivated || count > 1,
         })}
       >
-        {t(canHover ? 'hero.clickIt' : 'hero.tapIt')}
+        <span className="hover-only">{t('hero.clickIt')}</span>
+        <span className="touch-only">{t('hero.tapIt')}</span>
       </span>
     </>
   );

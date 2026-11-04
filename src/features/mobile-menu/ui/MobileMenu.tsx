@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { classNames } from '@/shared/lib/classNames';
 import { useCvLink } from '@/shared/lib/useCvLink';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 
 interface NavLink {
   key: string;
@@ -19,7 +19,7 @@ interface MobileMenuProps {
 
 const MobileMenu = ({ isOpen, onClose, currentLink, navLinks }: MobileMenuProps) => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const cvLink = useCvLink('mobile_menu');
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);

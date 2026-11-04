@@ -1,13 +1,13 @@
 import gsap from 'gsap';
 import { useLayoutEffect, useRef, useEffect } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import TechStack from './TechStack';
 import Process from './Process';
 import Beyond from './Beyond';
 
 const Skills = () => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const horizontal = useMediaQuery({ maxHeight: 600 });
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const horizontal = useMediaQuery('(max-height: 600px)');
   const skillsRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
@@ -23,6 +23,7 @@ const Skills = () => {
   };
 
   useLayoutEffect(() => {
+    if (isMobile === undefined || horizontal === undefined) return; // hydrating: wait for the real viewport
     const ctx = gsap.context(() => {
       const horizontalSections = gsap.utils.toArray('.horizontal-section');
       const xPercent = isMobile ? -112.52 : -100;

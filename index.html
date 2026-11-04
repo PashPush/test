@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/images/chainsaw.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- First-screen fonts, so the swap doesn't shift the visible hero: the h1 is Latin in
+         both languages, and Roboto latin 400 carries the spaces and punctuation of every line
+         (it sets the line metrics even in Russian text). -->
+    <link rel="preload" href="/src/app/styles/fonts/yeseva-one-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/src/app/styles/fonts/roboto-latin-400.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Static on purpose: link-preview bots (Telegram, Slack, LinkedIn) don't run JS.
@@ -43,8 +46,8 @@
         "sameAs": ["https://t.me/pah0v"]
       }
     </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QX4PNFEPB"></script>
+    <!-- Google tag (gtag.js). Calls queue in dataLayer; the library itself loads after
+         `load` + idle, or on the first interaction, whichever comes first. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -53,6 +56,39 @@
       gtag('js', new Date());
 
       gtag('config', 'G-2QX4PNFEPB');
+
+      (function () {
+        var events = ['scroll', 'pointerdown', 'keydown'];
+        var loaded = false;
+        function load() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) {
+            removeEventListener(e, load, true);
+          });
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-2QX4PNFEPB';
+          document.head.appendChild(script);
+        }
+        events.forEach(function (e) {
+          addEventListener(e, load, { capture: true, passive: true });
+        });
+        function idle() {
+          if (window.requestIdleCallback) requestIdleCallback(load, { timeout: 3000 });
+          else setTimeout(load, 3000);
+        }
+        // After the first paint as well: where rendering is slow (software GL) `load` comes first.
+        addEventListener('load', function () {
+          var P = window.PerformanceObserver;
+          if (!P || !P.supportedEntryTypes || P.supportedEntryTypes.indexOf('paint') < 0) return idle();
+          new P(function (list, observer) {
+            if (!list.getEntriesByName('first-contentful-paint').length) return;
+            observer.disconnect();
+            idle();
+          }).observe({ type: 'paint', buffered: true });
+        });
+      })();
     </script>
   </head>
   <body>

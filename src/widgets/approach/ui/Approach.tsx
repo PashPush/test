@@ -1,15 +1,21 @@
 import gsap from 'gsap';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import { useGSAP } from '@gsap/react';
 import { useTranslation } from 'react-i18next';
 import { classNames } from '@/shared/lib/classNames';
 
 type Principle = { title: string; proof: string };
 
+const pavelSrcSet = (ext: 'avif' | 'webp') =>
+  [640, 960, 1280, 1920]
+    .map(w => `/images/pavel2${w === 1920 && ext === 'webp' ? '' : `-${w}`}.${ext} ${w}w`)
+    .join(', ');
+// object-contain in a 100vw×100vh box, scaled 150% on mobile (.approach-mobile).
+const pavelSizes = '(max-width: 640px) 150vw, (min-aspect-ratio: 1920/1683) 114vh, 100vw';
+
 const Approach = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: 640 });
-  const isSmallMobile = useMediaQuery({ maxWidth: 460 });
+  const isMobile = useMediaQuery('(max-width: 640px)');
 
   const value = t('approach.principles', { returnObjects: true }) as unknown;
   const principles = Array.isArray(value) ? (value as Principle[]) : [];
@@ -17,7 +23,7 @@ const Approach = () => {
   const principleList = (items: Principle[]) =>
     items.map(({ title, proof }, index) => (
       <li key={index} className="flex items-start gap-2">
-        <img src="/images/check.png" alt="" />
+        <img src="/images/check.png" alt="" width={16} height={16} loading="lazy" />
         <p>
           {title}
           <small className="approach-proof">{proof}</small>
@@ -26,10 +32,13 @@ const Approach = () => {
     ));
 
   useGSAP(() => {
+    // Read here, not from the hook: this runs in the hydration commit, before the hook knows.
+    const mobile = window.matchMedia('(max-width: 640px)').matches;
+    const smallMobile = window.matchMedia('(max-width: 460px)').matches;
     gsap.set('.masked-img', { clearProps: 'transform,translate,x,y,xPercent,yPercent,scale' });
     gsap.set('.masked-img', { xPercent: -50, yPercent: -50 });
 
-    const start = isMobile ? 'top 1%' : 'top top';
+    const start = mobile ? 'top 1%' : 'top top';
 
     const maskTimeline = gsap.timeline({
       scrollTrigger: {
@@ -38,18 +47,18 @@ const Approach = () => {
         end: '+=1400',
         scrub: 1,
         pin: true,
-        anticipatePin: isMobile ? 1 : 0,
+        anticipatePin: mobile ? 1 : 0,
         fastScrollEnd: true,
         preventOverlaps: true,
         invalidateOnRefresh: false,
       },
     });
 
-    const contentAnimation = isMobile
+    const contentAnimation = mobile
       ? { translateX: 20, stagger: 0.8, ease: 'power1.inOut' }
       : { scale: 1.2, stagger: 0.8, ease: 'power1.inOut' };
 
-    const translateY = isSmallMobile ? 100 : 0;
+    const translateY = smallMobile ? 100 : 0;
 
     maskTimeline
       .to('.will-grow', contentAnimation)
@@ -57,7 +66,7 @@ const Approach = () => {
       .to('.will-fade', { opacity: 0, stagger: 0.2, ease: 'power1.inOut' })
       .to('.masked-img', {
         scale: 2,
-        maskSize: isMobile ? '450% auto' : '300% auto',
+        maskSize: mobile ? '450% auto' : '300% auto',
         xPercent: -50,
         yPercent: -50,
         y: translateY,
@@ -81,16 +90,22 @@ const Approach = () => {
           <ul className="space-y-4 will-fade will-grow sm:mr-50 z-10">{principleList(principles.slice(0, 3))}</ul>
 
           <div className={classNames('approach-img', { 'approach-mobile': isMobile })}>
-            <img
-              src="/images/pavel2.webp"
-              alt={t('approach.photoAlt')}
-              className={classNames('abs-center masked-img size-full object-contain', {
-                'masked-img-mobile': isMobile,
-              })}
-              decoding="async"
-              width={1920}
-              height={1683}
-            />
+            <picture>
+              <source type="image/avif" srcSet={pavelSrcSet('avif')} sizes={pavelSizes} />
+              <img
+                src="/images/pavel2.webp"
+                srcSet={pavelSrcSet('webp')}
+                sizes={pavelSizes}
+                alt={t('approach.photoAlt')}
+                className={classNames('abs-center masked-img size-full object-contain', {
+                  'masked-img-mobile': isMobile,
+                })}
+                loading="lazy"
+                decoding="async"
+                width={1920}
+                height={1683}
+              />
+            </picture>
           </div>
 
           <ul className="space-y-4 will-fade will-grow sm:ml-50 z-10">{principleList(principles.slice(3))}</ul>
